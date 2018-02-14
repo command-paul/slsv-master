@@ -18,6 +18,7 @@ cmake_minimum_required(VERSION 2.6)
 project(SLSV)
 add_subdirectory(src/State)
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
 add_executable(build ./src/TestInstance.cpp)
 
 target_link_libraries (build LINK_PUBLIC State)
