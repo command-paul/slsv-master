@@ -28,27 +28,33 @@ bool riscv:: addHART(){
 	#if DEBUG != 0  && VERBOSITY == 3// Debug Needs to be better
 		std::cout << "New HART Created" << std::endl;
 	#endif	
-	HART_Vec.push_back(NewHart); 
+	HART_Vec.push_back(*NewHart); 
 	return true;
 }
 
 
 bool riscv:: addMemory(){
 	memoryMappedDevice* NewMemory = new memoryMappedDevice;
-	memoryMappedDevice* NewMemoryA = new memory;
-	memoryMappedDevice* NewMemoryB = new periphralA;
 	if(NewMemory == NULL) return 0;
-	if(NewMemoryA == NULL) return 0;
-	if(NewMemoryB == NULL) return 0;
 	#if DEBUG != 0  && VERBOSITY == 3// Debug Needs to be better
 		std::cout << "New Memory Created" << std::endl;
 	#endif	
-	Memory.push_back(NewMemory); 
-	Memory.push_back(NewMemoryA); 
-	Memory.push_back(NewMemoryB); 
+	Memory.push_back(*NewMemory); 
 	return true;
 }
+std::vector <int> memoryMappedDevice::get_member(int address){
+	std::vector<int> a;
+	a.push_back(0);
+	return a;
+}
 
+memoryMappedDevice::memoryMappedDevice(){
+	return;
+}
+
+memoryMappedDevice::~memoryMappedDevice(){
+	return;
+}
 
 bool riscv:: addNHSV(){
 	nonHARTStateVariables* NewNHSV = new nonHARTStateVariables;
@@ -56,7 +62,7 @@ bool riscv:: addNHSV(){
 	#if DEBUG != 0  && VERBOSITY == 3// Debug Needs to be better
 		std::cout << "New NHSV Created" << std::endl;
 	#endif	
-	NHSV.push_back(NewNHSV); 
+	NHSV.push_back(*NewNHSV); 
 	return true;
 }
 // CLASS :: risc_v_HART
