@@ -154,6 +154,159 @@ class SwigPyIterator(_object):
 SwigPyIterator_swigregister = _slsv_state.SwigPyIterator_swigregister
 SwigPyIterator_swigregister(SwigPyIterator)
 
+class Tester1(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Tester1, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Tester1, name)
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        return _slsv_state.Tester1_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        return _slsv_state.Tester1___nonzero__(self)
+
+    def __bool__(self):
+        return _slsv_state.Tester1___bool__(self)
+
+    def __len__(self):
+        return _slsv_state.Tester1___len__(self)
+
+    def __getslice__(self, i, j):
+        return _slsv_state.Tester1___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        return _slsv_state.Tester1___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        return _slsv_state.Tester1___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        return _slsv_state.Tester1___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        return _slsv_state.Tester1___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _slsv_state.Tester1___setitem__(self, *args)
+
+    def pop(self):
+        return _slsv_state.Tester1_pop(self)
+
+    def append(self, x):
+        return _slsv_state.Tester1_append(self, x)
+
+    def empty(self):
+        return _slsv_state.Tester1_empty(self)
+
+    def size(self):
+        return _slsv_state.Tester1_size(self)
+
+    def swap(self, v):
+        return _slsv_state.Tester1_swap(self, v)
+
+    def begin(self):
+        return _slsv_state.Tester1_begin(self)
+
+    def end(self):
+        return _slsv_state.Tester1_end(self)
+
+    def rbegin(self):
+        return _slsv_state.Tester1_rbegin(self)
+
+    def rend(self):
+        return _slsv_state.Tester1_rend(self)
+
+    def clear(self):
+        return _slsv_state.Tester1_clear(self)
+
+    def get_allocator(self):
+        return _slsv_state.Tester1_get_allocator(self)
+
+    def pop_back(self):
+        return _slsv_state.Tester1_pop_back(self)
+
+    def erase(self, *args):
+        return _slsv_state.Tester1_erase(self, *args)
+
+    def __init__(self, *args):
+        this = _slsv_state.new_Tester1(*args)
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+
+    def push_back(self, x):
+        return _slsv_state.Tester1_push_back(self, x)
+
+    def front(self):
+        return _slsv_state.Tester1_front(self)
+
+    def back(self):
+        return _slsv_state.Tester1_back(self)
+
+    def assign(self, n, x):
+        return _slsv_state.Tester1_assign(self, n, x)
+
+    def resize(self, *args):
+        return _slsv_state.Tester1_resize(self, *args)
+
+    def insert(self, *args):
+        return _slsv_state.Tester1_insert(self, *args)
+
+    def reserve(self, n):
+        return _slsv_state.Tester1_reserve(self, n)
+
+    def capacity(self):
+        return _slsv_state.Tester1_capacity(self)
+    __swig_destroy__ = _slsv_state.delete_Tester1
+    __del__ = lambda self: None
+Tester1_swigregister = _slsv_state.Tester1_swigregister
+Tester1_swigregister(Tester1)
+
+class TestRet(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, TestRet, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, TestRet, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        this = _slsv_state.new_TestRet(*args)
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_setmethods__["first"] = _slsv_state.TestRet_first_set
+    __swig_getmethods__["first"] = _slsv_state.TestRet_first_get
+    if _newclass:
+        first = _swig_property(_slsv_state.TestRet_first_get, _slsv_state.TestRet_first_set)
+    __swig_setmethods__["second"] = _slsv_state.TestRet_second_set
+    __swig_getmethods__["second"] = _slsv_state.TestRet_second_get
+    if _newclass:
+        second = _swig_property(_slsv_state.TestRet_second_get, _slsv_state.TestRet_second_set)
+    def __len__(self):
+        return 2
+    def __repr__(self):
+        return str((self.first, self.second))
+    def __getitem__(self, index): 
+        if not (index % 2):
+            return self.first
+        else:
+            return self.second
+    def __setitem__(self, index, val):
+        if not (index % 2):
+            self.first = val
+        else:
+            self.second = val
+    __swig_destroy__ = _slsv_state.delete_TestRet
+    __del__ = lambda self: None
+TestRet_swigregister = _slsv_state.TestRet_swigregister
+TestRet_swigregister(TestRet)
+
 class HartVector(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, HartVector, name, value)
@@ -642,6 +795,20 @@ class riscv(_object):
 
     def addNHSV(self):
         return _slsv_state.riscv_addNHSV(self)
+
+    def memoryChainValid(self):
+        return _slsv_state.riscv_memoryChainValid(self)
+
+    def NHSVChainValid(self):
+        return _slsv_state.riscv_NHSVChainValid(self)
+    __swig_setmethods__["MemoryMap"] = _slsv_state.riscv_MemoryMap_set
+    __swig_getmethods__["MemoryMap"] = _slsv_state.riscv_MemoryMap_get
+    if _newclass:
+        MemoryMap = _swig_property(_slsv_state.riscv_MemoryMap_get, _slsv_state.riscv_MemoryMap_set)
+    __swig_setmethods__["NHSVMap"] = _slsv_state.riscv_NHSVMap_set
+    __swig_getmethods__["NHSVMap"] = _slsv_state.riscv_NHSVMap_get
+    if _newclass:
+        NHSVMap = _swig_property(_slsv_state.riscv_NHSVMap_get, _slsv_state.riscv_NHSVMap_set)
 riscv_swigregister = _slsv_state.riscv_swigregister
 riscv_swigregister(riscv)
 
@@ -651,19 +818,27 @@ class risc_v_HART(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, risc_v_HART, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["GPR"] = _slsv_state.risc_v_HART_GPR_set
-    __swig_getmethods__["GPR"] = _slsv_state.risc_v_HART_GPR_get
-    if _newclass:
-        GPR = _swig_property(_slsv_state.risc_v_HART_GPR_get, _slsv_state.risc_v_HART_GPR_set)
 
-    def __init__(self):
-        this = _slsv_state.new_risc_v_HART()
+    def __init__(self, *args):
+        this = _slsv_state.new_risc_v_HART(*args)
         try:
             self.this.append(this)
         except Exception:
             self.this = this
     __swig_destroy__ = _slsv_state.delete_risc_v_HART
     __del__ = lambda self: None
+    __swig_setmethods__["GPR"] = _slsv_state.risc_v_HART_GPR_set
+    __swig_getmethods__["GPR"] = _slsv_state.risc_v_HART_GPR_get
+    if _newclass:
+        GPR = _swig_property(_slsv_state.risc_v_HART_GPR_get, _slsv_state.risc_v_HART_GPR_set)
+    __swig_setmethods__["FPR"] = _slsv_state.risc_v_HART_FPR_set
+    __swig_getmethods__["FPR"] = _slsv_state.risc_v_HART_FPR_get
+    if _newclass:
+        FPR = _swig_property(_slsv_state.risc_v_HART_FPR_get, _slsv_state.risc_v_HART_FPR_set)
+    __swig_setmethods__["CSR"] = _slsv_state.risc_v_HART_CSR_set
+    __swig_getmethods__["CSR"] = _slsv_state.risc_v_HART_CSR_get
+    if _newclass:
+        CSR = _swig_property(_slsv_state.risc_v_HART_CSR_get, _slsv_state.risc_v_HART_CSR_set)
 risc_v_HART_swigregister = _slsv_state.risc_v_HART_swigregister
 risc_v_HART_swigregister(risc_v_HART)
 
@@ -673,10 +848,24 @@ class nonHARTStateVariables(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, nonHARTStateVariables, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["variable"] = _slsv_state.nonHARTStateVariables_variable_set
-    __swig_getmethods__["variable"] = _slsv_state.nonHARTStateVariables_variable_get
-    if _newclass:
-        variable = _swig_property(_slsv_state.nonHARTStateVariables_variable_get, _slsv_state.nonHARTStateVariables_variable_set)
+
+    def set_R_RW(self, startID, endID):
+        return _slsv_state.nonHARTStateVariables_set_R_RW(self, startID, endID)
+
+    def set_R_RW_L(self, startID, elements):
+        return _slsv_state.nonHARTStateVariables_set_R_RW_L(self, startID, elements)
+
+    def get_line(self, reg_ID, line_width):
+        return _slsv_state.nonHARTStateVariables_get_line(self, reg_ID, line_width)
+
+    def set_line(self, regID, line_width, arg4):
+        return _slsv_state.nonHARTStateVariables_set_line(self, regID, line_width, arg4)
+
+    def get_word(self, regID):
+        return _slsv_state.nonHARTStateVariables_get_word(self, regID)
+
+    def set_word(self, regID, arg3):
+        return _slsv_state.nonHARTStateVariables_set_word(self, regID, arg3)
 
     def __init__(self):
         this = _slsv_state.new_nonHARTStateVariables()
@@ -694,12 +883,34 @@ class memoryMappedDevice(_object):
     __setattr__ = lambda self, name, value: _swig_setattr(self, memoryMappedDevice, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, memoryMappedDevice, name)
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        this = _slsv_state.new_memoryMappedDevice(*args)
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
     __swig_destroy__ = _slsv_state.delete_memoryMappedDevice
     __del__ = lambda self: None
+
+    def set_R_RW(self, start_address, end_address):
+        return _slsv_state.memoryMappedDevice_set_R_RW(self, start_address, end_address)
+
+    def set_R_RW_L(self, start_address, lenght):
+        return _slsv_state.memoryMappedDevice_set_R_RW_L(self, start_address, lenght)
+
+    def get_line(self, address, line_width):
+        return _slsv_state.memoryMappedDevice_get_line(self, address, line_width)
+
+    def set_line(self, address, line_width, arg4):
+        return _slsv_state.memoryMappedDevice_set_line(self, address, line_width, arg4)
+
+    def get_word(self, address):
+        return _slsv_state.memoryMappedDevice_get_word(self, address)
+
+    def set_word(self, address, arg3):
+        return _slsv_state.memoryMappedDevice_set_word(self, address, arg3)
 memoryMappedDevice_swigregister = _slsv_state.memoryMappedDevice_swigregister
 memoryMappedDevice_swigregister(memoryMappedDevice)
 

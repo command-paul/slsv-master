@@ -12,3 +12,4 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
 add_executable(build ./src/TestInstance.cpp)
 
 target_link_libraries (build LINK_PUBLIC State)
+message(WARNING,"RUN THIS THROUGH THE INTEL PS FOR MEM LEAKS !!!")

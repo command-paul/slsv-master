@@ -6,8 +6,8 @@ int main(){
 	(*a).addHART();
 	(*a).addMemory();
 	(*a).addNHSV();
-	std::cout << (*a).HART_Vec[0].GPR << std::endl;
-	std::cout << (*a).Memory[0].get_member(0)[0] << std::endl;
+	std::cout << (*a).HART_Vec[0].GPR[0] << std::endl;
+	// /std::cout << (*a).Memory[0].get_member(0)[0] << std::endl;
 	//std::cout << (*a).Memory[0]->address0 << std::endl;
 	//std::cout << ((memory*)(*a).Memory[1])->address0 << std::endl;
 	//memory* temp = (memory*)&((*a).Memory[1]);
