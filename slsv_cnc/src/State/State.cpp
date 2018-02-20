@@ -128,6 +128,10 @@ memoryMappedDevice::memoryMappedDevice(uint64_t start_address,bool RRW ,uint64_t
 }
 
 bool memoryMappedDevice::set_R_RW(uint64_t start_address,uint64_t end_address){
+	MEMORY.clear();
+	MEMORY.shrink_to_fit();
+	R_RW.clear();
+	R_RW.shrink_to_fit();
 	return true;
 }
 
