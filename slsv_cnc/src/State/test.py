@@ -1,7 +1,6 @@
 import slsv_state
 
 core = slsv_state.riscv()
-
 core.addHART()
 core.addMemory()
 core.addNHSV()

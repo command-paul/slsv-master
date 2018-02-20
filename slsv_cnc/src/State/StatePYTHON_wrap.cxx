@@ -3033,20 +3033,21 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t swig_types[21]
 #define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t swig_types[22]
 #define SWIGTYPE_p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t swig_types[23]
-#define SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t swig_types[24]
-#define SWIGTYPE_p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t swig_types[25]
-#define SWIGTYPE_p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t swig_types[26]
-#define SWIGTYPE_p_std__vectorT_risc_v_HART_std__allocatorT_risc_v_HART_t_t swig_types[27]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[28]
-#define SWIGTYPE_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t swig_types[29]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[30]
-#define SWIGTYPE_p_unsigned_char swig_types[31]
-#define SWIGTYPE_p_unsigned_int swig_types[32]
-#define SWIGTYPE_p_unsigned_long swig_types[33]
-#define SWIGTYPE_p_unsigned_short swig_types[34]
-#define SWIGTYPE_p_value_type swig_types[35]
-static swig_type_info *swig_types[37];
-static swig_module_info swig_module = {swig_types, 36, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t swig_types[24]
+#define SWIGTYPE_p_std__vectorT_int_std__allocatorT_int_t_t swig_types[25]
+#define SWIGTYPE_p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t swig_types[26]
+#define SWIGTYPE_p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t swig_types[27]
+#define SWIGTYPE_p_std__vectorT_risc_v_HART_std__allocatorT_risc_v_HART_t_t swig_types[28]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[29]
+#define SWIGTYPE_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t swig_types[30]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[31]
+#define SWIGTYPE_p_unsigned_char swig_types[32]
+#define SWIGTYPE_p_unsigned_int swig_types[33]
+#define SWIGTYPE_p_unsigned_long swig_types[34]
+#define SWIGTYPE_p_unsigned_short swig_types[35]
+#define SWIGTYPE_p_value_type swig_types[36]
+static swig_type_info *swig_types[38];
+static swig_module_info swig_module = {swig_types, 37, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -16831,6 +16832,58 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_risc_v_HART_hart_id_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  risc_v_HART *arg1 = (risc_v_HART *) 0 ;
+  uint32_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:risc_v_HART_hart_id_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_risc_v_HART, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "risc_v_HART_hart_id_set" "', argument " "1"" of type '" "risc_v_HART *""'"); 
+  }
+  arg1 = reinterpret_cast< risc_v_HART * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "risc_v_HART_hart_id_set" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  if (arg1) (arg1)->hart_id = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_risc_v_HART_hart_id_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  risc_v_HART *arg1 = (risc_v_HART *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:risc_v_HART_hart_id_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_risc_v_HART, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "risc_v_HART_hart_id_get" "', argument " "1"" of type '" "risc_v_HART *""'"); 
+  }
+  arg1 = reinterpret_cast< risc_v_HART * >(argp1);
+  result = (uint32_t) ((arg1)->hart_id);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *risc_v_HART_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -17076,6 +17129,214 @@ SWIGINTERN PyObject *_wrap_nonHARTStateVariables_set_word(PyObject *SWIGUNUSEDPA
   }
   result = (bool)(arg1)->set_word(arg2,arg3);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_base_ID_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  uint64_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:nonHARTStateVariables_base_ID_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_base_ID_set" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "nonHARTStateVariables_base_ID_set" "', argument " "2"" of type '" "uint64_t""'");
+  } 
+  arg2 = static_cast< uint64_t >(val2);
+  if (arg1) (arg1)->base_ID = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_base_ID_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:nonHARTStateVariables_base_ID_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_base_ID_get" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  result = (uint64_t) ((arg1)->base_ID);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_end_ID_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  uint64_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:nonHARTStateVariables_end_ID_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_end_ID_set" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "nonHARTStateVariables_end_ID_set" "', argument " "2"" of type '" "uint64_t""'");
+  } 
+  arg2 = static_cast< uint64_t >(val2);
+  if (arg1) (arg1)->end_ID = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_end_ID_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:nonHARTStateVariables_end_ID_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_end_ID_get" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  result = (uint64_t) ((arg1)->end_ID);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_regFile_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *arg2 = (std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:nonHARTStateVariables_regFile_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_regFile_set" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nonHARTStateVariables_regFile_set" "', argument " "2"" of type '" "std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > * >(argp2);
+  if (arg1) (arg1)->regFile = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_regFile_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:nonHARTStateVariables_regFile_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_regFile_get" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  result = (std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *)& ((arg1)->regFile);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_R_RW_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  std::vector< bool,std::allocator< bool > > *arg2 = (std::vector< bool,std::allocator< bool > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:nonHARTStateVariables_R_RW_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_R_RW_set" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nonHARTStateVariables_R_RW_set" "', argument " "2"" of type '" "std::vector< bool,std::allocator< bool > > *""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< bool,std::allocator< bool > > * >(argp2);
+  if (arg1) (arg1)->R_RW = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nonHARTStateVariables_R_RW_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nonHARTStateVariables *arg1 = (nonHARTStateVariables *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< bool,std::allocator< bool > > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:nonHARTStateVariables_R_RW_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_nonHARTStateVariables, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nonHARTStateVariables_R_RW_get" "', argument " "1"" of type '" "nonHARTStateVariables *""'"); 
+  }
+  arg1 = reinterpret_cast< nonHARTStateVariables * >(argp1);
+  result = (std::vector< bool,std::allocator< bool > > *)& ((arg1)->R_RW);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -17599,6 +17860,266 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_position_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  uint32_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:memoryMappedDevice_position_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_position_set" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "memoryMappedDevice_position_set" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  if (arg1) (arg1)->position = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_position_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:memoryMappedDevice_position_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_position_get" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  result = (uint32_t) ((arg1)->position);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_base_address_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  uint64_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:memoryMappedDevice_base_address_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_base_address_set" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "memoryMappedDevice_base_address_set" "', argument " "2"" of type '" "uint64_t""'");
+  } 
+  arg2 = static_cast< uint64_t >(val2);
+  if (arg1) (arg1)->base_address = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_base_address_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:memoryMappedDevice_base_address_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_base_address_get" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  result = (uint64_t) ((arg1)->base_address);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_end_address_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  uint64_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:memoryMappedDevice_end_address_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_end_address_set" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "memoryMappedDevice_end_address_set" "', argument " "2"" of type '" "uint64_t""'");
+  } 
+  arg2 = static_cast< uint64_t >(val2);
+  if (arg1) (arg1)->end_address = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_end_address_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:memoryMappedDevice_end_address_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_end_address_get" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  result = (uint64_t) ((arg1)->end_address);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_MEMORY_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > *arg2 = (std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:memoryMappedDevice_MEMORY_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_MEMORY_set" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "memoryMappedDevice_MEMORY_set" "', argument " "2"" of type '" "std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > *""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > * >(argp2);
+  if (arg1) (arg1)->MEMORY = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_MEMORY_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:memoryMappedDevice_MEMORY_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_MEMORY_get" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  result = (std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > *)& ((arg1)->MEMORY);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_R_RW_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  std::vector< bool,std::allocator< bool > > *arg2 = (std::vector< bool,std::allocator< bool > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:memoryMappedDevice_R_RW_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_R_RW_set" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "memoryMappedDevice_R_RW_set" "', argument " "2"" of type '" "std::vector< bool,std::allocator< bool > > *""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< bool,std::allocator< bool > > * >(argp2);
+  if (arg1) (arg1)->R_RW = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_memoryMappedDevice_R_RW_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  memoryMappedDevice *arg1 = (memoryMappedDevice *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< bool,std::allocator< bool > > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:memoryMappedDevice_R_RW_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_memoryMappedDevice, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "memoryMappedDevice_R_RW_get" "', argument " "1"" of type '" "memoryMappedDevice *""'"); 
+  }
+  arg1 = reinterpret_cast< memoryMappedDevice * >(argp1);
+  result = (std::vector< bool,std::allocator< bool > > *)& ((arg1)->R_RW);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *memoryMappedDevice_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -17829,6 +18350,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"risc_v_HART_FPR_get", _wrap_risc_v_HART_FPR_get, METH_VARARGS, NULL},
 	 { (char *)"risc_v_HART_CSR_set", _wrap_risc_v_HART_CSR_set, METH_VARARGS, NULL},
 	 { (char *)"risc_v_HART_CSR_get", _wrap_risc_v_HART_CSR_get, METH_VARARGS, NULL},
+	 { (char *)"risc_v_HART_hart_id_set", _wrap_risc_v_HART_hart_id_set, METH_VARARGS, NULL},
+	 { (char *)"risc_v_HART_hart_id_get", _wrap_risc_v_HART_hart_id_get, METH_VARARGS, NULL},
 	 { (char *)"risc_v_HART_swigregister", risc_v_HART_swigregister, METH_VARARGS, NULL},
 	 { (char *)"nonHARTStateVariables_set_R_RW", _wrap_nonHARTStateVariables_set_R_RW, METH_VARARGS, NULL},
 	 { (char *)"nonHARTStateVariables_set_R_RW_L", _wrap_nonHARTStateVariables_set_R_RW_L, METH_VARARGS, NULL},
@@ -17836,6 +18359,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"nonHARTStateVariables_set_line", _wrap_nonHARTStateVariables_set_line, METH_VARARGS, NULL},
 	 { (char *)"nonHARTStateVariables_get_word", _wrap_nonHARTStateVariables_get_word, METH_VARARGS, NULL},
 	 { (char *)"nonHARTStateVariables_set_word", _wrap_nonHARTStateVariables_set_word, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_base_ID_set", _wrap_nonHARTStateVariables_base_ID_set, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_base_ID_get", _wrap_nonHARTStateVariables_base_ID_get, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_end_ID_set", _wrap_nonHARTStateVariables_end_ID_set, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_end_ID_get", _wrap_nonHARTStateVariables_end_ID_get, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_regFile_set", _wrap_nonHARTStateVariables_regFile_set, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_regFile_get", _wrap_nonHARTStateVariables_regFile_get, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_R_RW_set", _wrap_nonHARTStateVariables_R_RW_set, METH_VARARGS, NULL},
+	 { (char *)"nonHARTStateVariables_R_RW_get", _wrap_nonHARTStateVariables_R_RW_get, METH_VARARGS, NULL},
 	 { (char *)"new_nonHARTStateVariables", _wrap_new_nonHARTStateVariables, METH_VARARGS, NULL},
 	 { (char *)"delete_nonHARTStateVariables", _wrap_delete_nonHARTStateVariables, METH_VARARGS, NULL},
 	 { (char *)"nonHARTStateVariables_swigregister", nonHARTStateVariables_swigregister, METH_VARARGS, NULL},
@@ -17847,6 +18378,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"memoryMappedDevice_set_line", _wrap_memoryMappedDevice_set_line, METH_VARARGS, NULL},
 	 { (char *)"memoryMappedDevice_get_word", _wrap_memoryMappedDevice_get_word, METH_VARARGS, NULL},
 	 { (char *)"memoryMappedDevice_set_word", _wrap_memoryMappedDevice_set_word, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_position_set", _wrap_memoryMappedDevice_position_set, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_position_get", _wrap_memoryMappedDevice_position_get, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_base_address_set", _wrap_memoryMappedDevice_base_address_set, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_base_address_get", _wrap_memoryMappedDevice_base_address_get, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_end_address_set", _wrap_memoryMappedDevice_end_address_set, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_end_address_get", _wrap_memoryMappedDevice_end_address_get, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_MEMORY_set", _wrap_memoryMappedDevice_MEMORY_set, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_MEMORY_get", _wrap_memoryMappedDevice_MEMORY_get, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_R_RW_set", _wrap_memoryMappedDevice_R_RW_set, METH_VARARGS, NULL},
+	 { (char *)"memoryMappedDevice_R_RW_get", _wrap_memoryMappedDevice_R_RW_get, METH_VARARGS, NULL},
 	 { (char *)"memoryMappedDevice_swigregister", memoryMappedDevice_swigregister, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
@@ -17878,12 +18419,13 @@ static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argume
 static swig_type_info _swigt__p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t = {"_p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t", "std::pair< bool,std::vector< unsigned int > > *|std::pair< bool,std::vector< uint32_t > > *|std::pair< bool,std::vector< uint32_t,std::allocator< uint32_t > > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t = {"_p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t", "std::pair< std::pair< unsigned int,unsigned int >,std::vector< unsigned long *,std::allocator< unsigned long * > > > *|std::pair< std::pair< uint32_t,uint32_t >,std::vector< uint_fast32_t *,std::allocator< uint_fast32_t * > > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t = {"_p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t", "std::pair< std::pair< uint64_t,uint64_t >,std::vector< uint_fast32_t *,std::allocator< uint_fast32_t * > > > *|std::pair< std::pair< unsigned long,unsigned long >,std::vector< unsigned long *,std::allocator< unsigned long * > > > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_bool_std__allocatorT_bool_t_t = {"_p_std__vectorT_bool_std__allocatorT_bool_t_t", "std::vector< bool,std::allocator< bool > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_int_std__allocatorT_int_t_t = {"_p_std__vectorT_int_std__allocatorT_int_t_t", "std::vector< int,std::allocator< int > > *|std::vector< int > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t = {"_p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t", "std::vector< memoryMappedDevice,std::allocator< memoryMappedDevice > > *|std::vector< memoryMappedDevice > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t = {"_p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t", "std::vector< nonHARTStateVariables,std::allocator< nonHARTStateVariables > > *|std::vector< nonHARTStateVariables > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_risc_v_HART_std__allocatorT_risc_v_HART_t_t = {"_p_std__vectorT_risc_v_HART_std__allocatorT_risc_v_HART_t_t", "std::vector< risc_v_HART,std::allocator< risc_v_HART > > *|std::vector< risc_v_HART > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t = {"_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t", "std::vector< uint32_t,std::allocator< uint32_t > > *|std::vector< unsigned int,std::allocator< unsigned int > > *|std::vector< uint32_t > *|std::vector< unsigned int > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t = {"_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t", "std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *|std::vector< unsigned long,std::allocator< unsigned long > > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t = {"_p_std__vectorT_unsigned_long_std__allocatorT_unsigned_long_t_t", "std::vector< uint_fast64_t,std::allocator< uint_fast64_t > > *|std::vector< uint_fast32_t,std::allocator< uint_fast32_t > > *|std::vector< unsigned long,std::allocator< unsigned long > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "uint_least32_t *|uint32_t *|unsigned int *", 0, 0, (void*)0, 0};
@@ -17916,6 +18458,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t,
   &_swigt__p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t,
   &_swigt__p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t,
+  &_swigt__p_std__vectorT_bool_std__allocatorT_bool_t_t,
   &_swigt__p_std__vectorT_int_std__allocatorT_int_t_t,
   &_swigt__p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t,
   &_swigt__p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t,
@@ -17954,6 +18497,7 @@ static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__in
 static swig_cast_info _swigc__p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t[] = {  {&_swigt__p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t[] = {  {&_swigt__p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t[] = {  {&_swigt__p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_bool_std__allocatorT_bool_t_t[] = {  {&_swigt__p_std__vectorT_bool_std__allocatorT_bool_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_int_std__allocatorT_int_t_t[] = {  {&_swigt__p_std__vectorT_int_std__allocatorT_int_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t[] = {  {&_swigt__p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t[] = {  {&_swigt__p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -17992,6 +18536,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__pairT_bool_std__vectorT_uint32_t_std__allocatorT_uint32_t_t_t_t,
   _swigc__p_std__pairT_std__pairT_unsigned_int_unsigned_int_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t,
   _swigc__p_std__pairT_std__pairT_unsigned_long_unsigned_long_t_std__vectorT_unsigned_long_p_std__allocatorT_unsigned_long_p_t_t_t,
+  _swigc__p_std__vectorT_bool_std__allocatorT_bool_t_t,
   _swigc__p_std__vectorT_int_std__allocatorT_int_t_t,
   _swigc__p_std__vectorT_memoryMappedDevice_std__allocatorT_memoryMappedDevice_t_t,
   _swigc__p_std__vectorT_nonHARTStateVariables_std__allocatorT_nonHARTStateVariables_t_t,

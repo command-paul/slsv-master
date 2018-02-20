@@ -23,7 +23,7 @@ riscv::~riscv(){
 }
 
 bool riscv:: addHART(){
-	risc_v_HART NewHart = risc_v_HART(HART_Vec.size());
+	risc_v_HART NewHart = risc_v_HART((uint32_t)HART_Vec.size());
 	if(&NewHart == NULL) return 0;
 	#if DEBUG != 0  && VERBOSITY == 3// Debug Needs to be better
 		std::cout << "New HART Created" << std::endl;
@@ -34,7 +34,7 @@ bool riscv:: addHART(){
 
 
 bool riscv:: addMemory(){
-	memoryMappedDevice NewMemory = memoryMappedDevice();
+	memoryMappedDevice NewMemory = memoryMappedDevice(0,false,100);
 	if(&NewMemory == NULL) return 0;
 	#if DEBUG != 0  && VERBOSITY == 3// Debug Needs to be better
 		std::cout << "New Memory Created" << std::endl;
@@ -115,11 +115,15 @@ memoryMappedDevice::~memoryMappedDevice(){
 	return;
 }
 // Start End constructor
-memoryMappedDevice::memoryMappedDevice(uint64_t start_address,uint64_t end_address,bool R_RW){
+memoryMappedDevice::memoryMappedDevice(uint64_t start_address,uint64_t end_address,bool RRW){
 	return;
 }
 // Start Len Constructor
-memoryMappedDevice::memoryMappedDevice(uint64_t start_address,bool R_RW ,uint64_t lenght){
+memoryMappedDevice::memoryMappedDevice(uint64_t start_address,bool RRW ,uint64_t length){
+	MEMORY.resize(length,0);
+	R_RW.resize(length,RRW);
+	base_address = start_address;
+	end_address = base_address+length;
 	return;	
 }
 
@@ -127,12 +131,12 @@ bool memoryMappedDevice::set_R_RW(uint64_t start_address,uint64_t end_address){
 	return true;
 }
 
-bool memoryMappedDevice::set_R_RW_L(uint64_t start_address,uint64_t lenght){
+bool memoryMappedDevice::set_R_RW_L(uint64_t start_address,uint64_t length){
 	return true;
 }
 std::pair<bool,std::vector <uint32_t>> memoryMappedDevice::get_line(uint64_t address,uint64_t line_width){
 	std::pair<bool,std::vector <uint32_t>> a;
-	std::vector <uint32_t> Tvect = std::vector <uint32_t>(1,1);
+	std::vector<uint32_t> Tvect = std::vector<uint32_t>(MEMORY.begin()+address,MEMORY.begin()+address+line_width);
 	a = std::make_pair(true,Tvect);
 	return a;
 }

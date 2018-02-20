@@ -1,6 +1,15 @@
 #include "State/State.hpp"
 #include <iostream>
 
+
+int test_Hart(){
+	return 0;
+}
+
+int test_memory(){
+	return 0;
+}
+
 int main(){
 	riscv* a = new riscv;
 	(*a).addHART();

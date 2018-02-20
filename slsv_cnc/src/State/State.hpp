@@ -13,20 +13,20 @@ class memoryMappedDevice;
 class riscv{
 // A RISCV Architectural Core
 public:
-riscv();
-~riscv();
+	riscv();
+	~riscv();
 
-std::vector <risc_v_HART> HART_Vec;
-std::vector <memoryMappedDevice> Memory;
-std::vector <nonHARTStateVariables> NHSV;
+	std::vector <risc_v_HART> HART_Vec;
+	std::vector <memoryMappedDevice> Memory;
+	std::vector <nonHARTStateVariables> NHSV;
 
-bool addHART();		//OverLoad
-bool addMemory();	//OverLoad
-bool addNHSV();		//OverLoad
-bool memoryChainValid();
-bool NHSVChainValid();
-std::pair<std::pair<uint64_t,uint64_t>,std::vector<uint_fast32_t *>> MemoryMap; //Pair::((Pair::Start,End),Pointer);
-std::pair<std::pair<uint32_t,uint32_t>,std::vector<uint_fast32_t *>> NHSVMap; //Pair::((Pair::Start,End),Pointer);
+	bool addHART();		//OverLoad
+	bool addMemory();	//OverLoad
+	bool addNHSV();		//OverLoad
+	bool memoryChainValid();
+	bool NHSVChainValid();
+	std::pair<std::pair<uint64_t,uint64_t>,std::vector<uint_fast32_t *>> MemoryMap; //Pair::((Pair::Start,End),Pointer);
+	std::pair<std::pair<uint32_t,uint32_t>,std::vector<uint_fast32_t *>> NHSVMap; //Pair::((Pair::Start,End),Pointer);
 };
 
 class risc_v_HART{
@@ -38,7 +38,6 @@ public:
 	std::vector<uint_fast64_t> GPR = std::vector<uint_fast64_t>(32,0);
 	std::vector<uint_fast64_t> FPR = std::vector<uint_fast64_t>(32,0);
 	std::vector<uint_fast64_t> CSR = std::vector<uint_fast64_t>(4096,0);
-private:
 	uint32_t hart_id;
 };
 
@@ -51,7 +50,6 @@ public:
 	bool set_line(uint64_t regID,uint64_t line_width,std::vector <uint32_t>);
 	std::pair<bool,std::vector <uint32_t>> get_word(uint64_t regID);
 	bool set_word(uint64_t regID,std::vector <uint32_t>);
-private:
 	uint64_t base_ID = 0;
 	uint64_t end_ID = 0;
 	std::vector<uint_fast64_t> regFile;
@@ -61,19 +59,18 @@ private:
 class memoryMappedDevice{
 public:
 	memoryMappedDevice(); //  Test constructor 
-	memoryMappedDevice(uint64_t start_address,uint64_t end_address,bool R_RW = 0);
-	memoryMappedDevice(uint64_t start_address,bool R_RW ,uint64_t lenght);
+	memoryMappedDevice(uint64_t start_address,uint64_t end_address,bool RRW = 0);
+	memoryMappedDevice(uint64_t start_address,bool RRW ,uint64_t length);
 	~memoryMappedDevice();
 	bool set_R_RW(uint64_t start_address,uint64_t end_address);
-	bool set_R_RW_L(uint64_t start_address,uint64_t lenght);
+	bool set_R_RW_L(uint64_t start_address,uint64_t length);
 	std::pair<bool,std::vector <uint32_t>> get_line(uint64_t address,uint64_t line_width);
 	bool set_line(uint64_t address,uint64_t line_width,std::vector <uint32_t>);
 	std::pair<bool,std::vector <uint32_t>> get_word(uint64_t address);
 	bool set_word(uint64_t address,std::vector <uint32_t>);
-private:
 	uint32_t position;
 	uint64_t base_address = 0;
-	uint64_t end_Address = 0;
+	uint64_t end_address = 0;
 	std::vector<uint_fast32_t> MEMORY;
 	std::vector<bool> R_RW;
 };

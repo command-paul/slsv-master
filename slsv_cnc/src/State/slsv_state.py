@@ -839,6 +839,10 @@ class risc_v_HART(_object):
     __swig_getmethods__["CSR"] = _slsv_state.risc_v_HART_CSR_get
     if _newclass:
         CSR = _swig_property(_slsv_state.risc_v_HART_CSR_get, _slsv_state.risc_v_HART_CSR_set)
+    __swig_setmethods__["hart_id"] = _slsv_state.risc_v_HART_hart_id_set
+    __swig_getmethods__["hart_id"] = _slsv_state.risc_v_HART_hart_id_get
+    if _newclass:
+        hart_id = _swig_property(_slsv_state.risc_v_HART_hart_id_get, _slsv_state.risc_v_HART_hart_id_set)
 risc_v_HART_swigregister = _slsv_state.risc_v_HART_swigregister
 risc_v_HART_swigregister(risc_v_HART)
 
@@ -866,6 +870,22 @@ class nonHARTStateVariables(_object):
 
     def set_word(self, regID, arg3):
         return _slsv_state.nonHARTStateVariables_set_word(self, regID, arg3)
+    __swig_setmethods__["base_ID"] = _slsv_state.nonHARTStateVariables_base_ID_set
+    __swig_getmethods__["base_ID"] = _slsv_state.nonHARTStateVariables_base_ID_get
+    if _newclass:
+        base_ID = _swig_property(_slsv_state.nonHARTStateVariables_base_ID_get, _slsv_state.nonHARTStateVariables_base_ID_set)
+    __swig_setmethods__["end_ID"] = _slsv_state.nonHARTStateVariables_end_ID_set
+    __swig_getmethods__["end_ID"] = _slsv_state.nonHARTStateVariables_end_ID_get
+    if _newclass:
+        end_ID = _swig_property(_slsv_state.nonHARTStateVariables_end_ID_get, _slsv_state.nonHARTStateVariables_end_ID_set)
+    __swig_setmethods__["regFile"] = _slsv_state.nonHARTStateVariables_regFile_set
+    __swig_getmethods__["regFile"] = _slsv_state.nonHARTStateVariables_regFile_get
+    if _newclass:
+        regFile = _swig_property(_slsv_state.nonHARTStateVariables_regFile_get, _slsv_state.nonHARTStateVariables_regFile_set)
+    __swig_setmethods__["R_RW"] = _slsv_state.nonHARTStateVariables_R_RW_set
+    __swig_getmethods__["R_RW"] = _slsv_state.nonHARTStateVariables_R_RW_get
+    if _newclass:
+        R_RW = _swig_property(_slsv_state.nonHARTStateVariables_R_RW_get, _slsv_state.nonHARTStateVariables_R_RW_set)
 
     def __init__(self):
         this = _slsv_state.new_nonHARTStateVariables()
@@ -897,8 +917,8 @@ class memoryMappedDevice(_object):
     def set_R_RW(self, start_address, end_address):
         return _slsv_state.memoryMappedDevice_set_R_RW(self, start_address, end_address)
 
-    def set_R_RW_L(self, start_address, lenght):
-        return _slsv_state.memoryMappedDevice_set_R_RW_L(self, start_address, lenght)
+    def set_R_RW_L(self, start_address, length):
+        return _slsv_state.memoryMappedDevice_set_R_RW_L(self, start_address, length)
 
     def get_line(self, address, line_width):
         return _slsv_state.memoryMappedDevice_get_line(self, address, line_width)
@@ -911,6 +931,26 @@ class memoryMappedDevice(_object):
 
     def set_word(self, address, arg3):
         return _slsv_state.memoryMappedDevice_set_word(self, address, arg3)
+    __swig_setmethods__["position"] = _slsv_state.memoryMappedDevice_position_set
+    __swig_getmethods__["position"] = _slsv_state.memoryMappedDevice_position_get
+    if _newclass:
+        position = _swig_property(_slsv_state.memoryMappedDevice_position_get, _slsv_state.memoryMappedDevice_position_set)
+    __swig_setmethods__["base_address"] = _slsv_state.memoryMappedDevice_base_address_set
+    __swig_getmethods__["base_address"] = _slsv_state.memoryMappedDevice_base_address_get
+    if _newclass:
+        base_address = _swig_property(_slsv_state.memoryMappedDevice_base_address_get, _slsv_state.memoryMappedDevice_base_address_set)
+    __swig_setmethods__["end_address"] = _slsv_state.memoryMappedDevice_end_address_set
+    __swig_getmethods__["end_address"] = _slsv_state.memoryMappedDevice_end_address_get
+    if _newclass:
+        end_address = _swig_property(_slsv_state.memoryMappedDevice_end_address_get, _slsv_state.memoryMappedDevice_end_address_set)
+    __swig_setmethods__["MEMORY"] = _slsv_state.memoryMappedDevice_MEMORY_set
+    __swig_getmethods__["MEMORY"] = _slsv_state.memoryMappedDevice_MEMORY_get
+    if _newclass:
+        MEMORY = _swig_property(_slsv_state.memoryMappedDevice_MEMORY_get, _slsv_state.memoryMappedDevice_MEMORY_set)
+    __swig_setmethods__["R_RW"] = _slsv_state.memoryMappedDevice_R_RW_set
+    __swig_getmethods__["R_RW"] = _slsv_state.memoryMappedDevice_R_RW_get
+    if _newclass:
+        R_RW = _swig_property(_slsv_state.memoryMappedDevice_R_RW_get, _slsv_state.memoryMappedDevice_R_RW_set)
 memoryMappedDevice_swigregister = _slsv_state.memoryMappedDevice_swigregister
 memoryMappedDevice_swigregister(memoryMappedDevice)
 
