@@ -1,13 +1,22 @@
 #include "State/State.hpp"
 #include <iostream>
 
+// Append all of these to a Vector of test functions.
 
-int test_Hart(){
-	return 0;
+bool test_spike_interface(){
+	return true;
 }
 
-int test_memory(){
-	return 0;
+bool test_Hart(){
+	return true;
+}
+
+bool test_memory(){
+	return true;
+}
+
+bool test_NHSV(){
+	return true;
 }
 
 int main(){
