@@ -1,4 +1,5 @@
 import slsv_state
+import slsv_interface
 
 core = slsv_state.riscv()
 core.addHART()

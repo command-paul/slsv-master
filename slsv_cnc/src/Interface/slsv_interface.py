@@ -154,6 +154,85 @@ class SwigPyIterator(_object):
 SwigPyIterator_swigregister = _slsv_interface.SwigPyIterator_swigregister
 SwigPyIterator_swigregister(SwigPyIterator)
 
+class Interface(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Interface, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Interface, name)
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        this = _slsv_interface.new_Interface()
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_destroy__ = _slsv_interface.delete_Interface
+    __del__ = lambda self: None
+Interface_swigregister = _slsv_interface.Interface_swigregister
+Interface_swigregister(Interface)
+
+class V0(Interface):
+    __swig_setmethods__ = {}
+    for _s in [Interface]:
+        __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, V0, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Interface]:
+        __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
+    __getattr__ = lambda self, name: _swig_getattr(self, V0, name)
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        this = _slsv_interface.new_V0()
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_destroy__ = _slsv_interface.delete_V0
+    __del__ = lambda self: None
+
+    def Initialise(self):
+        return _slsv_interface.V0_Initialise(self)
+
+    def Synchronise(self):
+        return _slsv_interface.V0_Synchronise(self)
+
+    def Single_Step(self):
+        return _slsv_interface.V0_Single_Step(self)
+
+    def GetVariable(self):
+        return _slsv_interface.V0_GetVariable(self)
+
+    def SetVariable(self):
+        return _slsv_interface.V0_SetVariable(self)
+
+    def GetMemory(self):
+        return _slsv_interface.V0_GetMemory(self)
+
+    def SetMemory(self):
+        return _slsv_interface.V0_SetMemory(self)
+
+    def DumpMemory(self):
+        return _slsv_interface.V0_DumpMemory(self)
+
+    def LoadBinary(self, address):
+        return _slsv_interface.V0_LoadBinary(self, address)
+
+    def Checkpoint(self, *args):
+        return _slsv_interface.V0_Checkpoint(self, *args)
+
+    def Restore(self, File):
+        return _slsv_interface.V0_Restore(self, File)
+
+    def set_ocd_port(self, port):
+        return _slsv_interface.V0_set_ocd_port(self, port)
+
+    def set_ocd_ip(self, ip):
+        return _slsv_interface.V0_set_ocd_ip(self, ip)
+V0_swigregister = _slsv_interface.V0_swigregister
+V0_swigregister(V0)
+
 # This file is compatible with both classic and new-style classes.
 
 

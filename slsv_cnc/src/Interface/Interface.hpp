@@ -2,6 +2,7 @@
 #include <vector>
 #include <cstdint>
 
+#pragma once
 // This is the Interface Header file for the SLSV CNC Server
 
 /*
