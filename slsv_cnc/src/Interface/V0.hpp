@@ -1,5 +1,6 @@
 #include "Interface.hpp"
 #include "../State/State.hpp"
+#include "./Telnet/Telnet.hpp"
 
 class V0 : private Interface{
 public:
