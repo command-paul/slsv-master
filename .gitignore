@@ -10,3 +10,4 @@ compile_commands.json
 CTestTestfile.cmake
 *.a
 build
+slsv_cnc/src/Interface/Telnet/telnetpp
