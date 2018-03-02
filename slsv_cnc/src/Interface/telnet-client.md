@@ -1,70 +1,58 @@
-// This provides a telnet interface to the openOcd Debug module
-// Adapted from \/ Sean Middleditch`s libtelnet library  
-// @ https://github.com/seanmiddleditch/libtelnet
+/*
+ * Sean Middleditch
+ * sean@sourcemud.org
+ *
+ * The author or authors of this code dedicate any and all copyright interest
+ * in this code to the public domain. We make this dedication for the benefit
+ * of the public at large and to the detriment of our heirs and successors. We
+ * intend this dedication to be an overt act of relinquishment in perpetuity of
+ * all present and future rights to this code under copyright law. 
+ */
 
-#include "libtelnet.hpp"
-#include <iostream>
+#if !defined(_POSIX_SOURCE)
+#	define _POSIX_SOURCE
+#endif
+#if !defined(_BSD_SOURCE)
+#	define _BSD_SOURCE
+#endif
 
-void wrap_event_handler(TelnetOCD *a,telnet_t *telnet, telnet_event_t *ev,void *user_data){
-	(*a)._event_handler(telnet,ev,user_data);
-}
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <poll.h>
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <termios.h>
+#include <unistd.h>
 
-// Wrapper Functions to the TelnetOCD class
-TelnetOCD::TelnetOCD(){
+#ifdef HAVE_ZLIB
+#include "zlib.h"
+#endif
 
-	return;
-}
+#include "../libtelnet.h"
 
-TelnetOCD::~TelnetOCD(){
-	_cleanup();
-	telnet_free(telnet);
-	close(sock);
-	return;
-}
+static struct termios orig_tios;
+static telnet_t *telnet;
+static int do_echo;
 
-bool TelnetOCD::set_ip_port(std::string ip, int port){
-	return true;
-}
+static const telnet_telopt_t telopts[] = {
+	{ TELNET_TELOPT_ECHO,		TELNET_WONT, TELNET_DO   },
+	{ TELNET_TELOPT_TTYPE,		TELNET_WILL, TELNET_DONT },
+	{ TELNET_TELOPT_COMPRESS2,	TELNET_WONT, TELNET_DO   },
+	{ TELNET_TELOPT_MSSP,		TELNET_WONT, TELNET_DO   },
+	{ -1, 0, 0 }
+};
 
-
-bool TelnetOCD::is_alive(){
-	return true;
-}
-
-bool TelnetOCD::step(int n){
-	std::string step_str = "step\n";
-	send_message(step_str.c_str());
-	return true;
-}
-
-
-
-int TelnetOCD::send_message(const char* message){
-//	poll(pfd, 2, -1) != -1
-//	/* read from stdin */
-//	pfd[0].revents & POLLIN // some condition that stdin has something
-//	rs = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0 // essentially fill buffer srom stdin
-//	_input(buffer, rs); // handle the terminal usaer input
-//
-	return 0;
-}
-
-char* TelnetOCD::get_response(int bytes){
-// is this comment correct  ? :: /* read from client */
-	//pfd[1].revents & POLLIN
-	//rs = recv(sock, buffer, sizeof(buffer), 0)) > 0
-	//telnet_recv(telnet, buffer, rs);		
-	///* clean up */
-	return buffer;
-}
-
-
-
-void TelnetOCD::_cleanup(void) {
+static void _cleanup(void) {
 	tcsetattr(STDOUT_FILENO, TCSADRAIN, &orig_tios);
 }
 
-void TelnetOCD::_input(char *buffer, int size) {
+static void _input(char *buffer, int size) {
 	static char crlf[] = { '\r', '\n' };
 	int i;
 
@@ -86,7 +74,7 @@ void TelnetOCD::_input(char *buffer, int size) {
 	fflush(stdout);
 }
 
-void TelnetOCD::_send(int sock, const char *buffer, size_t size) {
+static void _send(int sock, const char *buffer, size_t size) {
 	int rs;
 
 	/* send data */
@@ -105,7 +93,7 @@ void TelnetOCD::_send(int sock, const char *buffer, size_t size) {
 	}
 }
 
-void TelnetOCD::_event_handler(telnet_t *telnet, telnet_event_t *ev,
+static void _event_handler(telnet_t *telnet, telnet_event_t *ev,
 		void *user_data) {
 	int sock = *(int*)user_data;
 
@@ -158,13 +146,28 @@ void TelnetOCD::_event_handler(telnet_t *telnet, telnet_event_t *ev,
 	}
 }
 
-bool TelnetOCD::Tconnect(){
+int main(int argc, char **argv) {
+	char buffer[512];
+	int rs;
+	int sock;
+	struct sockaddr_in addr;
+	struct pollfd pfd[2];
+	struct addrinfo *ai;
+	struct addrinfo hints;
+	struct termios tios;
+
+	/* check usage */
+	if (argc != 3) {
+		fprintf(stderr, "Usage:\n ./telnet-client <host> <port>\n");
+		return 1;
+	}
+
+	/* look up server host */
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
-	// PLZZZ FIXME !!!!! the line below is absolute crap.
-	if ((rs = getaddrinfo(HostName.c_str(), std::to_string(PortNumber).c_str(), &hints, &ai)) != 0) {
-		fprintf(stderr, "getaddrinfo() failed for %s: %s\n", HostName.c_str(),
+	if ((rs = getaddrinfo(argv[1], argv[2], &hints, &ai)) != 0) {
+		fprintf(stderr, "getaddrinfo() failed for %s: %s\n", argv[1],
 				gai_strerror(rs));
 		return 1;
 	}
@@ -196,8 +199,7 @@ bool TelnetOCD::Tconnect(){
 	 * register atexit handler to restore terminal settings
 	 */
 	tcgetattr(STDOUT_FILENO, &orig_tios);
-	//void (*fptr)() = (void(*))_cleanup;
-	
+	atexit(_cleanup);
 	tios = orig_tios;
 	cfmakeraw(&tios);
 	tcsetattr(STDOUT_FILENO, TCSADRAIN, &tios);
@@ -206,10 +208,7 @@ bool TelnetOCD::Tconnect(){
 	do_echo = 1;
 
 	/* initialize telnet box */
-	//wrap_event_handler
-	//void point = this._event_handler;
-	telnet = telnet_init(telopts,wrap_event_handler, 0, &sock,this);
-	//telnet = telnet_init(telopts, _event_handler, 0, &sock);
+	telnet = telnet_init(telopts, _event_handler, 0, &sock);
 
 	/* initialize poll descriptors */
 	memset(pfd, 0, sizeof(pfd));
@@ -218,17 +217,38 @@ bool TelnetOCD::Tconnect(){
 	pfd[1].fd = sock;
 	pfd[1].events = POLLIN;
 
-	return true;
-}
+	/* loop while both connections are open */
+	while (poll(pfd, 2, -1) != -1) {
+		/* read from stdin */
+		if (pfd[0].revents & POLLIN) {
+			if ((rs = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0) {
+				_input(buffer, rs);
+			} else if (rs == 0) {
+				break;
+			} else {
+				fprintf(stderr, "recv(server) failed: %s\n",
+						strerror(errno));
+				exit(1);
+			}
+		}
 
-
-
-int main(){
-	TelnetOCD a;
-	a.set_ip_port("localhost",10001);
-	a.Tconnect();
-	if(a.is_alive()){
-		a.step(1);
+		/* read from client */
+		if (pfd[1].revents & POLLIN) {
+			if ((rs = recv(sock, buffer, sizeof(buffer), 0)) > 0) {
+				telnet_recv(telnet, buffer, rs);
+			} else if (rs == 0) {
+				break;
+			} else {
+				fprintf(stderr, "recv(client) failed: %s\n",
+						strerror(errno));
+				exit(1);
+			}
+		}
 	}
+
+	/* clean up */
+	telnet_free(telnet);
+	close(sock);
+
 	return 0;
 }
