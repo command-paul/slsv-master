@@ -4,6 +4,7 @@
 
 #include "libtelnet.hpp"
 #include <iostream>
+#include <vector>
 
 void wrap_event_handler(TelnetOCD *a,telnet_t *telnet, telnet_event_t *ev,void *user_data){
 	(*a)._event_handler(telnet,ev,user_data);
@@ -23,6 +24,8 @@ TelnetOCD::~TelnetOCD(){
 }
 
 bool TelnetOCD::set_ip_port(std::string ip, int port){
+	HostName = ip;
+	PortNumber = port; 
 	return true;
 }
 
@@ -31,9 +34,32 @@ bool TelnetOCD::is_alive(){
 	return true;
 }
 
-bool TelnetOCD::step(int n){
-	std::string step_str = "step\n";
-	send_message(step_str.c_str());
+bool TelnetOCD::step(int i, std::vector<std::string> commandSet){
+	char str[512];
+	strcpy(str,commandSet[i].c_str());
+		/* read from stdin */
+	//if(poll(pfd, 2, -1) != -1){
+			rs = strlen(str);
+			_input(str, rs);
+	//}
+	while (poll(pfd, 2, 20) != -1) {
+		/* read from client */
+		if (pfd[1].revents & POLLIN) {
+			rs = recv(sock, buffer, sizeof(buffer), 0);
+			if (rs > 0) {
+				telnet_recv(telnet, buffer, rs);
+			} else if (rs == 0) {
+				break;
+			} else {
+				fprintf(stderr, "recv(client) failed: %s\n",
+						strerror(errno));
+				exit(1);
+			}
+		} 
+		else{
+			break;
+		} 
+	}
 	return true;
 }
 
@@ -43,18 +69,18 @@ int TelnetOCD::send_message(const char* message){
 //	poll(pfd, 2, -1) != -1
 //	/* read from stdin */
 //	pfd[0].revents & POLLIN // some condition that stdin has something
-//	rs = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0 // essentially fill buffer srom stdin
-//	_input(buffer, rs); // handle the terminal usaer input
+	rs = strlen(message-1);
+	strncpy(buffer,message,rs); // essenta.step(1);ially fill buffer srom stdin
+	_input(buffer, rs); // handle the terminal usaer input
 //
 	return 0;
 }
 
 char* TelnetOCD::get_response(int bytes){
-// is this comment correct  ? :: /* read from client */
-	//pfd[1].revents & POLLIN
-	//rs = recv(sock, buffer, sizeof(buffer), 0)) > 0
-	//telnet_recv(telnet, buffer, rs);		
-	///* clean up */
+	// is this comment correct  ? :: /* read from client */
+	if(pfd[1].revents & POLLIN){
+		if((rs = recv(sock, buffer, sizeof(buffer), 0)) > 0)telnet_recv(telnet, buffer, rs);			
+	}
 	return buffer;
 }
 
@@ -130,7 +156,7 @@ void TelnetOCD::_event_handler(telnet_t *telnet, telnet_event_t *ev,
 	/* notification of disabling remote feature (or receipt) */
 	case TELNET_EV_WONT:
 		if (ev->neg.telopt == TELNET_TELOPT_ECHO)
-			do_echo = 1;
+			do_echo = 0;
 		break;
 	/* request to enable local feature (or receipt) */
 	case TELNET_EV_DO:
@@ -174,7 +200,10 @@ bool TelnetOCD::Tconnect(){
 		fprintf(stderr, "socket() failed: %s\n", strerror(errno));
 		return 1;
 	}
-
+	struct timeval tv;
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 	/* bind server socket */
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
@@ -213,10 +242,11 @@ bool TelnetOCD::Tconnect(){
 
 	/* initialize poll descriptors */
 	memset(pfd, 0, sizeof(pfd));
-	pfd[0].fd = STDIN_FILENO;
+	pfd[0].fd = 0; STDIN_FILENO;
 	pfd[0].events = POLLIN;
 	pfd[1].fd = sock;
 	pfd[1].events = POLLIN;
+
 
 	return true;
 }
@@ -225,10 +255,23 @@ bool TelnetOCD::Tconnect(){
 
 int main(){
 	TelnetOCD a;
-	a.set_ip_port("localhost",10001);
+	a.set_ip_port("localhost",4444);
 	a.Tconnect();
-	if(a.is_alive()){
-		a.step(1);
-	}
+	std::vector<std::string> Commands;
+	Commands.push_back("slsv halt\n");
+	Commands.push_back("slsv resume\n");
+	Commands.push_back("slsv step\n");
+	Commands.push_back("version\n");
+	Commands.push_back("slsv\n");
+	a.step(0,Commands);
+	std::cout << "1" << std::endl;
+	a.step(1,Commands);
+	std::cout << "2" << std::endl;
+	a.step(2,Commands);
+	std::cout << "3" << std::endl;
+	a.step(3,Commands);
+	std::cout << "4" << std::endl;
+	a.step(4,Commands);
+	std::cout << "5" << std::endl;
 	return 0;
 }

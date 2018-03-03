@@ -4,14 +4,15 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 FIND_PACKAGE(SWIG REQUIRED)
 include(UseSWIG)
-INCLUDE_DIRECTORIES(/usr/include/python3.5)
+INCLUDE_DIRECTORIES(/usr/include/python3.4)
 INCLUDE_DIRECTORIES(.src/State)
 FIND_PACKAGE(PythonLibs)
 SET(CMAKE_SWIG_FLAGS "-DSWIGWORDSIZE64")
 
 SET_SOURCE_FILES_PROPERTIES(./State.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(./State.i PROPERTIES SWIG_FLAGS "-includeall")
-SWIG_ADD_MODULE(slsv_state python ./State.i ./State.cpp)
+SWIG_ADD_LIBRARY(slsv_state LANGUAGE python SOURCES ./State.i ./State.cpp)
+#SWIG_ADD_MODULE(slsv_state python ./State.i ./State.cpp)
 SWIG_LINK_LIBRARIES(slsv_state ${PYTHON_LIBRARIES})
 
 #execute_process(COMMAND python3 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)

@@ -7,7 +7,7 @@
 #include <cstddef>
 
 #include <iostream>
-
+#include <vector>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -671,7 +671,16 @@ public:
 	TelnetOCD();
 	~TelnetOCD();
 	bool is_alive();
-	bool step(int n);
+	//bool step(int n);
+	bool step(int i ,std::vector<std::string> commandSet);
+	bool resume();
+	bool halt();
+	// The below commands will return spaces of lenght l and will return the remaining spaces with null 
+	// it is up to the calling function to make sure that the call has been made correctly
+	uint64_t* getMemory(uint64_t address ,uint64_t length,int width);
+	bool setMemory(uint64_t address,uint64_t length,uint64_t* source,int width);
+	uint64_t* getAbstReg(uint32_t hartid,uint32_t regno,uint32_t length,int width); 
+	bool setAbstReg(uint32_t hartid,uint32_t regno,uint32_t length,uint64_t* source,int width); 
 	bool set_ip_port(std::string ip,int port);
 	bool Tconnect();
 	void _event_handler(telnet_t *telnet, telnet_event_t *ev,void *user_data) ; // This is a hack to get around pointer to member stuff;

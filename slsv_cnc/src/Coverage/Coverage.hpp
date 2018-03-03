@@ -1,5 +1,6 @@
 #include <vector>
 #include <cstdint>
+#include <string>
 
 //This is a base class of wrapper functions this defines tha basic interface behind which the different coverafe schemes operate.
 class Coverage{
