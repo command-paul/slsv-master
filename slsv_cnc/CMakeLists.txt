@@ -6,6 +6,7 @@ add_subdirectory(src/State)
 add_subdirectory(src/Interface)
 add_subdirectory(src/Interface/Telnet)
 add_subdirectory(src/Coverage)
+add_subdirectory(src)
 
 SET (CMAKE_BINARY_DIR "./")
 SET (CMAKE_BINARY_DIR "./")

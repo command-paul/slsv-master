@@ -1,3 +1,4 @@
+#pragma once
 #include "Interface.hpp"
 #include "../State/State.hpp"
 #include "./Telnet/libtelnet.hpp"
