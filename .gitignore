@@ -16,3 +16,5 @@ slsv_cnc/src/Interface/Telnet/telnetpp
 slsv_cnc/bin/
 slsv_cnc/lib
 test_vectors/Tests/
+test_vectors/pkTests/
+test_vectors/AAPG/result/
