@@ -2,6 +2,24 @@
 // Adapted from \/ Sean Middleditch`s libtelnet library  
 // @ https://github.com/seanmiddleditch/libtelnet
 
+
+// I am dissapointed by the fact that I`m having to use such an infefiicennt approach to transfer data
+// apparently i have two restrictions on me being 
+// Telnet server only acting on printable chars ? - from a quick skimmy
+// Telnet server having a max line lenght(MaxLen) which i can change
+
+// So how i see this given the small time frame i have to deliver poc in
+//	4b	// "SLSV" - application identifier
+//	1b	// " " delimiter
+//	1b	// "<ANY_PRINTABLECHAR>" operation select using an enum
+//	1b	// " " delimiter
+//	MaxLen-8b	// "N*<hex>" This is the argument passed to command formatted to the constraints im presented.
+//	1b	// NewLine
+
+// and apparently the MaxLen is magically 10*256 - looks like someone else is also trying to hack this for more utility old version was just 256 XD
+// and the openocd telnet server sadly echoes everything you putinto it :P
+// i think I should really just write a new server option for openocd after Im done with this - work for future inters !! :] 
+
 #include "libtelnet.hpp"
 #include <iostream>
 #include <vector>
@@ -261,7 +279,7 @@ int main(){
 	Commands.push_back("slsv halt\n");
 	Commands.push_back("slsv resume\n");
 	Commands.push_back("slsv halt\n");
-	Commands.push_back("slsv step\n");
+	Commands.push_back("slsv A A0A0A0A0 BBFFBBFF\n");
 	Commands.push_back("slsv\n");
 	a.step(0,Commands);
 	std::cout << "1" << std::endl;
