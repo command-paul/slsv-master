@@ -2,9 +2,9 @@
 %{
 /* Header files or functon declaritions here */
 	#include "DeviceInstance.hpp"
-	#import "./Interface/Interface.hpp"
-	#import "./Coverage/Coverage.hpp"
-	#import "./State/State.cpp"
+	#include "./Interface/Interface.hpp"
+	#include "./Coverage/Coverage.hpp"
+	#include "./State/State.cpp"
 %}
 %define SWIGWORDSIZE64
 %enddef

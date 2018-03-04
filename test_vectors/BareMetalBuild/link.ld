@@ -1,18 +1,26 @@
+
 OUTPUT_ARCH( "riscv" )
-ENTRY(_start)
-/*
-This is luap egoreg being an inefficient imbecil and going solo on making the bare metal linker script this
-*/
+
+/*----------------------------------------------------------------------*/
+/* Sections                                                             */
+/*----------------------------------------------------------------------*/
+
 SECTIONS
 {
+
+  /* text: test code section */
   . = 0x80000000;
-  .text.init : { *(.text.init) }
-  . = ALIGN(0x1000);
-  .tohost : { *(.tohost) }
-  . = ALIGN(0x1000);
+
   .text : { *(.text) }
-  . = ALIGN(0x1000);
+
+
+  /* data segment */
+  . = 0x80010000;
   .data : { *(.data) }
-  .bss : { *(.bss) }
+
+  .tohost ALIGN(0x100) : { *(.tohost) }
+
+  /* End of uninitalized data segement */
   _end = .;
 }
+

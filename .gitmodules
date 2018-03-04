@@ -1,3 +1,0 @@
-[submodule "slsv_cnc/src/Interface/Telnet/telnetpp"]
-	path = slsv_cnc/src/Interface/Telnet/telnetpp
-	url = https://github.com/KazDragon/telnetpp.git

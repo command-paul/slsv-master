@@ -1458,7 +1458,7 @@ void telnet_begin_compress2(telnet_t *telnet) {
 int telnet_vprintf(telnet_t *telnet, const char *fmt, va_list va) {
 	char buffer[1024];
 	char *output = buffer;
-	int rs, i, l;
+	unsigned int rs, i, l;
 
 	/* format */
 	va_list va2;
@@ -1527,7 +1527,7 @@ int telnet_printf(telnet_t *telnet, const char *fmt, ...) {
 int telnet_raw_vprintf(telnet_t *telnet, const char *fmt, va_list va) {
 	char buffer[1024];
 	char *output = buffer;
-	int rs;
+	unsigned int rs;
 
 	/* format; allocate more space if necessary */
 	va_list va2;

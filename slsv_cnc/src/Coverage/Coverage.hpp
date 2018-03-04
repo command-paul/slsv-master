@@ -7,7 +7,7 @@
 class Coverage{
 public:
 	Coverage();
-	~Coverage();
+	virtual ~Coverage();
 	virtual bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update);
 	virtual std::pair<bool,std::vector<uint64_t>> event();
 	virtual std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();

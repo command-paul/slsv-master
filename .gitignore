@@ -12,3 +12,7 @@ CTestTestfile.cmake
 build
 slsv_cnc/src/Interface/Telnet/telnetpp
 .vscode
+*.so
+slsv_cnc/bin/
+slsv_cnc/lib
+test_vectors/Tests/

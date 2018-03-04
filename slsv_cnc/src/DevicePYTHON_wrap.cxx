@@ -3140,9 +3140,9 @@ namespace swig {
 
 /* Header files or functon declaritions here */
 	#include "DeviceInstance.hpp"
-	#import "./Interface/Interface.hpp"
-	#import "./Coverage/Coverage.hpp"
-	#import "./State/State.cpp"
+	#include "./Interface/Interface.hpp"
+	#include "./Coverage/Coverage.hpp"
+	#include "./State/State.cpp"
 
 
 #include <stdint.h>		// Use the C99 official header

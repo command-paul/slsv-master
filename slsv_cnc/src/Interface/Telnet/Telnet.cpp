@@ -242,7 +242,7 @@ bool TelnetOCD::Tconnect(){
 
 	/* initialize poll descriptors */
 	memset(pfd, 0, sizeof(pfd));
-	pfd[0].fd = 0; STDIN_FILENO;
+	pfd[0].fd = 0;// STDIN_FILENO;
 	pfd[0].events = POLLIN;
 	pfd[1].fd = sock;
 	pfd[1].events = POLLIN;
@@ -260,8 +260,8 @@ int main(){
 	std::vector<std::string> Commands;
 	Commands.push_back("slsv halt\n");
 	Commands.push_back("slsv resume\n");
+	Commands.push_back("slsv halt\n");
 	Commands.push_back("slsv step\n");
-	Commands.push_back("version\n");
 	Commands.push_back("slsv\n");
 	a.step(0,Commands);
 	std::cout << "1" << std::endl;
