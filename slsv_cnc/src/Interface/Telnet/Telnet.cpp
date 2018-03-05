@@ -28,6 +28,23 @@ void wrap_event_handler(TelnetOCD *a,telnet_t *telnet, telnet_event_t *ev,void *
 	(*a)._event_handler(telnet,ev,user_data);
 }
 
+static int getPackedHex(uint64_t* vector,uint count,char* hexString,uint width){
+	// witdth is the width in bytes :: 8 for 32b , 16 for 64b
+	//*count = strlen(sexString)/width; // the maximum number of segments of width extractable
+	//vector = malloc(sizeof(uint64_t)*count);  // This seems better off is done by the calling fucntion
+	// the range 32-126 is 94 printable ascii characters , 32 being the space symbol where string parseing will break the string
+	//LOG_ERROR("SLSV string:: %s, width :: %u" ,hexString,width);
+	char temp[32+1]; // assuming the widest word rv128 is 128 bits wide // Plus one to hold the null terminator
+	for(uint i = 0;i<count;i++){
+		// put error catching on the returns of strncpy and sscanf
+		strncpy(temp,(hexString+(i*width)),width);
+		temp[width] = '\0';
+		sscanf(temp,"%lx",vector+i);
+		//LOG_ERROR("SLSV parsed integer:: %lu , string:: %s,string:: %s" ,*(vector+i),temp,(hexString+(count*width)));
+	}
+	return 0;
+}
+
 // Wrapper Functions to the TelnetOCD class
 TelnetOCD::TelnetOCD(){
 
@@ -78,6 +95,8 @@ bool TelnetOCD::step(int i, std::vector<std::string> commandSet){
 			break;
 		} 
 	}
+	// Parsing reply
+	//getPackedHex(uint64_t* vector,uint count,char* hexString,uint width);
 	return true;
 }
 
@@ -268,8 +287,11 @@ bool TelnetOCD::Tconnect(){
 
 	return true;
 }
-
-
+	// 	// put error catching on the returns of strncpy and sscanf
+	// 	strncpy(temp,(hexString+(count*width)),width);
+	// 	temp[width] = '\0';
+	// 	sscanf(temp,"%lux",vector+i);
+	// uint width = (*hex) - 32;
 
 int main(){
 	TelnetOCD a;
@@ -277,19 +299,14 @@ int main(){
 	a.Tconnect();
 	std::vector<std::string> Commands;
 	Commands.push_back("slsv halt\n");
-	Commands.push_back("slsv resume\n");
-	Commands.push_back("slsv halt\n");
-	Commands.push_back("slsv A A0A0A0A0 BBFFBBFF\n");
-	Commands.push_back("slsv\n");
+	Commands.push_back("slsv A 0f0f0f0f0f0f0f0f00f0f0f0f0f0f0f0f\n");
+	Commands.push_back("slsv A 0f0f0f0f0f0f0f0f00f0f0f0f0f0f0f0f\n");
+	Commands.push_back("slsv A 0f0f0f0f0f0f0f0f00f0f0f0f0f0f0f0f\n");
+	Commands.push_back("slsv A 000000000111111111111111100000000\n");
 	a.step(0,Commands);
-	std::cout << "1" << std::endl;
 	a.step(1,Commands);
-	std::cout << "2" << std::endl;
 	a.step(2,Commands);
-	std::cout << "3" << std::endl;
 	a.step(3,Commands);
-	std::cout << "4" << std::endl;
 	a.step(4,Commands);
-	std::cout << "5" << std::endl;
 	return 0;
 }

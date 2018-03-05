@@ -986,6 +986,7 @@ static void _process(telnet_t *telnet, const char *buffer, size_t size) {
 					ev.data.size = i - start;
 					telnet->eh(telnet->cpp_inst,telnet, &ev, telnet->ud);
 				}
+				printf("STRING ::  %s",ev.data.buffer);
 				telnet->state = TELNET_STATE_EOL;
 			}
 			break;
