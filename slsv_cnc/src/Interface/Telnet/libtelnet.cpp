@@ -62,50 +62,54 @@
 	(telnet)->eh((telnet)->cpp_inst,(telnet), &ev, (telnet)->ud);
 
 /* telnet state codes */
-enum telnet_state_t {
-	TELNET_STATE_DATA = 0,
-	TELNET_STATE_EOL,
-	TELNET_STATE_IAC,
-	TELNET_STATE_WILL,
-	TELNET_STATE_WONT,
-	TELNET_STATE_DO,
-	TELNET_STATE_DONT,
-	TELNET_STATE_SB,
-	TELNET_STATE_SB_DATA,
-	TELNET_STATE_SB_DATA_IAC
-};
-typedef enum telnet_state_t telnet_state_t;
+// enum telnet_state_t {
+// 	TELNET_STATE_DATA = 0,
+// 	TELNET_STATE_EOL,
+// 	TELNET_STATE_IAC,
+// 	TELNET_STATE_WILL,
+// 	TELNET_STATE_WONT,
+// 	TELNET_STATE_DO,
+// 	TELNET_STATE_DONT,
+// 	TELNET_STATE_SB,
+// 	TELNET_STATE_SB_DATA,
+// 	TELNET_STATE_SB_DATA_IAC
+// };
+// typedef enum telnet_state_t telnet_state_t;
 
-/* telnet state tracker */
-struct telnet_t {
-	/* user data */
-	void *ud;
-	/* telopt support table */
-	const telnet_telopt_t *telopts;
-	/* event handler */
-	telnet_event_handler_t eh;
-#if defined(HAVE_ZLIB)
-	/* zlib (mccp2) compression */
-	z_stream *z;
-#endif
-	/* RFC1143 option negotiation states */
-	struct telnet_rfc1143_t *q;
-	/* sub-request buffer */
-	char *buffer;
-	/* current size of the buffer */
-	size_t buffer_size;
-	/* current buffer write position (also length of buffer data) */
-	size_t buffer_pos;
-	/* current state */
-	enum telnet_state_t state;
-	/* option flags */
-	unsigned char flags;
-	/* current subnegotiation telopt */
-	unsigned char sb_telopt;
-	/* length of RFC1143 queue */
-	unsigned char q_size;
-	TelnetOCD* cpp_inst;
-};
+// /* telnet state tracker */
+// struct telnet_t {
+// 	/* user data */
+// 	void *ud;
+// 	/* telopt support table */
+// 	const telnet_telopt_t *telopts;
+// 	/* event handler */
+// 	telnet_event_handler_t eh;
+// #if defined(HAVE_ZLIB)
+// 	/* zlib (mccp2) compression */
+// 	z_stream *z;
+// #endif
+// 	/* RFC1143 option negotiation states */
+// 	struct telnet_rfc1143_t *q;
+// 	/* sub-request buffer */
+// 	char *buffer;
+// 	/* current size of the buffer */
+// 	size_t buffer_size;
+// 	/* current buffer write position (also length of buffer data) */
+// 	size_t buffer_pos;
+// 	/* current state */
+// 	enum telnet_state_t state;
+// 	/* option flags */
+// 	unsigned char flags;
+// 	/* current subnegotiation telopt */
+// 	unsigned char sb_telopt;
+// 	/* length of RFC1143 queue */
+// 	unsigned char q_size;
+// 	TelnetOCD* cpp_inst;
+// 	char line_buffer[1024]; // actuallt 10* 256 but baby steps :)
+// 	char lc_buffer[1024];
+// 	uint lcbfr_len;
+// 	uint lbfr_len;
+// };
 
 /* RFC1143 option negotiation state */
 typedef struct telnet_rfc1143_t {
@@ -882,6 +886,9 @@ telnet_t *telnet_init(const telnet_telopt_t *telopts,
 	telnet->telopts = telopts;
 	telnet->eh = eh;
 	telnet->flags = flags;
+	telnet->lbfr_len = 0;
+	telnet->response_len = 0;
+	telnet->lcbfr_len = 0;
 
 	return telnet;
 }
@@ -958,7 +965,27 @@ static telnet_error_t _buffer_byte(telnet_t *telnet,
 	return TELNET_EOK;
 }
 
+
 static void _process(telnet_t *telnet, const char *buffer, size_t size) {
+	for(uint i = 0;i<size;i++){
+		if(isprint(buffer[i])){
+			telnet->line_buffer[telnet->lbfr_len] = buffer[i];
+			telnet->lbfr_len = telnet->lbfr_len + 1;
+		}
+		else if((buffer[i] == '\n') || (buffer[i] == '\r')){
+			telnet->line_buffer[telnet->lbfr_len] = 0;
+			if(telnet->lbfr_len >4){
+				//printf(">>> %d , [%s],{%s}\n",strncmp(((telnet->line_buffer)+2), (telnet->lc_buffer),(telnet->lcbfr_len)-2),((telnet->line_buffer)+2),(telnet->lc_buffer));
+				if(strncmp(((telnet->line_buffer)+2), (telnet->lc_buffer),(telnet->lcbfr_len)-2)){
+					telnet->response_len = (telnet->lbfr_len);
+					strncpy(telnet->response_buffer,telnet->line_buffer,telnet->lbfr_len);
+					telnet->response_buffer[telnet->lbfr_len] = 0;
+					//printf("[%s]",telnet->response_buffer);
+				}
+			}	
+			telnet->lbfr_len = 0;
+		}
+	}
 	telnet_event_t ev;
 	unsigned char byte;
 	size_t i, start;
@@ -986,7 +1013,6 @@ static void _process(telnet_t *telnet, const char *buffer, size_t size) {
 					ev.data.size = i - start;
 					telnet->eh(telnet->cpp_inst,telnet, &ev, telnet->ud);
 				}
-				printf("STRING ::  %s",ev.data.buffer);
 				telnet->state = TELNET_STATE_EOL;
 			}
 			break;
@@ -1221,6 +1247,22 @@ void telnet_recv(telnet_t *telnet, const char *buffer,
 	/* COMPRESS2 is not negotiated, just process */
 	} else
 #endif /* defined(HAVE_ZLIB) */
+		// Some hack pre processing
+		// essentially maintain a line buffer
+		// if is printable add to line buffer 
+		// if newline or cr then spawn a new line and ig if line len is less than 2 // error report kind of stuff ?
+		// detect the prompt and ignore ?
+
+		// for(uint i = 0 ; i < size ;i ++ )
+		// if (isprint(*buf_p)) {	/* printable character */
+		// 	}
+		// else if ((*buf_p == 0xd) || (*buf_p == 0xa)) {	/* CR/LF */
+		// 	int retval;
+		// 	// handle the line completion
+		// 	if (strcmp(t_con->line, "history") == 0){
+
+		// 	}
+		// H4X0R Lyfe :P !
 		_process(telnet, buffer, size);
 }
 

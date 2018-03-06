@@ -43,14 +43,6 @@ extern "C" {
 /* Disable environ macro for Visual C++ 2015. */
 #undef environ
 
-/*! Telnet state tracker object type. */
-typedef struct telnet_t telnet_t;
-
-/*! Telnet event object type. */
-typedef union telnet_event_t telnet_event_t;
-
-/*! Telnet option table element type. */
-typedef struct telnet_telopt_t telnet_telopt_t;
 
 /*! \name Telnet commands */
 /*@{*/
@@ -166,6 +158,71 @@ typedef struct telnet_telopt_t telnet_telopt_t;
 #define TELNET_FLAG_RECEIVE_BINARY (1<<6)
 #define TELNET_PFLAG_DEFLATE (1<<7)
 /*@}*/
+
+
+/*! Telnet state tracker object type. */
+/*! Telnet event object type. */
+typedef union telnet_event_t telnet_event_t;
+
+/*! Telnet option table element type. */
+typedef struct telnet_telopt_t telnet_telopt_t;
+
+typedef struct telnet_t telnet_t;
+
+typedef void (*telnet_event_handler_t)(TelnetOCD* a,telnet_t *telnet,
+		telnet_event_t *event, void *user_data);
+
+enum telnet_state_t {
+	TELNET_STATE_DATA = 0,
+	TELNET_STATE_EOL,
+	TELNET_STATE_IAC,
+	TELNET_STATE_WILL,
+	TELNET_STATE_WONT,
+	TELNET_STATE_DO,
+	TELNET_STATE_DONT,
+	TELNET_STATE_SB,
+	TELNET_STATE_SB_DATA,
+	TELNET_STATE_SB_DATA_IAC
+};
+typedef enum telnet_state_t telnet_state_t;
+
+
+/* telnet state tracker */
+struct telnet_t {
+	/* user data */
+	void *ud;
+	/* telopt support table */
+	const telnet_telopt_t *telopts;
+	/* event handler */
+	telnet_event_handler_t eh;
+#if defined(HAVE_ZLIB)
+	/* zlib (mccp2) compression */
+	z_stream *z;
+#endif
+	/* RFC1143 option negotiation states */
+	struct telnet_rfc1143_t *q;
+	/* sub-request buffer */
+	char *buffer;
+	/* current size of the buffer */
+	size_t buffer_size;
+	/* current buffer write position (also length of buffer data) */
+	size_t buffer_pos;
+	/* current state */
+	enum telnet_state_t state;
+	/* option flags */
+	unsigned char flags;
+	/* current subnegotiation telopt */
+	unsigned char sb_telopt;
+	/* length of RFC1143 queue */
+	unsigned char q_size;
+	TelnetOCD* cpp_inst;
+	char line_buffer[1024]; // actuallt 10* 256 but baby steps :)
+	char lc_buffer[1024];
+	char response_buffer[1024];
+	uint response_len;
+	uint lcbfr_len;
+	uint lbfr_len;
+};
 
 /*! 
  * error codes 
@@ -331,8 +388,6 @@ union telnet_event_t {
  * \param event     Event structure with details about the event
  * \param user_data User-supplied pointer
  */
-typedef void (*telnet_event_handler_t)(TelnetOCD* a,telnet_t *telnet,
-		telnet_event_t *event, void *user_data);
 
 /*! 
  * telopt support table element; use telopt of -1 for end marker 
@@ -670,6 +725,7 @@ class TelnetOCD{
 public:
 	TelnetOCD();
 	~TelnetOCD();
+	telnet_t *telnet;
 	bool is_alive();
 	//bool step(int n);
 	bool step(int i ,std::vector<std::string> commandSet);
@@ -703,7 +759,6 @@ private:
 	struct addrinfo hints;
 	struct termios tios;
     struct termios orig_tios;
-    telnet_t *telnet;
     int do_echo;
 
     const telnet_telopt_t telopts[15] = {

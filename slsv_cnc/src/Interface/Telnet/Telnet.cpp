@@ -83,6 +83,8 @@ bool TelnetOCD::step(int i, std::vector<std::string> commandSet){
 			rs = recv(sock, buffer, sizeof(buffer), 0);
 			if (rs > 0) {
 				telnet_recv(telnet, buffer, rs);
+				buffer[rs] = 0;
+				//std::cout<< buffer << std::endl;
 			} else if (rs == 0) {
 				break;
 			} else {
@@ -95,8 +97,11 @@ bool TelnetOCD::step(int i, std::vector<std::string> commandSet){
 			break;
 		} 
 	}
+	//printf("[%s]",telnet->response_buffer);
 	// Parsing reply
-	//getPackedHex(uint64_t* vector,uint count,char* hexString,uint width);
+	uint64_t results[10];
+	getPackedHex(results,(telnet->response_len)/16,telnet->response_buffer,16);
+	for(uint i = 0 ; i < (telnet->response_len)/16 ; i++)printf("%016lx\r\n" , results[i]);
 	return true;
 }
 
@@ -130,7 +135,9 @@ void TelnetOCD::_cleanup(void) {
 void TelnetOCD::_input(char *buffer, int size) {
 	static char crlf[] = { '\r', '\n' };
 	int i;
-
+	telnet->lcbfr_len = size;
+	strncpy(telnet->lc_buffer , buffer , size);
+	telnet->lc_buffer[size] = 0;
 	for (i = 0; i != size; ++i) {
 		/* if we got a CR or LF, replace with CRLF
 		 * NOTE that usually you'd get a CR in UNIX, but in raw
@@ -175,9 +182,9 @@ void TelnetOCD::_event_handler(telnet_t *telnet, telnet_event_t *ev,
 	switch (ev->type) {
 	/* data received */
 	case TELNET_EV_DATA:
-		if (ev->data.size && fwrite(ev->data.buffer, 1, ev->data.size, stdout) != ev->data.size) {
-              		fprintf(stderr, "ERROR: Could not write complete buffer to stdout");
-		}
+		// if (ev->data.size && fwrite(ev->data.buffer, 1, ev->data.size, stdout) != ev->data.size) {
+        //       		fprintf(stderr, "ERROR: Could not write complete buffer to stdout");
+		// }
 		fflush(stdout);
 		break;
 	/* data must be sent */
