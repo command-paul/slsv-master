@@ -1,0 +1,3 @@
+[submodule "slsv-riscv-openocd"]
+	path = slsv-riscv-openocd
+	url = https://github.com/command-paul/slsv-riscv-openocd.git
