@@ -24,6 +24,10 @@
 #include <iostream>
 #include <vector>
 
+// sleep required ? 
+#include <chrono>
+#include <thread>
+
 void wrap_event_handler(TelnetOCD *a,telnet_t *telnet, telnet_event_t *ev,void *user_data){
 	(*a)._event_handler(telnet,ev,user_data);
 }
@@ -69,9 +73,10 @@ bool TelnetOCD::is_alive(){
 	return true;
 }
 
-bool TelnetOCD::step(int i, std::vector<std::string> commandSet){
+bool TelnetOCD::runCommand(std::string command,char* response){
 	char str[512];
-	strcpy(str,commandSet[i].c_str());
+	strcpy(str,command.c_str());
+	//printf("%s\r\n",command.c_str());
 		/* read from stdin */
 	//if(poll(pfd, 2, -1) != -1){
 			rs = strlen(str);
@@ -97,16 +102,76 @@ bool TelnetOCD::step(int i, std::vector<std::string> commandSet){
 			break;
 		} 
 	}
-	//printf("[%s]",telnet->response_buffer);
+	// printf("[%s]",telnet->response_buffer);
 	// Parsing reply
-	uint64_t results[10];
-	getPackedHex(results,(telnet->response_len)/16,telnet->response_buffer,16);
-	for(uint i = 0 ; i < (telnet->response_len)/16 ; i++)printf("%016lx\r\n" , results[i]);
+	// Wait till some known Response // if not known response that means some error occured or things are taking too long
+	response = telnet->response_buffer;
+
+	//uint64_t results[10];
+	//getPackedHex(results,(telnet->response_len)/16,telnet->response_buffer,16);
+	//for(uint i = 0 ; i < (telnet->response_len)/16 ; i++)printf("%016lx\r\n" , results[i]);
 	return true;
 }
 
+uint64_t* TelnetOCD::getMemory(uint64_t address ,uint64_t length,int width){
+	return NULL;
+}
 
+bool TelnetOCD::setMemory(uint64_t address,uint64_t length,uint64_t* source,int width){
+	
+	return true;
+}
 
+bool TelnetOCD::getAbstReg(uint64_t* result,uint32_t hartid,uint32_t regno,uint32_t length,int width){
+	// add the hart id support in a bit
+	// compose the command message
+	char str[512];
+	strcpy(str,"slsv 4 ");
+	char* position = str + strlen(str);
+	uint l = 0;
+	while(l < length){
+		sprintf(position,"%05x",regno+l); position +=5;	
+		l++;
+	}
+	sprintf(position,"\n"); position +=1;	
+	//printf("%s\r\n",str);
+
+	// send the message
+	rs = strlen(str);
+	_input(str, rs);
+	// get the response
+		while (poll(pfd, 2, 20) != -1) {
+			/* read from client */
+			if (pfd[1].revents & POLLIN) {
+				rs = recv(sock, buffer, sizeof(buffer), 0);
+				if (rs > 0) {
+					telnet_recv(telnet, buffer, rs);
+					buffer[rs] = 0;
+					//std::cout<< buffer << std::endl;
+				} else if (rs == 0) {
+					break;
+				} else {
+					fprintf(stderr, "recv(client) failed: %s\n",
+							strerror(errno));
+					exit(1);
+				}
+			} 
+			else{
+				break;
+			} 
+		}
+		
+	getPackedHex(result,(telnet->response_len)/16,telnet->response_buffer,16);
+	//for(uint i = 0 ; i < (telnet->response_len)/16 ; i++) printf(">>%016lx<<\r\n" , result[i]);
+	return true;
+}
+
+bool TelnetOCD::setAbstReg(uint32_t hartid,uint32_t regno,uint32_t length,uint64_t* source,int width){
+		
+	return true;
+}
+
+	
 int TelnetOCD::send_message(const char* message){
 //	poll(pfd, 2, -1) != -1
 //	/* read from stdin */
@@ -144,12 +209,10 @@ void TelnetOCD::_input(char *buffer, int size) {
 		 * mode we get LF instead (not sure why)
 		 */
 		if (buffer[i] == '\r' || buffer[i] == '\n') {
-			if (do_echo)
-				printf("\r\n");
+			//if (do_echo)printf("\r\n");
 			telnet_send(telnet, crlf, 2);
 		} else {
-			if (do_echo)
-				putchar(buffer[i]);
+			//if (do_echo)putchar(buffer[i]);
 			telnet_send(telnet, buffer + i, 1);
 		}
 	}
@@ -294,6 +357,7 @@ bool TelnetOCD::Tconnect(){
 
 	return true;
 }
+
 	// 	// put error catching on the returns of strncpy and sscanf
 	// 	strncpy(temp,(hexString+(count*width)),width);
 	// 	temp[width] = '\0';
@@ -304,16 +368,40 @@ int main(){
 	TelnetOCD a("localhost","4444",6,32);
 	a.set_ip_port("localhost",4444);
 	a.Tconnect();
-	std::vector<std::string> Commands;
-	Commands.push_back("slsv 0\n");
-	Commands.push_back("slsv 1\n");
-	Commands.push_back("slsv 0\n");
-	Commands.push_back("slsv 0\n");
-	Commands.push_back("slsv 1\n");
-	a.step(0,Commands);
-	a.step(1,Commands);
-	a.step(2,Commands);
-	a.step(3,Commands);
-	a.step(4,Commands);
+	uint64_t results[1024];
+	char* result;
+	while(1){
+		a.getAbstReg(results,0,0x7b0,100,1);
+		//a.getAbstReg(results,0,0x0,10,1);
+		//a.getAbstReg(results,0,0x7b0,10,1);
+		a.runCommand("slsv 2\n",result);
+	}
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	//a.getAbstReg(results,0,0x20,10,1);
+	//a.runCommand("slsv 2\n",result);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	////a.getAbstReg(results,0,0x20,10,1);
+	//a.runCommand("slsv 2\n",result);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	////a.getAbstReg(results,0,0x20,10,1);
+	//a.runCommand("slsv 2\n",result);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	////a.getAbstReg(results,0,0x20,10,1);
+	//a.runCommand("slsv 2\n",result);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	//a.getAbstReg(results,0,0x20,10,1);
+	//printf("%016lx\n\r",results[0]);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	return 0;
 }
+//a.runCommand("slsv 0\n",result);
+//a.runCommand("slsv 1\n",result);
+//a.runCommand("slsv 0\n",result);	
+//Commands.push_back("slsv 3 0000000000000001\n");
+//Commands.push_back("slsv 4 0002000021000220002300024\n");
+//Commands.push_back("slsv 4 0002000021000220002300024\n");
+//Commands.push_back("slsv 0\n");
+//Commands.push_back("slsv 4 0002000021000220002300024\n");
+//Commands.push_back("slsv 4 0002000021000220002300024\n");
+	

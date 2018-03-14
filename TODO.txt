@@ -1,0 +1,19 @@
+Check List : :: 
+Done :: - minimum viable soln for lockstep on GPR/FPR/CSR
+cmd_0_halt
+cmd_1_resume
+cmd_2_stepi
+cmd_3_stepn
+cmd_4_getAreg
+TODO::: 
+cmd_5_setAreg
+cmd_6_getMem
+cmd_7_setMem
+cmd_8_getDmi
+cmd_9_setDmi
+cmd_A_pollDmStatus
+cmd_B_setSLSVversion
+cmd_C_reset
+cmd_D_addBreakpoint
+cmd_E_removeBreakpoint
+cmd_F_shutdown

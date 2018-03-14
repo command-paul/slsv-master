@@ -216,9 +216,9 @@ struct telnet_t {
 	/* length of RFC1143 queue */
 	unsigned char q_size;
 	TelnetOCD* cpp_inst;
-	char line_buffer[1024]; // actuallt 10* 256 but baby steps :)
-	char lc_buffer[1024];
-	char response_buffer[1024];
+	char line_buffer[2560]; // actuallt 10* 256 but baby steps :) // on sender size of max packet before frag
+	char lc_buffer[2560];
+	char response_buffer[2560];
 	uint response_len;
 	uint lcbfr_len;
 	uint lbfr_len;
@@ -735,11 +735,12 @@ public:
 	// it is up to the calling function to make sure that the call has been made correctly
 	uint64_t* getMemory(uint64_t address ,uint64_t length,int width);
 	bool setMemory(uint64_t address,uint64_t length,uint64_t* source,int width);
-	uint64_t* getAbstReg(uint32_t hartid,uint32_t regno,uint32_t length,int width); 
+	bool getAbstReg(uint64_t* result,uint32_t hartid,uint32_t regno,uint32_t length,int width); 
 	bool setAbstReg(uint32_t hartid,uint32_t regno,uint32_t length,uint64_t* source,int width); 
 	bool set_ip_port(std::string ip,int port);
 	bool Tconnect();
 	void _event_handler(telnet_t *telnet, telnet_event_t *ev,void *user_data) ; // This is a hack to get around pointer to member stuff;
+	bool runCommand(std::string command,char* response);
 private:
 	std::string HostName;
 	int PortNumber;
