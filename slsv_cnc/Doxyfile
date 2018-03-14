@@ -1,0 +1,2 @@
+OUTPUT_DIRECTORY       = /PaulGeorgeTemp/repositories/slsv-master/slsv_cnc/../docs/
+INPUT                  = /PaulGeorgeTemp/repositories/slsv-master/slsv_cnc/src/ /PaulGeorgeTemp/repositories/slsv-master/slsv_cnc/src/State /PaulGeorgeTemp/repositories/slsv-master/slsv_cnc/src/Interface /PaulGeorgeTemp/repositories/slsv-master/slsv_cnc/src/Coverage /PaulGeorgeTemp/repositories/slsv-master/slsv_cnc/../docs

@@ -18,3 +18,5 @@ slsv_cnc/lib
 test_vectors/Tests/
 test_vectors/pkTests/
 test_vectors/AAPG/result/
+docs/html
+docs/latex
