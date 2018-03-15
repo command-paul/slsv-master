@@ -225,11 +225,8 @@ class V0(Interface):
     def Restore(self, File):
         return _slsv_interface.V0_Restore(self, File)
 
-    def set_ocd_port(self, port):
-        return _slsv_interface.V0_set_ocd_port(self, port)
-
-    def set_ocd_ip(self, ip):
-        return _slsv_interface.V0_set_ocd_ip(self, ip)
+    def configureV0(self, IP, PORTS, ABITS, WIDTH):
+        return _slsv_interface.V0_configureV0(self, IP, PORTS, ABITS, WIDTH)
 V0_swigregister = _slsv_interface.V0_swigregister
 V0_swigregister(V0)
 

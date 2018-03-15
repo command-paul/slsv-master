@@ -94,7 +94,7 @@ bool V0::Restore(std::string File){
 	return true;
 }
 
-bool V0::configureV0(std::string IP,std::string PORT,uint ABITS, uint WIDTH){
+bool V0::configureV0(std::string IP,std::string PORT,uint32_t ABITS, uint32_t WIDTH){
 	ip = IP;
 	port = PORT;
 	abits = ABITS;
@@ -102,6 +102,13 @@ bool V0::configureV0(std::string IP,std::string PORT,uint ABITS, uint WIDTH){
 	(*Transport).set_ip_port(IP,std::stoi(PORT));
 	return true;
 	}
+
+bool set_ocd_port(uint32_t port){
+	return true;
+}
+bool set_ocd_ip(char* ip){
+	return true;
+}
 
 
 // Test Below

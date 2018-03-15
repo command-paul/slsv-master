@@ -1,6 +1,3 @@
-/* Interface file for State.cpp 
-%include <std_string.i>
-*/
 
 
 %module slsv_interface
@@ -8,6 +5,7 @@
 /* Header files or functon declaritions here */
 	#include "Interface.hpp"
 	#include "V0.hpp"
+	#import "./Telnet/libtelnet.hpp"
 %}
 %define SWIGWORDSIZE64
 %enddef
@@ -15,7 +13,7 @@
 %include "std_vector.i"
 %include "std_pair.i"
 %include "typemaps.i"
-
+%include "std_string.i"
 // %template(Tester1) std::vector <uint32_t>;
 // %template(TestRet) std::pair<bool,std::vector <uint32_t>>;
 // %template(HartVector) std::vector <risc_v_HART> ;
@@ -67,7 +65,8 @@ public:
 	bool Checkpoint(std::string File)  override;
 	bool Checkpoint() override; // to the already defined checkpoint file :  /
 	bool Restore(std::string File)  override;
-	bool set_ocd_port(uint32_t port);
-	bool set_ocd_ip(char* ip);
+	bool configureV0(std::string IP,std::string PORTS,uint32_t ABITS,uint32_t WIDTH);
+//	bool set_ocd_port(uint32_t port);
+	//bool set_ocd_ip(char* ip);
 };
 

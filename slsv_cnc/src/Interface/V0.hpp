@@ -37,12 +37,12 @@ public:
 	// Utility Methods -- Should be defined in derived interface classes
 	bool set_ocd_port(uint32_t port);
 	bool set_ocd_ip(char* ip);
-	bool configureV0(std::string IP,std::string PORTS,uint ABITS, uint WIDTH);
+	bool configureV0(std::string IP,std::string PORTS,uint32_t ABITS, uint32_t WIDTH);
 
 private:
 	std::string ip;
 	std::string port;
-	uint abits;
-	uint width;
+	uint32_t abits;
+	uint32_t width;
 	TelnetOCD* Transport;
 };
