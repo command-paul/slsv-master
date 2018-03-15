@@ -3017,9 +3017,9 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_short swig_types[5]
 #define SWIGTYPE_p_signed_char swig_types[6]
 #define SWIGTYPE_p_std__invalid_argument swig_types[7]
-#define SWIGTYPE_p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t swig_types[8]
-#define SWIGTYPE_p_std__string swig_types[9]
-#define SWIGTYPE_p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t swig_types[10]
+#define SWIGTYPE_p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t swig_types[8]
+#define SWIGTYPE_p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t swig_types[9]
+#define SWIGTYPE_p_std__string swig_types[10]
 #define SWIGTYPE_p_swig__SwigPyIterator swig_types[11]
 #define SWIGTYPE_p_unsigned_char swig_types[12]
 #define SWIGTYPE_p_unsigned_int swig_types[13]
@@ -4637,7 +4637,7 @@ SWIGINTERN PyObject *_wrap_V0_Single_Step(PyObject *SWIGUNUSEDPARM(self), PyObje
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::vector< std::pair< unsigned long,unsigned long >,std::allocator< std::pair< unsigned long,unsigned long > > > > result;
+  SwigValueWrapper< std::pair< std::vector< std::pair< unsigned int,unsigned long >,std::allocator< std::pair< unsigned int,unsigned long > > >,std::vector< std::pair< unsigned long,unsigned long >,std::allocator< std::pair< unsigned long,unsigned long > > > > > result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:V0_Single_Step",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_V0, 0 |  0 );
@@ -4646,7 +4646,7 @@ SWIGINTERN PyObject *_wrap_V0_Single_Step(PyObject *SWIGUNUSEDPARM(self), PyObje
   }
   arg1 = reinterpret_cast< V0 * >(argp1);
   result = (arg1)->Single_Step();
-  resultobj = SWIG_NewPointerObj((new std::vector< std::pair< uint64_t,uint64_t >,std::allocator< std::pair< uint64_t,uint64_t > > >(static_cast< const std::vector< std::pair< uint64_t,uint64_t >,std::allocator< std::pair< uint64_t,uint64_t > > >& >(result))), SWIGTYPE_p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new std::pair< std::vector< std::pair< uint32_t,uint64_t >,std::allocator< std::pair< uint32_t,uint64_t > > >,std::vector< std::pair< uint64_t,uint64_t >,std::allocator< std::pair< uint64_t,uint64_t > > > >(static_cast< const std::pair< std::vector< std::pair< uint32_t,uint64_t >,std::allocator< std::pair< uint32_t,uint64_t > > >,std::vector< std::pair< uint64_t,uint64_t >,std::allocator< std::pair< uint64_t,uint64_t > > > >& >(result))), SWIGTYPE_p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -5066,9 +5066,9 @@ static swig_type_info _swigt__p_long = {"_p_long", "intptr_t *|int_least64_t *|i
 static swig_type_info _swigt__p_short = {"_p_short", "short *|int_least16_t *|int16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_signed_char = {"_p_signed_char", "signed char *|int_least8_t *|int_fast8_t *|int8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t = {"_p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t", "std::pair< std::vector< std::pair< unsigned int,unsigned long >,std::allocator< std::pair< unsigned int,unsigned long > > >,std::vector< std::pair< unsigned long,unsigned long >,std::allocator< std::pair< unsigned long,unsigned long > > > > *|std::pair< std::vector< std::pair< uint32_t,uint64_t >,std::allocator< std::pair< uint32_t,uint64_t > > >,std::vector< std::pair< uint64_t,uint64_t >,std::allocator< std::pair< uint64_t,uint64_t > > > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t = {"_p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t", "std::pair< uint64_t,std::vector< uint32_t,std::allocator< uint32_t > > > *|std::pair< unsigned long,std::vector< unsigned int,std::allocator< unsigned int > > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t = {"_p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t", "std::vector< std::pair< unsigned long,unsigned long >,std::allocator< std::pair< unsigned long,unsigned long > > > *|std::vector< std::pair< uint64_t,uint64_t >,std::allocator< std::pair< uint64_t,uint64_t > > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "uint_least32_t *|uint32_t *|unsigned int *", 0, 0, (void*)0, 0};
@@ -5084,9 +5084,9 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_short,
   &_swigt__p_signed_char,
   &_swigt__p_std__invalid_argument,
+  &_swigt__p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t,
   &_swigt__p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t,
   &_swigt__p_std__string,
-  &_swigt__p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t,
   &_swigt__p_swig__SwigPyIterator,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_int,
@@ -5102,9 +5102,9 @@ static swig_cast_info _swigc__p_long[] = {  {&_swigt__p_long, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_signed_char[] = {  {&_swigt__p_signed_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t[] = {  {&_swigt__p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t[] = {  {&_swigt__p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t[] = {  {&_swigt__p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
@@ -5120,9 +5120,9 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_short,
   _swigc__p_signed_char,
   _swigc__p_std__invalid_argument,
+  _swigc__p_std__pairT_std__vectorT_std__pairT_unsigned_int_unsigned_long_t_std__allocatorT_std__pairT_unsigned_int_unsigned_long_t_t_t_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t_t,
   _swigc__p_std__pairT_unsigned_long_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t_t,
   _swigc__p_std__string,
-  _swigc__p_std__vectorT_std__pairT_unsigned_long_unsigned_long_t_std__allocatorT_std__pairT_unsigned_long_unsigned_long_t_t_t,
   _swigc__p_swig__SwigPyIterator,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_int,

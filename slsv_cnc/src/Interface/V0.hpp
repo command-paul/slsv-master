@@ -16,7 +16,7 @@ public:
 	// Different policy for multi core
 	bool Synchronise()  override;
 	// Update State
-	std::vector<std::pair<uint64_t,uint64_t>> Single_Step()  override;
+	std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> Single_Step()  override;
 	// return a vector of updates 
 	// Access HART & NHSV
 	std::pair<uint64_t,std::vector<uint32_t>> GetVariable()  override;
@@ -37,4 +37,12 @@ public:
 	// Utility Methods -- Should be defined in derived interface classes
 	bool set_ocd_port(uint32_t port);
 	bool set_ocd_ip(char* ip);
+	bool configureV0(std::string IP,std::string PORTS,uint ABITS, uint WIDTH);
+
+private:
+	std::string ip;
+	std::string port;
+	uint abits;
+	uint width;
+	TelnetOCD* Transport;
 };

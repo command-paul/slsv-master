@@ -27,8 +27,8 @@ public:
 	// Different policy for multi core
 	virtual bool Synchronise();
 	// Update State
-	virtual std::vector<std::pair<uint64_t,uint64_t>> Single_Step();
-	// return a vector of updates 
+	virtual std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> Single_Step();
+	// return a vector of updates pair of Registers and memory
 	// Access HART & NHSV
 	virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable();
 	virtual bool SetVariable();

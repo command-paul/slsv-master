@@ -1,20 +1,12 @@
 #include "V0.hpp"
-// This describes the interface to update the state container with a SLSV level 0 Setup;
-
-// Method to just get state updates
-// Method to step and then get updates
-
-
-// initialisation to connect to an openOcd interface.
-// something to see if the connection is still alive and well,
-// Comms in binary format for commpactness
-// Calls on other library to assist with the telnet implementation
-// Calls methods over the selected adapter and does it business
-    // Cut open ocd out of the picture ?
-    // Use Open OCD as a library ?
-    // extern to openocd target support in C
+#include "./Telnet/libtelnet.hpp"
 
 V0::V0(){
+	ip = "0.0.0.0";
+	port = "0";
+	abits = 6;
+	width = 64; // Default , TODO Make this a build option
+	Transport = new TelnetOCD(ip,port,abits,width);;
 	return;
 }
 // Destructor
@@ -32,11 +24,33 @@ bool V0::Synchronise(){
 	return true;
 }
 // Update State
-std::vector<std::pair<uint64_t,uint64_t>> V0::Single_Step(){
-	std::pair<uint64_t,uint64_t> pair_tst = std::make_pair(0,0);
-	std::vector<std::pair<uint64_t,uint64_t>> memory;
-	memory.push_back(pair_tst);
-	return memory;
+std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> V0::Single_Step(){
+	// FOR SLSV LEVEL 0 We will have to record everything and then return updates
+	// updates based on weather there are any diferences from the current state
+	// updates are comitted by test instance
+	// This will need a reference to state :P TODO :: add ref to STATE
+	
+	// This Is getting cumbersome to type , TODO ::  TYPE DEF THESE STRUCTURES
+	std::pair<uint32_t,uint64_t> Reg_update_frame = std::make_pair(0,0);
+	std::pair<uint32_t,uint64_t> Mem_update_frame = std::make_pair(0,0);
+	std::vector<std::pair<uint32_t,uint64_t>> Reg_update_vector;
+	std::vector<std::pair<uint64_t,uint64_t>> Mem_update_vector; 
+	// Single Step
+
+
+	// Capture Updates
+	uint64_t value;
+	// just getting GPR`s , PC and FPR for now
+	for(uint i = 0 ; i < 65 ; i ++){
+		(*Transport).getAbstReg(&value,0,i,1,16);
+		// Check if this is an update , if not skip // Resolve after reference to state container is sorted
+		Reg_update_frame = std::make_pair(i,value);
+		Reg_update_vector.push_back(Reg_update_frame);
+	}
+	// This is a really big container that im moving around is there anything I can do to make this optimized for usage
+	// of shared memory between threads ?
+	std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> updates = std::make_pair(Reg_update_vector,Mem_update_vector);
+	return updates;
 }
 // return a vector of updates 
 // Access HART & NHSV
@@ -79,9 +93,20 @@ bool V0::Restore(std::string File){
 	return true;
 }
 
-bool V0::set_ocd_port(uint32_t port){
+bool V0::configureV0(std::string IP,std::string PORT,uint ABITS, uint WIDTH){
+	ip = IP;
+	port = PORT;
+	abits = ABITS;
+	width = WIDTH;
+	(*Transport).set_ip_port(IP,std::stoi(PORT));
 	return true;
-}
-bool V0::set_ocd_ip(char* ip){
-	return true;
+	}
+
+
+// Test Below
+int main(){
+	V0 Test = V0();
+	Test.configureV0("0.0.0.0","4444",6,64);
+	//Test.Single_Step();
+	return 0;
 }

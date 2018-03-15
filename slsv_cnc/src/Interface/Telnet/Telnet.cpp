@@ -50,7 +50,7 @@ static int getPackedHex(uint64_t* vector,uint count,char* hexString,uint width){
 }
 
 // Wrapper Functions to the TelnetOCD class
-TelnetOCD::TelnetOCD(std::string ip,std::string port,uint abits,uint wwidth){
+TelnetOCD::TelnetOCD(std::string ip,std::string port,uint abits,uint width){
 
 	return;
 }
@@ -363,7 +363,7 @@ bool TelnetOCD::Tconnect(){
 	// 	temp[width] = '\0';
 	// 	sscanf(temp,"%lux",vector+i);
 	// uint width = (*hex) - 32;
-
+/*
 int main(){
 	TelnetOCD a("localhost","4444",6,32);
 	a.set_ip_port("localhost",4444);
@@ -405,3 +405,4 @@ int main(){
 //Commands.push_back("slsv 4 0002000021000220002300024\n");
 //Commands.push_back("slsv 4 0002000021000220002300024\n");
 	
+*/

@@ -57,7 +57,7 @@ public:
 	~V0() override ;
 	bool Initialise()  override;
 	bool Synchronise()  override;
-	std::vector<std::pair<uint64_t,uint64_t>> Single_Step()  override;
+	std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> Single_Step()  override;
 	std::pair<uint64_t,std::vector<uint32_t>> GetVariable()  override;
 	bool SetVariable()  override;
 	std::pair<uint64_t,std::vector<uint32_t>> GetMemory()  override;

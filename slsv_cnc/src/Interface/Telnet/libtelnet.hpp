@@ -723,7 +723,7 @@ extern void telnet_zmp_arg(telnet_t *telnet, const char *arg);
 
 class TelnetOCD{
 public:
-	TelnetOCD(std::string ip,std::string port,uint abits = 6 ,uint wwidth = 32);
+	TelnetOCD(std::string ip,std::string port,uint abits = 6 ,uint width = 32);
 	~TelnetOCD();
 	telnet_t *telnet;
 	bool is_alive();
