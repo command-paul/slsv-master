@@ -15,6 +15,7 @@ V0::~V0(){
 }
 // Initialise 
 bool V0::Initialise(){
+	(*Transport).Tconnect();
 	return true;
 }
 // Syncronise
@@ -36,8 +37,8 @@ std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64
 	std::vector<std::pair<uint32_t,uint64_t>> Reg_update_vector;
 	std::vector<std::pair<uint64_t,uint64_t>> Mem_update_vector; 
 	// Single Step
-
-
+	char response[1024]; // Remove this later
+	(*Transport).runCommand("slsv 2\n",response);
 	// Capture Updates
 	uint64_t value;
 	// just getting GPR`s , PC and FPR for now
@@ -107,6 +108,7 @@ bool V0::configureV0(std::string IP,std::string PORT,uint ABITS, uint WIDTH){
 int main(){
 	V0 Test = V0();
 	Test.configureV0("0.0.0.0","4444",6,64);
-	//Test.Single_Step();
+	Test.Initialise(); // Propogate No Connection error
+	while(1) Test.Single_Step(); 
 	return 0;
 }
