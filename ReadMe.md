@@ -1,4 +1,4 @@
-## TODO :: Re-architecture this git structure to slsv-tools with slsv-C&C and other branches of tools as sub modules
+## TODO :: Re-architecture this git structure to slsv-tools with slsv-C&C and other branches of riscv-tools as sub modules
 ##### DOXYGEN DOCS :: https://codedocs.xyz/command-paul/slsv-master/
 Notes to Future Self
 Use Cmake 3.x
