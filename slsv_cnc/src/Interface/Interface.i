@@ -3,10 +3,11 @@
 %module slsv_interface
 %{
 /* Header files or functon declaritions here */
-	#include "Interface.hpp"
-	#include "V0.hpp"
-	#import "./Telnet/libtelnet.hpp"
+	#include "../src/Interface/Interface.hpp"
+	#include "../src/Interface/V0.hpp"
+	#import "../src/Interface/Telnet/libtelnet.hpp"
 %}
+
 %define SWIGWORDSIZE64
 %enddef
 %include "stdint.i"
@@ -14,16 +15,30 @@
 %include "std_pair.i"
 %include "typemaps.i"
 %include "std_string.i"
+
+// %template (p1) std::pair<uint32_t,uint64_t> ;
+// %template (p2) std::pair<uint64_t,uint64_t> ;
+// %template(RegUpdate) std::vector<p1> ;
+// %template(MemUpdate) std::vector<p2> ;
+// %template(StateContainer) std::pair<RegUpdate,MemUpdate> ;
+// 
 // %template(Tester1) std::vector <uint32_t>;
 // %template(TestRet) std::pair<bool,std::vector <uint32_t>>;
 // %template(HartVector) std::vector <risc_v_HART> ;
 // %template(MemVector0) std::vector <memoryMappedDevice> ;
 // %template(IntVec) std::vector <int> ;
 // %template(NHSVVector) std::vector <nonHARTStateVariables> ;
+//
+// %template(Container) std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>>;
 
+// typedef std::vector<std::pair<uint32_t,uint64_t>> RegUpdate ;
+// typedef std::vector<std::pair<uint64_t,uint64_t>> MemUpdate ;
+// typedef std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> StateContainer;
 
-
-
+//%template(RegUpdate)std::vector<std::pair<uint32_t,uint64_t>> ;
+//%template(MemUpdate)std::vector<std::pair<uint64_t,uint64_t>> ;
+//%template(RegFrame)std::pair<uint32_t,uint64_t> ;
+//%template(MemFrame)std::pair<uint64_t,uint64_t> ;
 // Interface
 
 class Interface{

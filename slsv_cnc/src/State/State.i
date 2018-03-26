@@ -6,7 +6,7 @@
 %module slsv_state
 %{
 /* Header files or functon declaritions here */
-	#include "State.hpp"
+	#include "../src/State/State.hpp"
 %}
 %define SWIGWORDSIZE64
 %enddef

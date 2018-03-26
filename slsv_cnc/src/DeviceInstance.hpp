@@ -12,6 +12,5 @@ public:
 	riscv DUV;
 	Interface Bridge;
 	// Somehow make a little vector of all the listed coverage metrics
-	std::vector<Coverage> CoverageMetrics;
 	std::string deviceName;
 };

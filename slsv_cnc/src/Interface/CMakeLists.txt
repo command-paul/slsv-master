@@ -1,16 +1,20 @@
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-#SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/python)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 FIND_PACKAGE(SWIG REQUIRED)
 include(UseSWIG)
-INCLUDE_DIRECTORIES(/usr/include/python3.4)
+INCLUDE_DIRECTORIES(/usr/include/python3.6)
 INCLUDE_DIRECTORIES(.src/Interface)
 FIND_PACKAGE(PythonLibs)
 SET(CMAKE_SWIG_FLAGS "-DSWIGWORDSIZE64")
+SET(SWIG_OUTFILE_DIR "./")
+SET(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/python)
+
 SET_SOURCE_FILES_PROPERTIES(./Interface.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(./Interface.i PROPERTIES SWIG_FLAGS "-includeall")
-SWIG_ADD_LIBRARY(slsv_interface LANGUAGE python SOURCES ./Interface.i Interface.cpp V0.cpp ./Telnet/Telnet.cpp ./Telnet/libtelnet.cpp )
+#SWIG_ADD_LIBRARY(slsv_interface LANGUAGE python SOURCES ./Interface.i Interface.cpp V0.cpp ./Telnet/Telnet.cpp ./Telnet/libtelnet.cpp )
+SWIG_ADD_MODULE(slsv_interface python ./Interface.i Interface.cpp V0.cpp ./Telnet/Telnet.cpp ./Telnet/libtelnet.cpp )
 #SWIG_ADD_LIBRARY(slsv_interface LANGUAGE python SOURCES ./Interface.i Interface.cpp V0.cpp V1.cpp V2.cpp V3.cpp V4.cpp)
 #SWIG_ADD_MODULE(slsv_interface python ./Interface.i Interface.cpp V0.cpp V1.cpp V2.cpp V3.cpp V4.cpp)
 SWIG_LINK_LIBRARIES(slsv_interface ${PYTHON_LIBRARIES})
@@ -21,7 +25,7 @@ SWIG_LINK_LIBRARIES(slsv_interface ${PYTHON_LIBRARIES})
 
 
 #add_library (Interface Interface.cpp V0.cpp V1.cpp V2.cpp V3.cpp V4.cpp)
-add_library (Interface Interface.cpp V0.cpp)
+add_library (Interface SHARED Interface.cpp V0.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
 target_include_directories (Interface PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

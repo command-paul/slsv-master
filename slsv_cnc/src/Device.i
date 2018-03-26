@@ -1,10 +1,10 @@
 %module slsv_target
 %{
 /* Header files or functon declaritions here */
-	#include "DeviceInstance.hpp"
-	#include "./Interface/Interface.hpp"
-	#include "./Coverage/Coverage.hpp"
-	#include "./State/State.cpp"
+#include "../src/DeviceInstance.hpp"
+#import "../src/Interface/Interface.hpp"
+#import "../src/Coverage/Coverage.hpp"
+#import "../src/State/State.cpp"
 %}
 %define SWIGWORDSIZE64
 %enddef
@@ -13,8 +13,6 @@
 %include "std_pair.i"
 %include "typemaps.i"
 
-%template(CoverageMetric) std::vector<Coverage>;
-
 class Device{
 public:	
 	Device();
@@ -22,6 +20,5 @@ public:
 	riscv DUV;
 	Interface Bridge;
 	// Somehow make a little vector of all the listed coverage metrics
-	std::vector<Coverage> CoverageMetrics;
 	std::string deviceName;
 };

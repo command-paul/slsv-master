@@ -20,6 +20,6 @@ SET(CMAKE_SWIG_FLAGS "-DSWIGWORDSIZE64")
 #install(FILES ${CMAKE_BINARY_DIR}/src/target.py DESTINATION ${PYTHON_SITE_PACKAGES})
 
 
-add_library (Coverage Coverage.cpp EditDistance.cpp SV_Assertions.cpp ToggleCoverage.cpp)
+add_library (Coverage SHARED Coverage.cpp EditDistance.cpp SV_Assertions.cpp ToggleCoverage.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
 target_include_directories (Coverage PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

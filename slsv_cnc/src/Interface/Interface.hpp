@@ -54,3 +54,8 @@ private:
 	bool initialised = 0;
 };
 
+typedef std::pair<uint32_t,uint64_t> p1;
+typedef std::pair<uint64_t,uint64_t> p2;
+typedef std::vector<p1> RegUpdate;
+typedef std::vector<p2> MemUpdate;
+typedef std::pair<RegUpdate,MemUpdate> StateContainer;

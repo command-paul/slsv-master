@@ -4,18 +4,18 @@
 
 // Public Access Status Functions
 
-bool editDistance::update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update){
+bool SVAssetrions::update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update){
 	return true;
 }
-std::pair<bool,std::vector<uint64_t>> editDistance::event(){
+std::pair<bool,std::vector<uint64_t>> SVAssetrions::event(){
 	std::pair<bool,std::vector<uint64_t>> a;
 	return a;
 }
-std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> editDistance::get_results(){
+std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> SVAssetrions::get_results(){
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> a;
 	return a;
 }
-int editDistance::get_event(int id){
+int SVAssetrions::get_event(int id){
 	return 0;
 }
 
