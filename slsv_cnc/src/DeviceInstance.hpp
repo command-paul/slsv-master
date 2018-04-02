@@ -9,8 +9,8 @@ class Device{
 public:	
 	Device();
 	~Device();
-	riscv DUV;
-	Interface Bridge;
+	riscv* DUV;
+	Interface* Bridge;
 	// Somehow make a little vector of all the listed coverage metrics
 	std::string deviceName;
 };

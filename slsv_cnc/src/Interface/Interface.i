@@ -19,52 +19,28 @@
 %include "typemaps.i"
 %include "std_string.i"
 
-// %template (p1) std::pair<uint32_t,uint64_t> ;
-// %template (p2) std::pair<uint64_t,uint64_t> ;
-// %template(RegUpdate) std::vector<p1> ;
-// %template(MemUpdate) std::vector<p2> ;
-// %template(StateContainer) std::pair<RegUpdate,MemUpdate> ;
-// 
-// %template(Tester1) std::vector <uint32_t>;
-// %template(TestRet) std::pair<bool,std::vector <uint32_t>>;
-// %template(HartVector) std::vector <risc_v_HART> ;
-// %template(MemVector0) std::vector <memoryMappedDevice> ;
-// %template(IntVec) std::vector <int> ;
-// %template(NHSVVector) std::vector <nonHARTStateVariables> ;
-//
-// %template(Container) std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>>;
-
-// typedef std::vector<std::pair<uint32_t,uint64_t>> RegUpdate ;
-// typedef std::vector<std::pair<uint64_t,uint64_t>> MemUpdate ;
-// typedef std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> StateContainer;
-
-//%template(RegUpdate)std::vector<std::pair<uint32_t,uint64_t>> ;
-//%template(MemUpdate)std::vector<std::pair<uint64_t,uint64_t>> ;
-//%template(RegFrame)std::pair<uint32_t,uint64_t> ;
-//%template(MemFrame)std::pair<uint64_t,uint64_t> ;
-// Interface
-
+// Interface - pure virtual
 class Interface{
-// 	public:
-// 		Interface();
-// 		virtual ~Interface();
-// 		virtual bool Initialise();
-// 		virtual bool Synchronise();
-// 		virtual std::vector<std::pair<uint64_t,uint64_t>> Single_Step();
-// 		virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable();
-// 		virtual bool SetVariable();
-// 		virtual std::pair<uint64_t,std::vector<uint32_t>> GetMemory();
-// 		virtual bool SetMemory();
-// 		virtual std::pair<uint64_t,std::vector<uint32_t>> DumpMemory();
-// 		virtual bool LoadBinary(uint64_t address);
-// 		virtual bool Checkpoint(std::string File);
-// 		virtual bool Checkpoint(); // to the already defined checkpoint file :/
-// 		virtual bool Restore(std::string File);
+public:
+	Interface();
+	virtual ~Interface(); 
+	virtual bool Initialise() = 0;
+	virtual bool Synchronise() = 0;
+	virtual std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> Single_Step() = 0;
+	virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable() = 0;
+	virtual bool SetVariable() = 0;
+	virtual std::pair<uint64_t,std::vector<uint32_t>> GetMemory() = 0;
+	virtual bool SetMemory() = 0;
+	virtual std::pair<uint64_t,std::vector<uint32_t>> DumpMemory() = 0;
+	virtual bool LoadBinary(uint64_t address) = 0;
+	virtual bool Checkpoint(std::string File) = 0;
+	virtual bool Checkpoint() = 0; // to the already defined checkpoint file :/
+	virtual bool Restore(std::string File) = 0;
 private:
+
 	std::string CheckpointFile;
 	bool initialised = 0;
 };
-
 
 // V0
 class V0 : public Interface{

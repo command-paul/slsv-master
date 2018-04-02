@@ -22,3 +22,5 @@ test_vectors/openocd
 docs/html
 docs/latex
 __pycache__
+slsv_*.py
+*_wrap.cxx

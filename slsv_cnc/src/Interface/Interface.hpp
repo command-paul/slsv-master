@@ -4,7 +4,7 @@
 #include <cstdint>
 
 
-// This is the Interface Header file for the SLSV CNC Server
+// This is the Interface Header file for the SLSV CNC Servcleaer
 
 /*
 	This file essentially provides a bunnch of methods to the parent Device and test instance sets 
@@ -21,29 +21,29 @@ public:
 	// Destructor
 	virtual ~Interface();
 	// Initialise 
-	virtual bool Initialise();
+	virtual bool Initialise() = 0;
 	// Syncronise
 	// Get it to the defined sync point
 	// Different policy for multi core
-	virtual bool Synchronise();
+	virtual bool Synchronise() = 0;
 	// Update State
-	virtual std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> Single_Step();
+	virtual std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> Single_Step() = 0;
 	// return a vector of updates pair of Registers and memory
 	// Access HART & NHSV
-	virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable();
-	virtual bool SetVariable();
+	virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable() = 0;
+	virtual bool SetVariable() = 0;
 	// Access Memory
-	virtual std::pair<uint64_t,std::vector<uint32_t>> GetMemory();
-	virtual bool SetMemory();
+	virtual std::pair<uint64_t,std::vector<uint32_t>> GetMemory() = 0;
+	virtual bool SetMemory() = 0;
 	// Load Memory w/ Use Fastest method available to load the program memory 
-	virtual std::pair<uint64_t,std::vector<uint32_t>> DumpMemory();
-	virtual bool LoadBinary(uint64_t address);
+	virtual std::pair<uint64_t,std::vector<uint32_t>> DumpMemory() = 0;
+	virtual bool LoadBinary(uint64_t address) = 0;
 	// Checkpoint
 	// Record the entire accessable state from all reachable DUV`s
-	virtual bool Checkpoint(std::string File);
-	virtual bool Checkpoint(); // to the already defined checkpoint file :/
+	virtual bool Checkpoint(std::string File) = 0;
+	virtual bool Checkpoint() = 0; // to the already defined checkpoint file :/
 	// Restore
-	virtual bool Restore(std::string File);
+	virtual bool Restore(std::string File) = 0;
 	// Restore the checkpoint state to the core and set/reset state variables as defined by user.
 	// Utility Methods -- Should be defined in derived interface classes
 	// bool set_ocd_port(uint32_t port);

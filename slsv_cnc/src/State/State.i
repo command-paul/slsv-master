@@ -16,6 +16,7 @@
 %include "std_pair.i"
 %include "typemaps.i"
 
+%template(StateReg) std::vector<uint_fast64_t>;
 %template(Tester1) std::vector <uint32_t>;
 %template(TestRet) std::pair<bool,std::vector <uint32_t>>;
 %template(HartVector) std::vector <risc_v_HART> ;

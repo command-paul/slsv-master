@@ -41,3 +41,12 @@ if (DOXYGEN_FOUND)
 else (DOXYGEN_FOUND)
   message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
+
+# This is the top level swig python module make
+# FIND_PACKAGE(SWIG REQUIRED)
+# include(UseSWIG)
+# INCLUDE_DIRECTORIES(/usr/include/python3.6) # Some how automate this line
+# FIND_PACKAGE(PythonLibs)
+# SET(CMAKE_SWIG_FLAGS "-DSWIGWORDSIZE64")
+# SET(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/python)
+# SET(SWIG_OUTFILE_DIR "./" )

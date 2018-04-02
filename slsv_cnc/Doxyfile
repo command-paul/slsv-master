@@ -1,2 +1,2 @@
-OUTPUT_DIRECTORY       = /home/commandpaul/slsv-master/slsv_cnc/../docs/
-INPUT                  = /home/commandpaul/slsv-master/slsv_cnc/src/ /home/commandpaul/slsv-master/slsv_cnc/src/State /home/commandpaul/slsv-master/slsv_cnc/src/Interface /home/commandpaul/slsv-master/slsv_cnc/src/Coverage /home/commandpaul/slsv-master/slsv_cnc/../docs
+OUTPUT_DIRECTORY       = /home/commandpaul/scratch/slsv-master/slsv_cnc/../docs/
+INPUT                  = /home/commandpaul/scratch/slsv-master/slsv_cnc/src/ /home/commandpaul/scratch/slsv-master/slsv_cnc/src/State /home/commandpaul/scratch/slsv-master/slsv_cnc/src/Interface /home/commandpaul/scratch/slsv-master/slsv_cnc/src/Coverage /home/commandpaul/scratch/slsv-master/slsv_cnc/../docs

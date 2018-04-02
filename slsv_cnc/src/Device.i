@@ -8,6 +8,8 @@
 %}
 %define SWIGWORDSIZE64
 %enddef
+%include "Interface/Interface.i"
+%include "State/State.i"
 %include "stdint.i"
 %include "std_vector.i"
 %include "std_pair.i"
@@ -17,8 +19,8 @@ class Device{
 public:	
 	Device();
 	~Device();
-	riscv DUV;
-	Interface Bridge;
+	riscv* DUV;
+	Interface* Bridge;
 	// Somehow make a little vector of all the listed coverage metrics
 	std::string deviceName;
 };
