@@ -11,7 +11,7 @@ add_subdirectory(src)
 SET(CMAKE_BINARY_DIR "./")
 SET(CMAKE_BINARY_DIR "./")
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/python)
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/SLSV)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
@@ -42,11 +42,7 @@ else (DOXYGEN_FOUND)
   message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
 
-# This is the top level swig python module make
-# FIND_PACKAGE(SWIG REQUIRED)
-# include(UseSWIG)
-# INCLUDE_DIRECTORIES(/usr/include/python3.6) # Some how automate this line
-# FIND_PACKAGE(PythonLibs)
-# SET(CMAKE_SWIG_FLAGS "-DSWIGWORDSIZE64")
-# SET(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/python)
-# SET(SWIG_OUTFILE_DIR "./" )
+# Install Options
+set(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/build)
+add_custom_command(OUTPUT ${OUTPUT} COMMAND ${PYTHON} ARGS setup.py)
+install(CODE "execute_process(COMMAND python3 setup.py install)")

@@ -1,0 +1,1 @@
+# Python tests for the SWIG wrapped Interface class
