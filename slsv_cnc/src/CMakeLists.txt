@@ -13,8 +13,8 @@ SET(SWIG_OUTFILE_DIR "./" )
 
 SET_SOURCE_FILES_PROPERTIES(./Device.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(./Device.i PROPERTIES SWIG_FLAGS "-includeall")
-#SWIG_ADD_LIBRARY(slsv_target LANGUAGE python SOURCES ./Device.i ./DeviceInstance.cpp)
-SWIG_ADD_MODULE(slsv_target python ./Device.i ./DeviceInstance.cpp)
+SWIG_ADD_LIBRARY(slsv_target LANGUAGE python SOURCES ./Device.i ./DeviceInstance.cpp)
+#SWIG_ADD_MODULE(slsv_target python ./Device.i ./DeviceInstance.cpp)
 SWIG_LINK_LIBRARIES(slsv_target ${PYTHON_LIBRARIES} Interface State Telnet)
 
 add_library (Device SHARED DeviceInstance.cpp)

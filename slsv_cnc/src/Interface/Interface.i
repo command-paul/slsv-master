@@ -3,9 +3,12 @@
 %module slsv_interface
 %{
 /* Header files or functon declaritions here */
-	#include "../src/Interface/Interface.hpp"
-	#include "../src/Interface/V0.hpp"
-	#import "../src/Interface/Telnet/libtelnet.hpp"
+	//#include "../src/Interface/Interface.hpp"
+	//#include "../src/Interface/V0.hpp"
+	//#import "../src/Interface/Telnet/libtelnet.hpp"
+	#include "Interface.hpp"
+	#include "V0.hpp"
+	#import "Telnet/libtelnet.hpp"
 %}
 
 %define SWIGWORDSIZE64

@@ -11,6 +11,9 @@ endif()
 if(NOT DEFINED DOXYGEN_CREATE_SUBDIRS)
     set(DOXYGEN_CREATE_SUBDIRS NO)
 endif()
+if(NOT DEFINED DOXYGEN_ALLOW_UNICODE_NAMES)
+    set(DOXYGEN_ALLOW_UNICODE_NAMES NO)
+endif()
 if(NOT DEFINED DOXYGEN_OUTPUT_LANGUAGE)
     set(DOXYGEN_OUTPUT_LANGUAGE English)
 endif()
@@ -19,6 +22,19 @@ if(NOT DEFINED DOXYGEN_BRIEF_MEMBER_DESC)
 endif()
 if(NOT DEFINED DOXYGEN_REPEAT_BRIEF)
     set(DOXYGEN_REPEAT_BRIEF YES)
+endif()
+if(NOT DEFINED DOXYGEN_ABBREVIATE_BRIEF)
+    set(DOXYGEN_ABBREVIATE_BRIEF "The $name class" 
+                         "The $name widget" 
+                         "The $name file" 
+                         is 
+                         provides 
+                         specifies 
+                         contains 
+                         represents 
+                         a 
+                         an 
+                         the)
 endif()
 if(NOT DEFINED DOXYGEN_ALWAYS_DETAILED_SEC)
     set(DOXYGEN_ALWAYS_DETAILED_SEC NO)
@@ -65,6 +81,9 @@ endif()
 if(NOT DEFINED DOXYGEN_MARKDOWN_SUPPORT)
     set(DOXYGEN_MARKDOWN_SUPPORT YES)
 endif()
+if(NOT DEFINED DOXYGEN_TOC_INCLUDE_HEADINGS)
+    set(DOXYGEN_TOC_INCLUDE_HEADINGS 0)
+endif()
 if(NOT DEFINED DOXYGEN_AUTOLINK_SUPPORT)
     set(DOXYGEN_AUTOLINK_SUPPORT YES)
 endif()
@@ -82,6 +101,9 @@ if(NOT DEFINED DOXYGEN_IDL_PROPERTY_SUPPORT)
 endif()
 if(NOT DEFINED DOXYGEN_DISTRIBUTE_GROUP_DOC)
     set(DOXYGEN_DISTRIBUTE_GROUP_DOC NO)
+endif()
+if(NOT DEFINED DOXYGEN_GROUP_NESTED_COMPOUNDS)
+    set(DOXYGEN_GROUP_NESTED_COMPOUNDS NO)
 endif()
 if(NOT DEFINED DOXYGEN_SUBGROUPING)
     set(DOXYGEN_SUBGROUPING YES)
@@ -139,6 +161,9 @@ if(NOT DEFINED DOXYGEN_CASE_SENSE_NAMES)
 endif()
 if(NOT DEFINED DOXYGEN_HIDE_SCOPE_NAMES)
     set(DOXYGEN_HIDE_SCOPE_NAMES NO)
+endif()
+if(NOT DEFINED DOXYGEN_HIDE_COMPOUND_REFERENCE)
+    set(DOXYGEN_HIDE_COMPOUND_REFERENCE NO)
 endif()
 if(NOT DEFINED DOXYGEN_SHOW_INCLUDE_FILES)
     set(DOXYGEN_SHOW_INCLUDE_FILES YES)
@@ -209,17 +234,69 @@ endif()
 if(NOT DEFINED DOXYGEN_WARN_NO_PARAMDOC)
     set(DOXYGEN_WARN_NO_PARAMDOC NO)
 endif()
+if(NOT DEFINED DOXYGEN_WARN_AS_ERROR)
+    set(DOXYGEN_WARN_AS_ERROR NO)
+endif()
 if(NOT DEFINED DOXYGEN_WARN_FORMAT)
     set(DOXYGEN_WARN_FORMAT "$file:$line: $text")
 endif()
 if(NOT DEFINED DOXYGEN_INPUT_ENCODING)
     set(DOXYGEN_INPUT_ENCODING UTF-8)
 endif()
+if(NOT DEFINED DOXYGEN_FILE_PATTERNS)
+    set(DOXYGEN_FILE_PATTERNS *.c 
+                         *.cc 
+                         *.cxx 
+                         *.cpp 
+                         *.c++ 
+                         *.java 
+                         *.ii 
+                         *.ixx 
+                         *.ipp 
+                         *.i++ 
+                         *.inl 
+                         *.idl 
+                         *.ddl 
+                         *.odl 
+                         *.h 
+                         *.hh 
+                         *.hxx 
+                         *.hpp 
+                         *.h++ 
+                         *.cs 
+                         *.d 
+                         *.php 
+                         *.php4 
+                         *.php5 
+                         *.phtml 
+                         *.inc 
+                         *.m 
+                         *.markdown 
+                         *.md 
+                         *.mm 
+                         *.dox 
+                         *.py 
+                         *.pyw 
+                         *.f90 
+                         *.f95 
+                         *.f03 
+                         *.f08 
+                         *.f 
+                         *.for 
+                         *.tcl 
+                         *.vhd 
+                         *.vhdl 
+                         *.ucf 
+                         *.qsf)
+endif()
 if(NOT DEFINED DOXYGEN_RECURSIVE)
     set(DOXYGEN_RECURSIVE NO)
 endif()
 if(NOT DEFINED DOXYGEN_EXCLUDE_SYMLINKS)
     set(DOXYGEN_EXCLUDE_SYMLINKS NO)
+endif()
+if(NOT DEFINED DOXYGEN_EXAMPLE_PATTERNS)
+    set(DOXYGEN_EXAMPLE_PATTERNS *)
 endif()
 if(NOT DEFINED DOXYGEN_EXAMPLE_RECURSIVE)
     set(DOXYGEN_EXAMPLE_RECURSIVE NO)
@@ -254,6 +331,9 @@ endif()
 if(NOT DEFINED DOXYGEN_VERBATIM_HEADERS)
     set(DOXYGEN_VERBATIM_HEADERS YES)
 endif()
+if(NOT DEFINED DOXYGEN_CLANG_ASSISTED_PARSING)
+    set(DOXYGEN_CLANG_ASSISTED_PARSING NO)
+endif()
 if(NOT DEFINED DOXYGEN_ALPHABETICAL_INDEX)
     set(DOXYGEN_ALPHABETICAL_INDEX YES)
 endif()
@@ -279,7 +359,7 @@ if(NOT DEFINED DOXYGEN_HTML_COLORSTYLE_GAMMA)
     set(DOXYGEN_HTML_COLORSTYLE_GAMMA 80)
 endif()
 if(NOT DEFINED DOXYGEN_HTML_TIMESTAMP)
-    set(DOXYGEN_HTML_TIMESTAMP YES)
+    set(DOXYGEN_HTML_TIMESTAMP NO)
 endif()
 if(NOT DEFINED DOXYGEN_HTML_DYNAMIC_SECTIONS)
     set(DOXYGEN_HTML_DYNAMIC_SECTIONS NO)
@@ -407,6 +487,9 @@ endif()
 if(NOT DEFINED DOXYGEN_LATEX_BIB_STYLE)
     set(DOXYGEN_LATEX_BIB_STYLE plain)
 endif()
+if(NOT DEFINED DOXYGEN_LATEX_TIMESTAMP)
+    set(DOXYGEN_LATEX_TIMESTAMP NO)
+endif()
 if(NOT DEFINED DOXYGEN_GENERATE_RTF)
     set(DOXYGEN_GENERATE_RTF NO)
 endif()
@@ -418,6 +501,9 @@ if(NOT DEFINED DOXYGEN_COMPACT_RTF)
 endif()
 if(NOT DEFINED DOXYGEN_RTF_HYPERLINKS)
     set(DOXYGEN_RTF_HYPERLINKS NO)
+endif()
+if(NOT DEFINED DOXYGEN_RTF_SOURCE_CODE)
+    set(DOXYGEN_RTF_SOURCE_CODE NO)
 endif()
 if(NOT DEFINED DOXYGEN_GENERATE_MAN)
     set(DOXYGEN_GENERATE_MAN NO)
@@ -445,6 +531,9 @@ if(NOT DEFINED DOXYGEN_GENERATE_DOCBOOK)
 endif()
 if(NOT DEFINED DOXYGEN_DOCBOOK_OUTPUT)
     set(DOXYGEN_DOCBOOK_OUTPUT docbook)
+endif()
+if(NOT DEFINED DOXYGEN_DOCBOOK_PROGRAMLISTING)
+    set(DOXYGEN_DOCBOOK_PROGRAMLISTING NO)
 endif()
 if(NOT DEFINED DOXYGEN_GENERATE_AUTOGEN_DEF)
     set(DOXYGEN_GENERATE_AUTOGEN_DEF NO)
@@ -492,7 +581,7 @@ if(NOT DEFINED DOXYGEN_HIDE_UNDOC_RELATIONS)
     set(DOXYGEN_HIDE_UNDOC_RELATIONS YES)
 endif()
 if(NOT DEFINED DOXYGEN_HAVE_DOT)
-    set(DOXYGEN_HAVE_DOT NO)
+    set(DOXYGEN_HAVE_DOT YES)
 endif()
 if(NOT DEFINED DOXYGEN_DOT_NUM_THREADS)
     set(DOXYGEN_DOT_NUM_THREADS 0)
@@ -555,7 +644,7 @@ if(NOT DEFINED DOXYGEN_DOT_TRANSPARENT)
     set(DOXYGEN_DOT_TRANSPARENT NO)
 endif()
 if(NOT DEFINED DOXYGEN_DOT_MULTI_TARGETS)
-    set(DOXYGEN_DOT_MULTI_TARGETS YES)
+    set(DOXYGEN_DOT_MULTI_TARGETS NO)
 endif()
 if(NOT DEFINED DOXYGEN_GENERATE_LEGEND)
     set(DOXYGEN_GENERATE_LEGEND YES)
