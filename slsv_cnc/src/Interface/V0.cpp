@@ -11,6 +11,7 @@ V0::V0(){
 }
 // Destructor
 V0::~V0(){
+	delete Transport;
 	return;
 }
 // Initialise 
@@ -32,8 +33,8 @@ std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64
 	// This will need a reference to state :P TODO :: add ref to STATE
 	
 	// This Is getting cumbersome to type , TODO ::  TYPE DEF THESE STRUCTURES
-	std::pair<uint32_t,uint64_t> Reg_update_frame = std::make_pair(0,0);
-	std::pair<uint32_t,uint64_t> Mem_update_frame = std::make_pair(0,0);
+	std::pair<uint32_t,uint64_t> Reg_update_frame ;
+	//std::pair<uint32_t,uint64_t> Mem_update_frame = std::make_pair(0,0);
 	std::vector<std::pair<uint32_t,uint64_t>> Reg_update_vector;
 	std::vector<std::pair<uint64_t,uint64_t>> Mem_update_vector; 
 	// Single Step
@@ -111,11 +112,11 @@ bool set_ocd_ip(char* ip){
 }
 
 
-// Test Below
+// Test Below -- move out of here 
 int main(){
 	V0 Test = V0();
 	Test.configureV0("0.0.0.0","4444",6,64);
 	Test.Initialise(); // Propogate No Connection error
-	while(1) Test.Single_Step(); 
+	Test.Single_Step(); 
 	return 0;
 }

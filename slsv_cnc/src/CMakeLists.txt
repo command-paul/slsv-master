@@ -18,5 +18,5 @@ SWIG_ADD_LIBRARY(slsv_target LANGUAGE python SOURCES ./Device.i ./DeviceInstance
 SWIG_LINK_LIBRARIES(slsv_target ${PYTHON_LIBRARIES} Interface State Telnet)
 
 add_library (Device SHARED DeviceInstance.cpp)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=gnu++0x")
 target_include_directories (Device PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -7,6 +7,7 @@
 import threading
 import subprocess
 import sys
+import gc
 
 class TestClass():
     def setup(self):
@@ -46,20 +47,28 @@ class testSpawnOcd(TestClass):
 
 def main():
     todo = []
+    count  = 10
     module = sys.modules[__name__]
     for name in dir(module):
         defn = getattr(module, name)
         if isinstance(defn, type) and hasattr(defn, 'test'):
             todo.append((name, defn))
-
-    for i in range(len(todo)):
-        name = todo[i][0]
+    for i in range(len(todo)):    
         definition = todo[i][1]
-        instance = definition()
+        instance = definition() 
         result = instance.setup()
-        result = instance.test()
-        result = instance.getResult()
-        print("{",name,"}",result)
+    
+    while(count >0):
+        for i in range(len(todo)):
+            name = todo[i][0]
+            definition = todo[i][1]
+            instance = definition()    
+            result = instance.test()
+            result = instance.getResult()
+            print("{",name,"}",result)
+        count = count -1
+    
+
 
 if __name__ == '__main__':
     sys.exit(main())

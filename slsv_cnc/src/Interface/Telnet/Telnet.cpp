@@ -335,7 +335,7 @@ bool TelnetOCD::Tconnect(){
 	//void (*fptr)() = (void(*))_cleanup;
 	
 	tios = orig_tios;
-	cfmakeraw(&tios);
+	// cfmakeraw(&tios);
 	tcsetattr(STDOUT_FILENO, TCSADRAIN, &tios);
 
 	/* set input echoing on by default */

@@ -8,12 +8,14 @@
 %}
 %define SWIGWORDSIZE64
 %enddef
-%include "Interface/Interface.i"
-%include "State/State.i"
 %include "stdint.i"
 %include "std_vector.i"
 %include "std_pair.i"
 %include "typemaps.i"
+
+%include "Interface/Interface.i"
+%include "State/State.i"
+
 
 class Device{
 public:	
@@ -24,3 +26,5 @@ public:
 	// Somehow make a little vector of all the listed coverage metrics
 	std::string deviceName;
 };
+
+

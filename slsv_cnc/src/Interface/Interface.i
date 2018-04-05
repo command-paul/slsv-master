@@ -1,5 +1,3 @@
-
-
 %module slsv_interface
 %{
 /* Header files or functon declaritions here */
@@ -18,6 +16,13 @@
 %include "std_pair.i"
 %include "typemaps.i"
 %include "std_string.i"
+
+%template(lop1) std::pair<uint32_t,uint64_t>;
+%template(lop2) std::pair<uint64_t,uint64_t>;
+//%template(single_step_v1) std::vector<std::pair<uint64_t,uint64_t>>;
+//%template(single_step_v2) std::vector<std::pair<uint32_t,uint64_t>>;
+//%template(single_step) std::pair<single_step_v1,single_step_v2> ;
+%template(single_step_ctr) std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>>;
 
 // Interface - pure virtual
 class Interface{
