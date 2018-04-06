@@ -17,6 +17,7 @@
 
 %include "Interface/Interface.i"
 %include "State/State.i"
+%include "Coverage/Coverage.i"
 
 // Device Class abstracting State containers and interfaces.
 class Device{
