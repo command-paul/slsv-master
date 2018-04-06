@@ -1,5 +1,4 @@
-#include "DeviceInstance.hpp"
-
+#include "TestInstance.hpp"
 
 Device::Device(){
 	// anything to init

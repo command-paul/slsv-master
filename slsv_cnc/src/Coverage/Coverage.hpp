@@ -8,10 +8,10 @@ class Coverage{
 public:
 	Coverage();
 	virtual ~Coverage();
-	virtual bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update);
-	virtual std::pair<bool,std::vector<uint64_t>> event();
-	virtual std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
-	virtual int get_event(int id);
+	virtual bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update)=0;
+	virtual std::pair<bool,std::vector<uint64_t>> event()=0;
+	virtual std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results()= 0;
+	virtual int get_event(int id) = 0;
 };
 
 class editDistance : public Coverage {
