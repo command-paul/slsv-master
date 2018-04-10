@@ -3,7 +3,7 @@
 #include "../State/State.hpp"
 #include "./Telnet/libtelnet.hpp"
 
-class V0 : private Interface{
+class V0 : public Interface{
 public:
     // Constructors
     V0();

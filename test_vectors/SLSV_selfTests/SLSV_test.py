@@ -20,11 +20,12 @@ class TestClass():
 # I hope to see SLSV self tests to significantly grow in size with the addition of custom modules
 # Therefore a tradeoff to allow for more readable code in other modules as instantiated below. 
 
-from testDevice import *   #pylint: disable=W0614
-from testInterface import *   #pylint: disable=W0614
-from testState import *  #pylint: disable=W0614
-from testCoverage import *  #pylint: disable=W0614
-from testInterfaceV0 import *  #pylint: disable=W0614
+from slsv.slsv_framework import * 
+#from testDevice import *   #pylint: disable=W0614
+#from testInterface import *   #pylint: disable=W0614
+#from testState import *  #pylint: disable=W0614
+#from testCoverage import *  #pylint: disable=W0614
+#from testInterfaceV0 import *  #pylint: disable=W0614
 
 def spawnOcd():
     subprocess.Popen('openocd -f ../spike.cfg'.split(), shell=False)

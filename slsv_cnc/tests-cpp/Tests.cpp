@@ -1,5 +1,4 @@
-#include "../src/State/State.hpp"
-#include "../src/Interface/Interface.hpp"
+#include "../src/TestInstance.hpp"
 #include <iostream>
 
 // Append all of these to a Vector of test functions.

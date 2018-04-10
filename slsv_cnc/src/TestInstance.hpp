@@ -1,4 +1,5 @@
 #include "./Interface/Interface.hpp"
+#include "./Interface/V0.hpp" // Rework this to something better
 #include "./Coverage/Coverage.hpp"
 #include "./State/State.hpp"
 #include "events.hpp"
@@ -22,7 +23,7 @@ public:
 
 // LockStep Verification Test Setup    
 class LockStep_Verification{
-    public:
+public:
     Device deviceA;
     Device deviceB;
     bool eventPending;
@@ -40,6 +41,7 @@ class LockStep_Verification{
 
 // Other Classes describing other Verification setup Configurations
 class basicDeviceTests{
+public:
     Device DUT;
     bool eventPending;
     uint eventID;
@@ -50,5 +52,7 @@ class basicDeviceTests{
     bool run();// Design a better run control system and implement
     bool checkpoint();
     bool restore();
+    std::vector<Coverage*> coverageTrackers;
+    bool addCoverageTracker();
 };
 

@@ -8,6 +8,6 @@ setup(
     author_email='pg456@snu.edu.in',
     packages=['slsv'],
     url='https://github.com/command-paul/slsv-master',
-    package_data={'SLSV':['*.so']},
+    package_data={'slsv':['*.so']},
     license='IIT - Madras Licence',
 )
