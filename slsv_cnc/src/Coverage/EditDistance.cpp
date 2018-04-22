@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-bool editDistance::update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update){
+bool editDistance::update(){
 	return true;
 }
 std::pair<bool,std::vector<uint64_t>> editDistance::event(){

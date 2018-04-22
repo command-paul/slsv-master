@@ -61,7 +61,7 @@ public:
 	// Different policy for multi core
 	virtual bool Synchronise() = 0;
 	// Update State
-	virtual bool Single_Step() = 0;
+	virtual uint32_t Single_Step() = 0;
 	// return a vector of updates pair of Registers and memory
 	// Access HART & NHSV
 	virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable() = 0;

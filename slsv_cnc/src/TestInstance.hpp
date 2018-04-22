@@ -95,12 +95,12 @@ class basicDeviceTests{
 public:
     Device DUT;
     bool eventPending;
-    uint eventID;
+    uint32_t eventID;
     bool initialise();
     bool testInterfaces();
     bool testRegisters();
     bool testMemory();
-    bool run();// Design a better run control system and implement
+    uint32_t run();// Design a better run control system and implement
     bool checkpoint();
     bool restore();
     std::vector<Coverage*> coverageTrackers;

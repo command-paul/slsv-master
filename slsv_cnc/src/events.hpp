@@ -37,7 +37,9 @@
 /*
         Event Name  {4'h Event Origin,4'h Event ID} 
 */
-#define DEVICE_BASIC_TEST_0 0x1000'0000
-#define DEVICE_BASIC_TEST_1 0x1000'0001
+#define ALL_OK                  0x00000000
+#define DEVICE_BASIC_TEST_0     0x10000000
+#define DEVICE_BASIC_TEST_1     0x10000001
+#define TRACE_CACHE_FULL        0x11111111
 
 #endif

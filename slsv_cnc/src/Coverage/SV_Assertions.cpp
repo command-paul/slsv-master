@@ -4,7 +4,7 @@
 
 // Public Access Status Functions
 
-bool SVAssetrions::update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update){
+bool SVAssetrions::update(){
 	return true;
 }
 std::pair<bool,std::vector<uint64_t>> SVAssetrions::event(){

@@ -45,7 +45,7 @@ public:
 	// Different policy for multi core
 	bool Synchronise()  override;
 	// Update State
-	bool Single_Step()  override;
+	uint32_t Single_Step()  override;
 	// return a vector of updates 
 	// Access HART & NHSV
 	std::pair<uint64_t,std::vector<uint32_t>> GetVariable()  override;

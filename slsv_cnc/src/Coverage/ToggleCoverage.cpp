@@ -4,7 +4,7 @@
 
 // Public Access Status Functions
 
-bool ToggleCoverage::update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update){
+bool ToggleCoverage::update(){
 	return true;
 }
 std::pair<bool,std::vector<uint64_t>> ToggleCoverage::event(){

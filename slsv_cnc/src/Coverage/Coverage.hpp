@@ -28,14 +28,15 @@
 #ifndef Coverage_H
 #define Coverage_H
 
-
-
 #include <vector>
 #include <cstdint>
 #include <string>
-#include "../State/State.hpp"
-#include "../Interface/Interface.hpp"
+// #include "../State/State.hpp"
+// #include "../Interface/Interface.hpp"
+#include "../TestInstance.hpp"
 
+class riscv;
+class Device; // Forward declarition
 //Coverage event + Operational exception .
 
 // Coverage can be associated with one or more than one device.
@@ -53,20 +54,21 @@
 #endif
 
 // TraceFrames
-typedef  std::vector<std::pair<INTLEN,INTLEN>> regUpdateFrame;
-typedef  std::vector<std::pair<INTLEN,INTLEN>> memUpdateFrame;
-typedef  std::pair<regUpdateFrame,memUpdateFrame> traceFrame;
-
+typedef  std::pair<INTLEN,INTLEN> update_t;
+typedef  std::vector<update_t> UpdateFrame_t;
+typedef  std::pair<UpdateFrame_t,UpdateFrame_t> traceFrame_t;
 
 // Should I integrate the trace cache intot he coverage module section  ?? Me thinks yes .
 class traceCache{
 public:
-    riscv ScratchState;
-    //traceCache(); // Add back later  ? 
-    traceCache(uint32_t max_len);    // ease of use 
+    riscv* ScratchState; 
+	// The above is my sacraficeing space for commputational overhead & time to functional deployment
+	Device* Parent;
+    traceCache();
+	//traceCache(uint32_t max_len);    // ease of use - later not in testing :P
     ~traceCache();
 
-    std::vector<traceFrame> Cache;
+    std::vector<traceFrame_t> Cache; 
     uint32_t max_length;
     uint32_t curr_length;
     std::vector<uint64_t> traceCommitMask ; // This restricts the Number of possible coverage trackers to 64
@@ -77,9 +79,11 @@ public:
 	// 2D Assert Clear - can be disabled by Trace Analysis clear.
 	// Alternatively for lockstep if PC not match pc Step the Device that matches a sequence 
     bool configureScratchState();
-    bool enqueueTF(traceFrame frame);
+    uint32_t enqueueTF(traceFrame_t frame);
     bool commitTopFrame();
     bool commitNFrames(uint32_t N);
+	uint32_t updateScratch();
+	uint32_t commitScratch();
 };
 
 // my memory footprint is huge, I tbh can at each step compute the net effective state 
@@ -87,15 +91,16 @@ public:
 class Coverage{
 public:
 	Coverage();
+	Device* Parent;
 	virtual ~Coverage();
-	virtual bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update)=0;
+	virtual bool update()=0;
 	virtual std::pair<bool,std::vector<uint64_t>> event()=0;
 	virtual std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results()= 0;
 	virtual int get_event(int id) = 0;
 };
 
 class editDistance : public Coverage {
-	bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update);
+	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
 	int get_event(int id);
@@ -103,7 +108,7 @@ private:
 };
 
 class SVAssetrions : public Coverage {
-	bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update);
+	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
 	int get_event(int id);
@@ -111,7 +116,7 @@ private:
 };
 
 class ToggleCoverage : public Coverage {
-	bool update(std::pair<std::vector<uint64_t>,std::vector<uint64_t>>update);
+	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
 	int get_event(int id);

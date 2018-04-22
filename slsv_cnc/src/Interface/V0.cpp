@@ -67,16 +67,20 @@ bool V0::Synchronise(){
 
 // Include a reference to trace cache and the state lib
 
-bool V0::Single_Step(){  // This should return bool and simply set the frame into the trace cache , why even expoose this to the user  
-	traceFrame updates;
-	uint32_t event = 0; // ref events.hpp	
+uint32_t V0::Single_Step(){  // This should return bool and simply set the frame into the trace cache , why even expoose this to the user  
+	traceFrame_t updates;
+	uint32_t event = ALL_OK; // ref events.hpp	
 	char response[1024]; // Remove this later
 	std::cout << "<<<<<<" << std::endl;
 	uint32_t iterator = 0;
 // 	MEMORY
-
+	UpdateFrame_t MemUpdates;
 // 	CSR GPR FPR
-	uint32_t HartCT = Parent->DUV->HART_Vec.size(); // apparently some 2^20 harts now :P 
+	UpdateFrame_t RegUpdates;
+	riscv* hartPtr = Parent->Cache->ScratchState;
+	// just getting GPR`s , PC and FPR for now
+	uint32_t MaxRegs = hartPtr->TopRegAddress;
+	uint32_t HartCT  = hartPtr->HART_Vec.size(); // apparently some 2^20 harts now :P 
 	// The fetch method does nont currently et the hartsel value 
 	for(int HartIter = 0 ; HartIter < HartCT ; HartIter++){
 		// GPR FPR
@@ -84,38 +88,26 @@ bool V0::Single_Step(){  // This should return bool and simply set the frame int
 		(*Transport).runCommand("slsv 2\n",response); // Step Command
 		// Capture Updates
 		uint64_t value;
-		// just getting GPR`s , PC and FPR for now
-		uint32_t MaxRegs = Parent->DUV->TopRegAddress;
 		for(uint i = 0 ; i <= MaxRegs; i ++){
 			(*Transport).getAbstReg(&value,0,i,1,16);
 			// Branching to get the trace cache initialization setup
 			// Required to get the latest state setup. // The trace cache state is the main state and the DUV is just a shadow state for house keeping.
-			uint64_t csval = Parent->DUV->get_register(i);
-			if(value != csval)	std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
-			
-			// Check if this is an update , if not skip // Resolve after reference to state container is sorted
-			
-			//Reg_update_frame = std::make_pair(i,value);
-			//Reg_update_vector.push_back(Reg_update_frame);
+			uint64_t csval = hartPtr->get_register(i);
+			if(value != csval){
+				// Check if this is an update , if not skip // Resolve after reference to state container is sorted
+				std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
+				// The I being comitted here needs to be transelated to the required address
+				update_t temp = std::make_pair(i,value);
+				RegUpdates.push_back(temp);
+			}	
 	  	}
 		// CSR
 	}
 
 // 	NHSV
-
-	
-/*	Pointer to Parent Device;
-	SOC = Device->riscv ;
-	uint32_t iterator =0;
-	for (iterator = 0;iterator < riscv.MemoryMap.length();iterator ++ ) ; // Query Memory Map  :: MemoryMap 
-	for each HART
-		// Query NSHW Map :: NHSVMap
-		// HART Query Pttern :: ALL GPR +FPR and CSR`s Only if Valid bit is set true
-		for (iterator = 0;iterator < riscv.MemoryMap.length();iterator ++ ) ; // Query Memory Map  :: MemoryMap 
-		for GPR
-		for FPR
-		for CSR ( if cSR VAlid )
-	
+	updates = std::make_pair(RegUpdates,MemUpdates);
+	event = Parent->Cache->enqueueTF(updates);
+/*	
 	If Sate-> cached == Variable read //nothing
 	else // Create update and append to the appropriate vector for setting into the trace cache 
 
@@ -127,7 +119,7 @@ bool V0::Single_Step(){  // This should return bool and simply set the frame int
 	// Partent->traceCache.cache(updates);
 	// free updates ?? update and free all liabilities of the interface file ??? -  yasss good in long run as everyone fends for his / her own memory
 	std::cout << "<<<<<<" << std::endl;
-	return true;
+	return event;
 }
 
 // return a vector of updates 

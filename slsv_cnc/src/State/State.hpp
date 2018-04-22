@@ -25,11 +25,25 @@
 * Author:  Paul George
 * Email id: pg456@snu.edu.in
 * ------------------------------------------------------------------------------------------------*/
+
 #ifndef State_H
 #define State_H
 
 #include <vector>
 #include <cstdint>
+#include "../TestInstance.hpp"
+
+#define XLEN 64
+
+#if XLEN == 64
+    #define INTLEN uint64_t
+#else if XLEN == 32 
+    #define INTLEN uint32_t
+#endif
+
+typedef  std::pair<INTLEN,INTLEN> update_t;
+typedef  std::vector<update_t> UpdateFrame_t;
+typedef  std::pair<UpdateFrame_t,UpdateFrame_t> traceFrame_t;
 
 // This class is a scalabale RISCV Architectural Unit
 // Create Micro Architectural def in impl specific library / derive from shakti structures
@@ -57,6 +71,7 @@ public:
 	bool NHSVChainValid();
 	uint32_t TopRegAddress = 65; // just GPR PC FPR right now 
 	uint64_t get_register(uint32_t address); // This address is according to the State variable addressing scheme
+	uint32_t updateTraceFrame(traceFrame_t frame);
 	// HART Micro Architctural state variables need to be traced somehow the NHSV it masks the HART ID Fiels addressing scheme doesnt cover the smae
 	std::pair<std::pair<uint64_t,uint64_t>,std::vector<uint_fast32_t>> MemoryMap; //Pair::((Pair::Start,End),Pointer);
 	std::pair<std::pair<uint32_t,uint32_t>,std::vector<uint_fast32_t>> NHSVMap; //Pair::((Pair::Start,End),Pointer);
