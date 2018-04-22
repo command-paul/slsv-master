@@ -18,6 +18,9 @@ bool basicDeviceTests::testMemory(){
 
 bool basicDeviceTests::run(){
     // Design abetter run control system and implement
+    //loop some some n times or till some event is reached
+    //step check if this is an event we care about 
+    //gets event from single step is passed upward to the pythn instance for handling
     return true;
     }
 
@@ -27,4 +30,17 @@ bool basicDeviceTests::checkpoint(){
 
 bool basicDeviceTests::restore(){
     return true;
+    }
+
+bool basicDeviceTests::addCoverageTracker(){
+    return true;
+    }
+
+bool step(){
+    // Design abetter run control system and implement
+    //error = deviceA tracecache(deviceSingle step);
+    //if (error) print error type;
+    //event = Coverage Evaluate();
+    bool event;
+    return event;
     }

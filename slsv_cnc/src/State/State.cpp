@@ -21,6 +21,18 @@ riscv::~riscv(){
 		std::cout << "Bye Riscv !" << std::endl;
 	#endif	
 }
+uint64_t riscv::get_register(uint32_t address){
+	uint32_t HART = ((address & 0xFFFF0000) >> 16);
+	address = (address & 0xFFFF);
+	if(address < 32) return HART_Vec[HART].GPR[address]; // GPR
+	else if(address == 32) return HART_Vec[HART].PC; // PC
+	else if(address < 65) return HART_Vec[HART].FPR[address-32]; // FPR
+	else {
+		// This comes down to the case of csr`s and additional mapped registers including NHSV`s
+		return 0; // need to implemennt the csr valid bit setting because spec wise
+		// reading a non implemented csr (using prg buffer) can cause the core to take a badd address or invalid read exception
+	}
+}
 
 bool riscv:: addHART(){
 	risc_v_HART NewHart = risc_v_HART((uint32_t)HART_Vec.size());

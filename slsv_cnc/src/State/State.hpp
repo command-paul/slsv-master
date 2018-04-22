@@ -1,4 +1,33 @@
-#pragma once
+/*-------------------------------------------------------------------------------------------------- 
+* Copyright (c) 2018, IIT Madras All rights reserved.
+* 
+* Redistribution and use in source and binary forms, with or without modification, are permitted
+* provided that the following conditions are met:
+* 
+* - Redistributions of source code must retain the below copyright notice, this list of conditions
+*   and the following disclaimer.  
+* - Redistributions in binary form must reproduce the above copyright notice, this list of 
+*   conditions and the following disclaimer in the documentation and/or other materials provided 
+*   with the distribution.  
+* - Neither the name of IIT Madras  nor the names of its contributors may be used to endorse or 
+*   promote products derived from this software without specific prior written permission.
+* 
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+* OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+* AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+* IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
+* OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+* --------------------------------------------------------------------------------------------------
+* Author:  Paul George
+* Email id: pg456@snu.edu.in
+* ------------------------------------------------------------------------------------------------*/
+#ifndef State_H
+#define State_H
+
 #include <vector>
 #include <cstdint>
 
@@ -8,10 +37,10 @@
 class risc_v_HART;
 class nonHARTStateVariables;
 class memoryMappedDevice;
-//class memory : memoryMappedDevice ;
+//class memory : memoryMappedDevice ; // doesnt make a lot of sense with state_t being just a container structure
 //class periphralA : memoryMappedDevice;
 
-class riscv{
+class riscv{ // rename this to riscv_State
 // A RISCV Architectural Core
 public:
 	riscv();
@@ -26,8 +55,11 @@ public:
 	bool addNHSV();		//OverLoad
 	bool memoryChainValid();
 	bool NHSVChainValid();
-	std::pair<std::pair<uint64_t,uint64_t>,std::vector<uint_fast32_t *>> MemoryMap; //Pair::((Pair::Start,End),Pointer);
-	std::pair<std::pair<uint32_t,uint32_t>,std::vector<uint_fast32_t *>> NHSVMap; //Pair::((Pair::Start,End),Pointer);
+	uint32_t TopRegAddress = 65; // just GPR PC FPR right now 
+	uint64_t get_register(uint32_t address); // This address is according to the State variable addressing scheme
+	// HART Micro Architctural state variables need to be traced somehow the NHSV it masks the HART ID Fiels addressing scheme doesnt cover the smae
+	std::pair<std::pair<uint64_t,uint64_t>,std::vector<uint_fast32_t>> MemoryMap; //Pair::((Pair::Start,End),Pointer);
+	std::pair<std::pair<uint32_t,uint32_t>,std::vector<uint_fast32_t>> NHSVMap; //Pair::((Pair::Start,End),Pointer);
 };
 
 class risc_v_HART{
@@ -39,6 +71,7 @@ public:
 	std::vector<uint_fast64_t> GPR = std::vector<uint_fast64_t>(32,0);
 	std::vector<uint_fast64_t> FPR = std::vector<uint_fast64_t>(32,0);
 	std::vector<uint_fast64_t> CSR = std::vector<uint_fast64_t>(4096,0);
+	uint_fast64_t PC;
 	uint32_t hart_id;
 };
 
@@ -55,7 +88,8 @@ public:
 	uint64_t end_ID = 0;
 	std::vector<uint_fast64_t> regFile;
 	std::vector<bool> R_RW;
-};
+}; // NHSV is deprecated because its in effective for uarch state variables ::
+// This loks lie a good solution for tracking implementation specific architectural hidden variables
 
 class memoryMappedDevice{
 public:
@@ -78,3 +112,5 @@ public:
 
 // FUTURE :: ADD a DELTA based FAST MEMORY FOOTPRINT MODEL
 // END SEGMENT FOR FUTURE DERIVED CLASS
+
+#endif

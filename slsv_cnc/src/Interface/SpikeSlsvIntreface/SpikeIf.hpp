@@ -27,8 +27,6 @@ public:
     ~SpikeIf() override ;
 	
 	//Spike Command Line Arguments 
-	std::string SpikeArguments;	
-
 	bool setISA(std::string);
 	bool setProcessors(u_int16_t);
 	bool setMiB(u_int16_t);
@@ -72,7 +70,10 @@ public:
 	bool Restore(std::string File)  override;
 	// Restore the checkpoint state to the core and set/reset state variables as defined by user.
 	// Utility Methods -- Should be defined in derived interface classes
-	
+
+	sim_t* s;
+	std::string SpikeArguments = "/home/commandpaul/slsv-master/test_vectors/Tests/test0.rv64imafd";
+	// donot Leave any superfluous spaces
 };
 
 

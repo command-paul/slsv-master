@@ -14,31 +14,32 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/slsv)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-message(WARNING,"Always remember to update the IDL file on updation of module interfaces (any header files )")
-message(WARNING,"RUN THIS THROUGH THE INTEL PS FOR MEM LEAKS !!!")
-message(WARNING,"Use the supp and Python3.6 malloc env variable when using valgrind !!!")
-message(WARNING,"Please re work the paths for the include files -  a little messy right now !")
-message(WARNING,"SWIG Template variable naming is poor please Rework !!!")
+SET(BUILD_SWIG TRUE)
+SET(BUILD_DOCS TRUE)
+
+message(WARNING, "Always remember to update the IDL file on updation of module interfaces (any header files )")
+message(WARNING, "RUN THIS THROUGH THE INTEL PS FOR MEM LEAKS !!!")
+message(WARNING, "Use the supp and Python3.6 malloc env variable when using valgrind !!!")
+message(WARNING, "Please re work the paths for the include files -  a little messy right now !")
+message(WARNING, "SWIG Template variable naming is poor please Rework !!!")
 
 find_package(Doxygen)
-if (DOXYGEN_FOUND)
+if (DOXYGEN_FOUND AND (${BUILD_DOCS} EQUAL TRUE ))
     # set input and output files
     set(DOXYGEN_IN ${CMAKE_CURRENT_BINARY_DIR}/../docs/Doxyfile.in)
     set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-    # request to configure the file
+   # request to configure the file
     configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
     message("Doxygen build started")
-
-    # note the option ALL which allows to build the docs together with the application
+   # note the option ALL which allows to build the docs together with the application
     add_custom_target( doc_doxygen ALL
         COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Generating documentation with Doxygen"
         VERBATIM )
-else (DOXYGEN_FOUND)
-  message("Doxygen need to be installed to generate the doxygen documentation")
-endif (DOXYGEN_FOUND)
+else (DOXYGEN_FOUND AND (${BUILD_DOCS} EQUAL TRUE ))
+  message("EITHER DOXYGEN NOT FOUND OR BUILD_DOCS IS DISABLED")
+endif (DOXYGEN_FOUND AND (${BUILD_DOCS} EQUAL TRUE ))
 
 # Install Options
 set(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/build)

@@ -6,6 +6,7 @@
 #import "../src/Interface/Interface.hpp"
 #import "../src/Coverage/Coverage.hpp"
 #import "../src/State/State.cpp"
+#include "Commons.hpp"
 %}
 
 %define SWIGWORDSIZE64
@@ -19,6 +20,10 @@
 %include "State/State.i"
 %include "Coverage/Coverage.i"
 
+//%template(regUpdateFrame) std::vector<std::pair<INTLEN,INTLEN>>;
+//%template(memUpdateFrame) std::vector<std::pair<INTLEN,INTLEN>>;
+//%template(traceFrame) std::pair<regUpdateFrame,memUpdateFrame>;
+
 // Device Class abstracting State containers and interfaces.
 class Device{
 public:	
@@ -29,10 +34,12 @@ public:
 	// Somehow make a little vector of all the listed coverage metrics
 	std::string deviceName;
 	// Trace Cache of uncomitted state updates pair (vector pair)
+    std::vector<traceFrame> traceCache;
 };
 
+// LockStep Verification Test Setup    
 class LockStep_Verification{
-    public:
+public:
     Device deviceA;
     Device deviceB;
     bool eventPending;
@@ -50,6 +57,7 @@ class LockStep_Verification{
 
 // Other Classes describing other Verification setup Configurations
 class basicDeviceTests{
+public:
     Device DUT;
     bool eventPending;
     uint eventID;
@@ -60,6 +68,7 @@ class basicDeviceTests{
     bool run();// Design a better run control system and implement
     bool checkpoint();
     bool restore();
+    std::vector<Coverage*> coverageTrackers;
+    bool addCoverageTracker();
 };
-
 

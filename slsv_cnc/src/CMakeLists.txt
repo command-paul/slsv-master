@@ -2,7 +2,10 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/slsv)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+SET(BUILD_SWIG FALSE)
+
 FIND_PACKAGE(SWIG REQUIRED)
+if (${BUILD_SWIG} EQUAL TRUE )
 include(UseSWIG)
 INCLUDE_DIRECTORIES(/usr/include/python3.6)
 #INCLUDE_DIRECTORIES(.src)
@@ -16,6 +19,9 @@ SET_SOURCE_FILES_PROPERTIES(slsv_framework.i PROPERTIES SWIG_FLAGS "-includeall"
 SWIG_ADD_LIBRARY(slsv_framework LANGUAGE python SOURCES slsv_framework.i DeviceInstance.cpp BasicDeviceTests.cpp LockStepVerification.cpp)
 #SWIG_ADD_MODULE(slsv_target python ./Device.i ./DeviceInstance.cpp)
 SWIG_LINK_LIBRARIES(slsv_framework ${PYTHON_LIBRARIES} Interface State Telnet Coverage)
+
+endif(${BUILD_SWIG} EQUAL TRUE )
+
 
 add_library (slsv_framework SHARED DeviceInstance.cpp BasicDeviceTests.cpp LockStepVerification.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=gnu++0x")

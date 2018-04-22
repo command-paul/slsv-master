@@ -25,54 +25,36 @@
 * Author:  Paul George
 * Email id: pg456@snu.edu.in
 * ------------------------------------------------------------------------------------------------*/
-#ifndef Interface_V0_H
-#define Interface_V0_H
+#ifndef Commons_H
+#define Commons_H
 
-#include "../TestInstance.hpp"
-#include "./Telnet/libtelnet.hpp"
+// This is collection of things that ive found to be ecessary between modules.
 
-class V0 : public Interface{
-public:
-    // Constructors
-    V0();
-	V0(Device* parentPointer);
-	// Destructor
-    ~V0() override ;
-	// Initialise 
-	bool Initialise()  override;
-	// Syncronise
-	// Get it to the defined sync point
-	// Different policy for multi core
-	bool Synchronise()  override;
-	// Update State
-	bool Single_Step()  override;
-	// return a vector of updates 
-	// Access HART & NHSV
-	std::pair<uint64_t,std::vector<uint32_t>> GetVariable()  override;
-	bool SetVariable()  override;
-	// Access Memory
-	std::pair<uint64_t,std::vector<uint32_t>> GetMemory()  override;
-	bool SetMemory()  override;
-	// Load Memory w/ Use Fastest method available to load the program memory 
-	std::pair<uint64_t,std::vector<uint32_t>> DumpMemory()  override;
-	bool LoadBinary(uint64_t address)  override;
-	// Checkpoint
-	// Record the entire accessable state from all reachable DUV`s
-	bool Checkpoint(std::string File)  override;
-	bool Checkpoint() override; // to the already defined checkpoint file :  /
-	// Restore
-	bool Restore(std::string File)  override;
-	// Restore the checkpoint state to the core and set/reset state variables as defined by user.
-	// Utility Methods -- Should be defined in derived interface classes
-	bool set_ocd_port(uint32_t port);
-	bool set_ocd_ip(char* ip);
-	bool configureV0(std::string IP,std::string PORTS,uint32_t ABITS, uint32_t WIDTH);
-private:
-	std::string ip;
-	std::string port;
-	uint32_t abits;
-	uint32_t width;
-	TelnetOCD* Transport;
-};
+#include <vector>
+#include <cstdint>
+// #define XLEN 64
+
+// #if XLEN == 64
+//     #define INTLEN uint64_t
+// #else if XLEN == 32 
+//     #define INTLEN uint32_t
+// #endif
+
+
+
+// This whole module has been migrated to trace cache and is now deprecated
+    // 
+    //      TraceFrames
+    // typedef  std::vector<std::pair<INTLEN,INTLEN>> regUpdateFrame;
+    // typedef  std::vector<std::pair<INTLEN,INTLEN>> memUpdateFrame;
+    // typedef  std::pair<regUpdateFrame,memUpdateFrame> traceFrame;
+    // 
+
+
+// Why is this a typedef and not a class ?
+
+// global exception and event vector ?
+// all modules add to this ?
+// format of adding to this ?
 
 #endif

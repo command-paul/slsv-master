@@ -980,7 +980,7 @@ static void _process(telnet_t *telnet, const char *buffer, size_t size) {
 					telnet->response_len = (telnet->lbfr_len);
 					strncpy(telnet->response_buffer,telnet->line_buffer,telnet->lbfr_len);
 					telnet->response_buffer[telnet->lbfr_len] = 0;
-					printf("[%s]\n",telnet->response_buffer);
+					//printf("[%s]\n",telnet->response_buffer);
 				}
 			}	
 			telnet->lbfr_len = 0;
