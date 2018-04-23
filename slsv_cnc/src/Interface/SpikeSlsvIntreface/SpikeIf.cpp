@@ -157,8 +157,7 @@ bool SpikeIf::Initialise() {
 
   //htif_args.push_back(SpikeArguments);
 
-  s = new sim_t(isa, nprocs, halted, start_pc, mems, htif_args, std::move(hartids),
-      progsize, max_bus_master_bits);
+  s = new sim_t(isa, nprocs, halted, start_pc, mems, htif_args, std::move(hartids),progsize, max_bus_master_bits);
       
   std::unique_ptr<remote_bitbang_t> remote_bitbang((remote_bitbang_t *) NULL);
   std::unique_ptr<jtag_dtm_t> jtag_dtm(new jtag_dtm_t(&s->debug_module));
@@ -221,17 +220,66 @@ bool SpikeIf::Synchronise() {
   return true;
 }
 
-std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> SpikeIf::Single_Step() {
-  processor_t* HART0 =s->get_core(0);
+uint32_t SpikeIf::Single_Step() {
+  traceFrame_t updates;
+	uint32_t event = ALL_OK; // ref events.hpp	
+	std::cout << "<<<<<<" << std::endl;
+	uint32_t iterator = 0;
+// 	MEMORY
+	UpdateFrame_t MemUpdates;
+// 	CSR GPR FPR
+	UpdateFrame_t RegUpdates;
+	processor_t* HART0 =s->get_core(0);
   state_t* hart0state = HART0->get_state();
-  std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>> A;
+  
+  // This is the hak that actually single
   s->set_log(0);
+  
+  
   HART0 =s->get_core(0); // make this compatible with slsv interface addressing and access.
   //std::cout << std::hex << HART0->get_csr(2816) << std::endl;
   hart0state = HART0->get_state();
-  std::cout << std::hex << hart0state->pc << std::endl;
-  //std::cout << std::hex << hart0state->XPR[0] << std::endl;
-  return A;
+  riscv* hartPtr = Parent->Cache->ScratchState;
+	
+  // just getting GPR`s , PC and FPR for now
+	uint32_t MaxRegs = hartPtr->TopRegAddress;
+	uint32_t HartCT  = hartPtr->HART_Vec.size(); // apparently some 2^20 harts now :P 
+	// The fetch method does nont currently et the hartsel value 
+	for(int HartIter = 0 ; HartIter < HartCT ; HartIter++){
+		uint64_t value;
+		for(uint i = 0 ; i <= MaxRegs; i ++){
+      
+      if(i<32) value = hart0state->XPR[i];
+      else if(i==32) value = hart0state->pc;
+      //else if(i<65) value =(uint64_t) 
+      uint64_t csval = hartPtr->get_register(i);
+			if(value != csval){
+				// Check if this is an update , if not skip // Resolve after reference to state container is sorted
+				std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
+				// The I being comitted here needs to be transelated to the required address
+				update_t temp = std::make_pair(i,value);
+				RegUpdates.push_back(temp);
+			}	
+	  	}
+		// CSR
+	}
+
+// 	NHSV
+	updates = std::make_pair(RegUpdates,MemUpdates);
+	event = Parent->Cache->enqueueTF(updates);
+/*	
+	If Sate-> cached == Variable read //nothing
+	else // Create update and append to the appropriate vector for setting into the trace cache 
+
+
+	//updates.first = Reg_update_vector; // I suspect this is horribly leaky
+	//updates.second = Mem_update_vector;
+	// = (traceFrame) std::make_pair(Reg_update_vector,Mem_update_vector);
+	*/
+	// Partent->traceCache.cache(updates);
+	// free updates ?? update and free all liabilities of the interface file ??? -  yasss good in long run as everyone fends for his / her own memory
+	std::cout << "<<<<<<" << std::endl;
+	return event;
 }
 
 std::pair<uint64_t,std::vector<uint32_t>> SpikeIf::GetVariable() {
