@@ -36,6 +36,7 @@
 #include "../TestInstance.hpp"
 
 class riscv;
+class Assertion;
 class Device; // Forward declarition
 //Coverage event + Operational exception .
 
@@ -99,6 +100,7 @@ public:
 	virtual int get_event(int id) = 0;
 };
 
+// EDIT DISTANCE
 class editDistance : public Coverage {
 	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();
@@ -107,14 +109,37 @@ class editDistance : public Coverage {
 private:
 };
 
+// uint32_t SV_equality(Assertion* State){
+// 	return ALL_OK;
+// }
+
+// uint32_t SV_inequality(Assertion* State){
+// 	return ALL_OK;
+// }
+// // SV ASSERTIONS
+// class Assertion{
+// 	Assertion(uint32_t type);
+// 	~Assertion();
+// 	// Store a pointer to parent;
+
+// 	//read up on how to switch between function pointers or how to efficiently write functions
+// 	std::vector<uint64_t> scratchPad;
+// 	const uint32_t (*Eval[])(Assertion*) = {SV_equality,SV_inequality};
+// 	//void (uint32_t)evaluate(void*);
+// 	uint32_t evaluate[i]();
+// }
+
 class SVAssetrions : public Coverage {
-	bool update();
+	bool update() override;
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
 	int get_event(int id);
+// SVA specific containers
+
 private:
 };
 
+// TOGGLE COVERAGE
 class ToggleCoverage : public Coverage {
 	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();

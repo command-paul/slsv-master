@@ -82,7 +82,7 @@ public:
 
     bool initialise();
     bool loadTestVector();
-    bool run();// Design a better run control system and implement
+    uint32_t run();// Design a better run control system and implement
     bool checkpoint();
     bool restore();
 

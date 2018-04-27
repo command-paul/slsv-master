@@ -23,4 +23,8 @@ link_directories(${RISCV}/lib)
 add_executable(bst testBasicSelfTest.cpp)
 target_include_directories (bst PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include) 
 target_link_libraries (bst LINK_PUBLIC slsv_framework State Interface Coverage slsvSpikeIf)
+
+add_executable(lsv testLockStepVerification.cpp)
+target_include_directories (lsv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include) 
+target_link_libraries (lsv LINK_PUBLIC slsv_framework State Interface Coverage slsvSpikeIf)
 #target_link_libraries(testSpikeIf riscv spike_main fesvrState Interface Coverage slsv_framework ) 

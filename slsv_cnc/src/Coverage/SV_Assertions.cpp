@@ -2,13 +2,32 @@
 #include <iostream>
 #include <vector>
 
-// Public Access Status Functions
+// SVA update policy
 
 bool SVAssetrions::update(){
-	return true;
+	// Container to houle all declared L1 Assertions
+	// uint32_t iterator = AVector.size();
+	// while(iterator > 0){
+	// 	type =
+	// }
+	return ALL_OK;
 }
 // House Sva DEcls .
 
+// Function pointer to all implements SVA assetrtions 
+
+
+// EOFP
+
+uint32_t SVA_Equality(bool MN1 , uint64_t address1 ,bool MN2 , uint64_t address2 ){
+	return ALL_OK;
+}
+
+uint32_t SVA_Equality(bool MN1 , uint64_t address1 ,uint64_t value ){
+	return ALL_OK;
+}
+
+// Public Access Gneral Purpose Coverage functions
 
 std::pair<bool,std::vector<uint64_t>> SVAssetrions::event(){
 	std::pair<bool,std::vector<uint64_t>> a;
