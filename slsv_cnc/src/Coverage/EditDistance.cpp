@@ -13,6 +13,6 @@ std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> editDistance::get_r
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> a;
 	return a;
 }
-int editDistance::get_event(int id){
+uint32_t editDistance::get_event(uint32_t id){
 	return 0;
 }

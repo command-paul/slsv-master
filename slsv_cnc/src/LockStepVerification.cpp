@@ -26,7 +26,7 @@ bool LockStep_Verification::restore(){
 uint32_t LockStep_Verification::run(){
     uint32_t evA = ALL_OK;
     uint32_t evB = ALL_OK;
-    while((evA == ALL_OK)&(evB == ALL_OK)){
+    while((evA + evB == ALL_OK)){
         // essentially coverage module stuff and return event
         // for(int i = 0 ; i <coverageTrackers.size() ; i ++){
         //     event = coverageTrackers[i]->update();

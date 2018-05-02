@@ -20,15 +20,15 @@ uint32_t basicDeviceTests::run(){
     uint32_t event = ALL_OK;
     while((event  = DUT.Bridge->Single_Step()) == ALL_OK){
         // essentially coverage module stuff and return event
-        for(int i = 0 ; i <coverageTrackers.size() ; i ++){
-            event = coverageTrackers[i]->update();
-            if(event != ALL_OK) break;
-        }
+        // The updaate function is looking at the Update vector in the trace cache and not the scratch state        
         DUT.Cache->updateScratch();
+        for(int i = 0 ; i <coverageTrackers.size() ; i ++){
+            if(coverageTrackers[i]->update()) event = coverageTrackers[i]->get_event(0);
+            if(event != ALL_OK) return event;
+        }
         //DUT.Cache->commitScratch(); //get back to this post testing // Noto physically necessary to exist // only needes when checkpointing 
     }
     //handle single step error or num run expired 
-
     return event; // or the run cycles expired all ok eqv 
     }
 

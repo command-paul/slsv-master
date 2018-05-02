@@ -27,11 +27,12 @@
 * ------------------------------------------------------------------------------------------------*/
 
 #include "../src/TestInstance.hpp"
-#include "../src/Interface/V0.hpp"
+#include "../src/Interface/V0/V0.hpp"
 #include "../src/Interface/SpikeSlsvIntreface/SpikeIf.hpp"
 
 #include <iostream>
 
+#define CHECKPROPS 1000
 
 int main(){
 // Initialise Device
@@ -60,11 +61,22 @@ int main(){
     
     A.DUT.Bridge = new SpikeIf;
     A.DUT.Bridge->Parent = &(A.DUT);
+    
+    A.coverageTrackers.push_back(new SVAssetrions);
+    
+    // Test for increased comutational latency because of adding state trackers
+    
+    for(int itr = 0 ;itr <CHECKPROPS;itr++){
+        ((SVAssetrions*)A.coverageTrackers[0])->add_assertion({&(A.DUT)},1,{0,0,0,0});
+    }
+    ((SVAssetrions*)A.coverageTrackers[0])->add_assertion({&(A.DUT)},0,{0,0,0,0});
+    //((SVAssetrions*)A.coverageTrackers[0])->update();
+    //((SVAssetrions*)A.coverageTrackers[0])-> ; 
+
     ((SpikeIf*)A.DUT.Bridge)->setISA("RV64IMAFD");
     ((SpikeIf*)A.DUT.Bridge)->SpikeArguments =("/home/commandpaul/slsv-master/test_vectors/Tests/test" + std::to_string(0) + ".rv64imafd") ;
     ((SpikeIf*)A.DUT.Bridge)->Initialise();
     ((SpikeIf*)A.DUT.Bridge)->Synchronise();
-    
 // Pause break to acomodate a special interface for spike only.
 // The Interface has been configured The Code below is a prototype for Basic Self Test running.    
     A.run();

@@ -28,8 +28,8 @@
 #ifndef Interface_V0_H
 #define Interface_V0_H
 
-#include "../TestInstance.hpp"
-#include "./Telnet/libtelnet.hpp"
+#include "../../TestInstance.hpp"
+#include "../Telnet/libtelnet.hpp"
 
 class V0 : public Interface{
 public:

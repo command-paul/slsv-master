@@ -1,5 +1,5 @@
 #include "V0.hpp"
-#include "./Telnet/libtelnet.hpp"
+#include "../Telnet/libtelnet.hpp"
 
 V0::V0(){
 	ip = "0.0.0.0";

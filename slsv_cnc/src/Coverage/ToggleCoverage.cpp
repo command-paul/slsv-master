@@ -15,7 +15,7 @@ std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> ToggleCoverage::get
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> a;
 	return a;
 }
-int ToggleCoverage::get_event(int id){
+uint32_t ToggleCoverage::get_event(uint32_t id){
 	return 0;
 }
 

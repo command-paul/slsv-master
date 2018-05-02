@@ -42,4 +42,7 @@
 #define DEVICE_BASIC_TEST_1     0x10000001
 #define TRACE_CACHE_FULL        0x11111111
 
+#define SVA1D_EQUALITY          0x10100001
+#define SVA1D_INEQUALITY        0x10100010
+
 #endif

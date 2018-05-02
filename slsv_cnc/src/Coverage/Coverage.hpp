@@ -28,9 +28,12 @@
 #ifndef Coverage_H
 #define Coverage_H
 
+#define SVA_INDEX 2 // Total Number of defined assertion types  
+
 #include <vector>
 #include <cstdint>
 #include <string>
+#include "../events.hpp"
 // #include "../State/State.hpp"
 // #include "../Interface/Interface.hpp"
 #include "../TestInstance.hpp"
@@ -97,7 +100,7 @@ public:
 	virtual bool update()=0;
 	virtual std::pair<bool,std::vector<uint64_t>> event()=0;
 	virtual std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results()= 0;
-	virtual int get_event(int id) = 0;
+	virtual uint32_t get_event(uint32_t id) = 0;
 };
 
 // EDIT DISTANCE
@@ -105,38 +108,60 @@ class editDistance : public Coverage {
 	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
-	int get_event(int id);
+	uint32_t get_event(uint32_t id);
 private:
 };
 
-// uint32_t SV_equality(Assertion* State){
+uint32_t SV_1D_equality(Assertion* State); //{
+// 	std::cout << "1D equality" << std::endl ;
 // 	return ALL_OK;
 // }
 
-// uint32_t SV_inequality(Assertion* State){
-// 	return ALL_OK;
+uint32_t SV_1D_inequality(Assertion* State);//{
+	// std::cout << "1D inequality" << std::endl ;
+	// return ALL_OK;
 // }
+
+// SV ASSERTIONS
+class Assertion{
+public:
+	Assertion(Device* Parentp,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args);
+	~Assertion();
+	// Store a pointer to parent;
+	Device* Parent; // 1D Assertion
+	//read up on how to switch between function pointers or how to efficiently write functions
+ 	uint32_t (*Eval)(Assertion*) = NULL ;
+	std::vector<uint64_t> scratchPad;
+};
+
+
 // // SV ASSERTIONS
-// class Assertion{
-// 	Assertion(uint32_t type);
-// 	~Assertion();
+// class Assertion2D:public Assertion {
+// public:
+// 	Assertion2D(Device* deviceA ,Device* deviceB,uint32_t type) override;
+// 	~Assertion2D();
 // 	// Store a pointer to parent;
-
+// 	Device* deviceA; 
+// 	Device* deviceB;
 // 	//read up on how to switch between function pointers or how to efficiently write functions
+// 	uint32_t (*Eval)(Assertion*) = NULL ; //  function pointer 
 // 	std::vector<uint64_t> scratchPad;
-// 	const uint32_t (*Eval[])(Assertion*) = {SV_equality,SV_inequality};
-// 	//void (uint32_t)evaluate(void*);
-// 	uint32_t evaluate[i]();
-// }
+// };
 
 class SVAssetrions : public Coverage {
+public:
+	// This parent class of SVA holds the function pointers (vuln point to overflow attacks :P)
+	uint32_t add_assertion(std::vector<Device*> Devices,uint32_t type,std::vector<uint64_t> Args);
 	bool update() override;
+	std::vector<Assertion*> Assertions ;
+
+	// The below seem un necessary
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
-	int get_event(int id);
+	uint32_t get_event(uint32_t id); // use ID to diff b/w events 
+	uint32_t Event0;
 // SVA specific containers
-
-private:
+	uint32_t (*Eval[SVA_INDEX])(Assertion*)= {SV_1D_equality,SV_1D_inequality}; // Flexible Array Member at the end of Class
 };
 
 // TOGGLE COVERAGE
@@ -144,7 +169,7 @@ class ToggleCoverage : public Coverage {
 	bool update();
 	std::pair<bool,std::vector<uint64_t>> event();
 	std::pair<bool,std::pair<std::string,std::vector<uint64_t>>> get_results();
-	int get_event(int id);
+	uint32_t get_event(uint32_t id);
 private:
 };
 

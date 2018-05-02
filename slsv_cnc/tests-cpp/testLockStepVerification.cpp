@@ -27,7 +27,7 @@
 * ------------------------------------------------------------------------------------------------*/
 
 #include "../src/TestInstance.hpp"
-#include "../src/Interface/V0.hpp"
+#include "../src/Interface/V0/V0.hpp"
 #include "../src/Interface/SpikeSlsvIntreface/SpikeIf.hpp"
 
 #include <iostream>
@@ -52,11 +52,19 @@ int main(){
     A.deviceB.Cache->ScratchState->addHART();
     A.deviceB.Cache->Parent = &(A.deviceB);
 
-    A.deviceA.Bridge = new V0; 
+    // A.deviceA.Bridge = new V0; 
+    // A.deviceA.Bridge->Parent = &(A.deviceA);
+    // ((V0*)A.deviceA.Bridge)->configureV0("0.0.0.0","4444",0,0);
+    // ((V0*)A.deviceA.Bridge)->Initialise();
+    // ((V0*)A.deviceA.Bridge)->Synchronise();
+
+    A.deviceA.Bridge = new SpikeIf;
     A.deviceA.Bridge->Parent = &(A.deviceA);
-    ((V0*)A.deviceA.Bridge)->configureV0("0.0.0.0","4444",0,0);
-    ((V0*)A.deviceA.Bridge)->Initialise();
-    ((V0*)A.deviceA.Bridge)->Synchronise();
+    ((SpikeIf*)A.deviceA.Bridge)->setISA("RV64IMAFD");
+    ((SpikeIf*)A.deviceA.Bridge)->SpikeArguments =("/home/commandpaul/slsv-master/test_vectors/Tests/test" + std::to_string(0) + ".rv64imafd") ;
+    ((SpikeIf*)A.deviceA.Bridge)->Initialise();
+    ((SpikeIf*)A.deviceA.Bridge)->Synchronise();
+    
 
     A.deviceB.Bridge = new SpikeIf;
     A.deviceB.Bridge->Parent = &(A.deviceB);
@@ -65,6 +73,8 @@ int main(){
     ((SpikeIf*)A.deviceB.Bridge)->Initialise();
     ((SpikeIf*)A.deviceB.Bridge)->Synchronise();
     
+
+
 // Pause break to acomodate a special interface for spike only.
 // The Interface has been configured The Code below is a prototype for Basic Self Test running.    
     A.run();

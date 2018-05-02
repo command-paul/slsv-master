@@ -1,36 +1,20 @@
 %module slsv_interface
 %{
 /* Header files or functon declaritions here */
-	//#include "../src/Interface/Interface.hpp"
-	//#include "../src/Interface/V0.hpp"
-	//#import "../src/Interface/Telnet/libtelnet.hpp"
+	//#include "../TestInstance.hpp"
 	#include "Interface.hpp"
-	#include "V0.hpp"
-	#import "Telnet/libtelnet.hpp"
+	#include "V0/V0.hpp"
+	#include "SpikeSlsvIntreface/SpikeIf.hpp"
 %}
 
-%define SWIGWORDSIZE64
-%enddef
 %include "stdint.i"
 %include "std_vector.i"
 %include "std_pair.i"
 %include "typemaps.i"
 %include "std_string.i"
 
+class Device;
 
-//%template(regUpdateFrame) std::vector<std::pair<INTLEN,INTLEN>>;
-//%template(memUpdateFrame) std::vector<std::pair<INTLEN,INTLEN>>;
-//%template(traceFrame) std::pair<regUpdateFrame,memUpdateFrame>;
-
-
-// %template(lop1) std::pair<uint32_t,uint64_t>;
-// %template(lop2) std::pair<uint64_t,uint64_t>;
-// //%template(single_step_v1) std::vector<std::pair<uint64_t,uint64_t>>;
-// //%template(single_step_v2) std::vector<std::pair<uint32_t,uint64_t>>;
-// //%template(single_step) std::pair<single_step_v1,single_step_v2> ;
-// %template(single_step_ctr) std::pair<std::vector<std::pair<uint32_t,uint64_t>>,std::vector<std::pair<uint64_t,uint64_t>>>;
-
-// Interface - pure virtual
 class Interface{
 public:
 	// Constructors
@@ -44,7 +28,7 @@ public:
 	// Different policy for multi core
 	virtual bool Synchronise() = 0;
 	// Update State
-	virtual traceFrame Single_Step() = 0;
+	virtual uint32_t Single_Step() = 0;
 	// return a vector of updates pair of Registers and memory
 	virtual std::pair<uint64_t,std::vector<uint32_t>> GetVariable() = 0;
 	virtual bool SetVariable() = 0;
@@ -57,23 +41,27 @@ public:
 	// Checkpoint
 	// Record the entire accessable state from all reachable DUV`s
 	virtual bool Checkpoint(std::string File) = 0;
-	virtual bool Checkpoint() = 0; 
+	virtual bool Checkpoint() = 0; // to the already defined checkpoint file :/
 	// Restore
 	virtual bool Restore(std::string File) = 0;
 	// Restore the checkpoint state to the core and set/reset state variables as defined by user.
 	// Utility Methods -- Should be defined in derived interface classes
 	// bool set_ocd_port(uint32_t port);
 	// bool set_ocd_ip(char* ip);
+	Device* Parent;
 private:
 	//this is the Function Vector;
 	std::string CheckpointFile;
 	bool initialised = 0;
 };
 
+
+
 class V0 : public Interface{
 public:
     // Constructors
     V0();
+	V0(Device* parentPointer);
 	// Destructor
     ~V0() override ;
 	// Initialise 
@@ -83,9 +71,8 @@ public:
 	// Different policy for multi core
 	bool Synchronise()  override;
 	// Update State
-	traceFrame Single_Step()  override;
+	uint32_t Single_Step()  override;
 	// return a vector of updates 
-	// Access HART + NHSV
 	std::pair<uint64_t,std::vector<uint32_t>> GetVariable()  override;
 	bool SetVariable()  override;
 	// Access Memory
@@ -102,14 +89,70 @@ public:
 	bool Restore(std::string File)  override;
 	// Restore the checkpoint state to the core and set/reset state variables as defined by user.
 	// Utility Methods -- Should be defined in derived interface classes
-	//bool set_ocd_port(uint32_t port);
-	//bool set_ocd_ip(char* ip);
+	bool set_ocd_port(uint32_t port);
+	bool set_ocd_ip(char* ip);
 	bool configureV0(std::string IP,std::string PORTS,uint32_t ABITS, uint32_t WIDTH);
-
 private:
 	std::string ip;
 	std::string port;
 	uint32_t abits;
 	uint32_t width;
 	TelnetOCD* Transport;
+};
+
+
+class SpikeIf : public Interface{
+public:
+    // Constructors
+    SpikeIf();
+	// Destructor
+    ~SpikeIf() override ;
+	
+	//Spike Command Line Arguments 
+	bool setISA(std::string);
+	bool setProcessors(u_int16_t);
+	bool setMiB(u_int16_t);
+	bool setMVect(std::vector<std::pair<uint64_t,u_int64_t>>);
+	bool setPC(uint64_t);
+	bool setPK();
+	bool setElfToLoad();
+	bool setHalted(bool Halted);
+	bool genSpikeArguments();
+	// Other NFU Options can be implemented later. reference left below for spike as of Apr 9 2018
+
+	// Initialise essentially passes the configuration argument and starts and waits for a command
+	bool Initialise()  override;
+	
+	// Syncronise
+	// Get it to the defined sync point which is the Ebreak at start address.
+	// Different policy for multi core
+	bool Synchronise()  override;
+
+	// Single_Step // Get all the updates that happened over the course of a single step
+	uint32_t Single_Step()  override;
+	
+	// return a vector of updates 
+	std::pair<uint64_t,std::vector<uint32_t>> GetVariable()  override;
+	bool SetVariable()  override;
+
+	// Access Memory
+	std::pair<uint64_t,std::vector<uint32_t>> GetMemory()  override;
+	bool SetMemory()  override;
+	
+	// Load Memory w/ Use Fastest method available to load the program memory 
+	std::pair<uint64_t,std::vector<uint32_t>> DumpMemory()  override;
+	bool LoadBinary(uint64_t address)  override;
+	
+	// Checkpoint
+	// Record the entire accessable state from all reachable DUV`s
+	bool Checkpoint(std::string File)  override;
+	bool Checkpoint() override; // to the already defined checkpoint file :  /
+	// Restore
+	bool Restore(std::string File)  override;
+	// Restore the checkpoint state to the core and set/reset state variables as defined by user.
+	// Utility Methods -- Should be defined in derived interface classes
+
+	sim_t* s;
+	std::string SpikeArguments = "/home/commandpaul/slsv-master/test_vectors/Tests/test0.rv64imafd";
+	// donot Leave any superfluous spaces
 };

@@ -5,7 +5,9 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(BUILD_SWIG FALSE)
 
 FIND_PACKAGE(SWIG REQUIRED)
-if (${BUILD_SWIG} EQUAL TRUE )
+
+#if (${BUILD_SWIG} EQUAL TRUE )
+
 include(UseSWIG)
 INCLUDE_DIRECTORIES(/usr/include/python3.6)
 INCLUDE_DIRECTORIES(.src/Coverage)
@@ -19,7 +21,7 @@ SET_SOURCE_FILES_PROPERTIES(Coverage.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(Coverage.i PROPERTIES SWIG_FLAGS "-includeall")
 SWIG_ADD_LIBRARY(slsv_coverage LANGUAGE python SOURCES Coverage.i Coverage.cpp EditDistance.cpp SV_Assertions.cpp ToggleCoverage.cpp)
 SWIG_LINK_LIBRARIES(slsv_coverage ${PYTHON_LIBRARIES})
-endif(${BUILD_SWIG} EQUAL TRUE )
+#endif(${BUILD_SWIG} EQUAL TRUE )
 
 
 add_library (Coverage SHARED Coverage.cpp EditDistance.cpp SV_Assertions.cpp ToggleCoverage.cpp)
