@@ -8,10 +8,19 @@ uint32_t SV_1D_equality(Assertion* State){
 	return ALL_OK;
 }
 
+// I think the 1D 2D business can be cleared up once i have a sloid State variable addressing policy in place
+
 uint32_t SV_1D_inequality(Assertion* State){
 	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC > 0x80002000) return SVA1D_INEQUALITY;
 	return ALL_OK;
 }
+
+uint32_t SV_2D_notequal(Assertion* State){
+	Assertion2D* St = (Assertion2D*) State ;
+	if(St->deviceB->Cache->ScratchState->HART_Vec[0].PC != St->deviceA->Cache->ScratchState->HART_Vec[0].PC ) return SVA2D_NOTEQUAL;
+	return ALL_OK;
+}
+
 // SVA update policy
 bool SVAssetrions::update(){
 	for(int i=0;i<Assertions.size();i++){
@@ -22,9 +31,16 @@ bool SVAssetrions::update(){
 // House Sva DEcls .
 
 // add a SVAssertion
-uint32_t SVAssetrions::add_assertion(Device* Devices,uint32_t type,std::vector<uint64_t> Args){
-	Assertions.push_back(new Assertion(Devices,Eval[type],Args));
-	return ALL_OK;
+uint32_t SVAssetrions::add_assertion(std::vector<Device*> Devices,uint32_t type,std::vector<uint64_t> Args){
+	if(type < 1000){
+		Assertions.push_back(new Assertion(Devices,Eval[type],Args));
+		return ALL_OK;
+	}
+	else{
+		type = type%1000;
+		Assertions.push_back(new Assertion2D(Devices,Eval[type],Args));
+		return ALL_OK;
+	}
 }
 
 
@@ -62,8 +78,8 @@ uint32_t SVAssetrions::get_event(uint32_t id){
 
 
 // Housekeeping for the 1DA class 
-Assertion ::Assertion(Device* Parentp,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args){
-	Parent = Parentp;
+Assertion ::Assertion(std::vector<Device*> Devices,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args){
+	Parent = Devices[0];
 	Eval = FPTR;
 	scratchPad = Args;
 	return;
@@ -73,4 +89,15 @@ Assertion ::~Assertion(){
 	return;
 }
 
-// s
+
+Assertion2D::Assertion2D(std::vector<Device*> Devices,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args):Assertion(Devices,FPTR,Args){
+	deviceA = Devices[0];
+	deviceB = Devices[1];
+	Eval = FPTR;
+	scratchPad = Args;
+	return;
+}
+
+Assertion2D::~Assertion2D(){
+	return;
+}

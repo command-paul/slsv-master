@@ -67,9 +67,9 @@ int main(){
     // Test for increased comutational latency because of adding state trackers
     
     for(int itr = 0 ;itr <CHECKPROPS;itr++){
-        ((SVAssetrions*)A.coverageTrackers[0])->add_assertion(&(A.DUT),1,{0,0,0,0});
+        ((SVAssetrions*)A.coverageTrackers[0])->add_assertion({&(A.DUT)},1,{0,0,0,0});
     }
-    ((SVAssetrions*)A.coverageTrackers[0])->add_assertion(&(A.DUT),0,{0,0,0,0});
+    ((SVAssetrions*)A.coverageTrackers[0])->add_assertion({&(A.DUT)},0,{0,0,0,0});
     //((SVAssetrions*)A.coverageTrackers[0])->update();
     //((SVAssetrions*)A.coverageTrackers[0])-> ; 
 

@@ -50,14 +50,15 @@ def BasicSelfTests():
 
     SVA = sf.SVAssetrions()
     config  = [0,0,0,0]
-    SVA.add_assertion(A.DUT,0,config)
+    dv = [A.DUT,A.DUT,A.DUT]
+    SVA.add_assertion(dv,0,config)
     #A.coverageTrackers.push_back(SVA)
 
     SVA1 = sf.SVAssetrions()
     config1  = [0,0,0,0]
-    SVA1.add_assertion(A.DUT,1,config1)
+    dv1 = [A.DUT,A.DUT,A.DUT]
+    SVA1.add_assertion(dv1,1,config1)
     A.coverageTrackers.push_back(SVA1)
-
 
     #A.coverageTrackers[0].add_assertion({A.DUT},1,{0,0,0,0});
     A.DUT.Bridge.__class__ = sf.SpikeIf
@@ -88,12 +89,10 @@ def LockstepVerification():
     A.deviceB.Cache.ScratchState.addHART();
     A.deviceB.Cache.Parent = A.deviceB;
 
-    #A.deviceA.Bridge = new V0; 
-    #A.deviceA.Bridge->Parent = A.deviceA
-    #((V0*)A.deviceA.Bridge)->configureV0("0.0.0.0","4444",0,0);
-    #((V0*)A.deviceA.Bridge)->Initialise();
-    #((V0*)A.deviceA.Bridge)->Synchronise();
-
+    #DABV0 = sf.V0()
+    #DABV0.Parent = A.deviceA
+    #DABV0.configureV0("0.0.0.0","4444",0,0);
+    
     DAB = sf.SpikeIf()
     DAB.Parent = A.deviceA
     DAB.setISA("RV64IMAFD");
@@ -105,7 +104,20 @@ def LockstepVerification():
     DBB.SpikeArguments =("/home/commandpaul/slsv-master/test_vectors/Tests/test" + str(0) + ".rv64imafd") ;
 
     A.deviceA.Bridge = DAB
+    #A.deviceA.Bridge = DABV0
     A.deviceB.Bridge = DBB
+
+    SVA = sf.SVAssetrions()
+    config  = [0,0,0,0]
+    dv = [A.deviceA,A.deviceB]
+    SVA.add_assertion(dv,1002,config)
+    A.coverageTrackers.push_back(SVA)
+
+    SVA1 = sf.SVAssetrions()
+    config1  = [0,0,0,0]
+    dv1 = [A.deviceA]
+    SVA1.add_assertion(dv1,1,config1)
+    A.coverageTrackers.push_back(SVA1)
 
     A.deviceA.Bridge.Initialise()
     A.deviceB.Bridge.Initialise()    

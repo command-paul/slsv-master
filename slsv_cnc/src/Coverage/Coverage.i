@@ -13,6 +13,7 @@ class Device; // Forward declarition
 %include "std_pair.i"
 %include "typemaps.i"
 
+%template(Dvec) std::vector<Device*> ;
 %naturalvar SVAssetrions::add_assertion;
 
 %factory(Coverage,editDistance,SVAssetrions,ToggleCoverage);
@@ -47,7 +48,7 @@ private:
 class SVAssetrions : public Coverage {
 public:
 	// This parent class of SVA holds the function pointers (vuln point to overflow attacks :P)
-	uint32_t add_assertion(Device* Devices,uint32_t type,std::vector<uint64_t> Args);
+	uint32_t add_assertion(std::vector<Device*> Devices,uint32_t type,std::vector<uint64_t> Args);
 	bool update() override;
 	std::vector<Assertion*> Assertions ;
 

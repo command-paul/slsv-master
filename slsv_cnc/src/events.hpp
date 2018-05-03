@@ -45,4 +45,8 @@
 #define SVA1D_EQUALITY          0x10100001
 #define SVA1D_INEQUALITY        0x10100010
 
+#define SVA2D_EQUALITY          0x10110001
+#define SVA2D_INEQUALITY        0x10110010
+#define SVA2D_NOTEQUAL          0x10110011
+
 #endif

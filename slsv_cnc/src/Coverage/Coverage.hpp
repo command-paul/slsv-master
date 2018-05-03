@@ -28,7 +28,7 @@
 #ifndef Coverage_H
 #define Coverage_H
 
-#define SVA_INDEX 2 // Total Number of defined assertion types  
+#define SVA_INDEX 3 // Total Number of defined assertion types  
 
 #include <vector>
 #include <cstdint>
@@ -122,10 +122,12 @@ uint32_t SV_1D_inequality(Assertion* State);//{
 	// return ALL_OK;
 // }
 
+uint32_t SV_2D_notequal(Assertion* State);
+
 // SV ASSERTIONS
 class Assertion{
 public:
-	Assertion(Device* Parentp,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args);
+	Assertion(std::vector<Device*> Devices,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args);
 	~Assertion();
 	// Store a pointer to parent;
 	Device* Parent; // 1D Assertion
@@ -134,24 +136,20 @@ public:
 	std::vector<uint64_t> scratchPad;
 };
 
+// SV ASSERTIONS
+class Assertion2D:public Assertion {
+public:
+	Assertion2D(std::vector<Device*> Devices,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args);
+	~Assertion2D();
 
-// // SV ASSERTIONS
-// class Assertion2D:public Assertion {
-// public:
-// 	Assertion2D(Device* deviceA ,Device* deviceB,uint32_t type) override;
-// 	~Assertion2D();
-// 	// Store a pointer to parent;
-// 	Device* deviceA; 
-// 	Device* deviceB;
-// 	//read up on how to switch between function pointers or how to efficiently write functions
-// 	uint32_t (*Eval)(Assertion*) = NULL ; //  function pointer 
-// 	std::vector<uint64_t> scratchPad;
-// };
+	Device* deviceA; 
+	Device* deviceB;
+};
 
 class SVAssetrions : public Coverage {
 public:
 	// This parent class of SVA holds the function pointers (vuln point to overflow attacks :P)
-	uint32_t add_assertion(Device* Devices,uint32_t type,std::vector<uint64_t> Args);
+	uint32_t add_assertion(std::vector<Device*> Devices,uint32_t type,std::vector<uint64_t> Args);
 	bool update() override;
 	std::vector<Assertion*> Assertions ;
 
@@ -161,7 +159,7 @@ public:
 	uint32_t get_event(uint32_t id); // use ID to diff b/w events 
 	uint32_t Event0;
 // SVA specific containers
-	uint32_t (*Eval[SVA_INDEX])(Assertion*)= {SV_1D_equality,SV_1D_inequality}; // Flexible Array Member at the end of Class
+	uint32_t (*Eval[SVA_INDEX])(Assertion*)= {SV_1D_equality,SV_1D_inequality,SV_2D_notequal}; // Flexible Array Member at the end of Class
 };
 
 // TOGGLE COVERAGE
