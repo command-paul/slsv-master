@@ -22,7 +22,7 @@ uint32_t basicDeviceTests::run(){
         // essentially coverage module stuff and return event
         // The updaate function is looking at the Update vector in the trace cache and not the scratch state        
         DUT.Cache->updateScratch();
-        for(int i = 0 ; i <coverageTrackers.size() ; i ++){
+        for(int i = 0 ; i < coverageTrackers.size() ; i ++){
             if(coverageTrackers[i]->update()) event = coverageTrackers[i]->get_event(0);
             if(event != ALL_OK) return event;
         }

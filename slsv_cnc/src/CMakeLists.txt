@@ -27,11 +27,14 @@ SET_SOURCE_FILES_PROPERTIES(slsv_framework.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(slsv_framework.i PROPERTIES SWIG_FLAGS "-includeall")
 SWIG_ADD_LIBRARY(slsv_framework LANGUAGE python SOURCES slsv_framework.i DeviceInstance.cpp BasicDeviceTests.cpp LockStepVerification.cpp traceCache.cpp)
 #SWIG_ADD_MODULE(slsv_target python ./Device.i ./DeviceInstance.cpp)
-SWIG_LINK_LIBRARIES(slsv_framework ${PYTHON_LIBRARIES} Interface State Coverage riscv spike_main fesvr)
+SWIG_LINK_LIBRARIES(slsv_framework ${PYTHON_LIBRARIES} Interface State Coverage riscv spike_main fesvr )
 
 #endif(${BUILD_SWIG} EQUAL TRUE )
 
 #target_include_directories (slsv_framework PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include) # Specify the header files here
 add_library (slsv_framework SHARED DeviceInstance.cpp BasicDeviceTests.cpp LockStepVerification.cpp traceCache.cpp)
+#target_include_directories (Interface PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include)
+#target_include_directories (Interface PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include slsvSpikeIf)
+
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=gnu++0x")
 target_include_directories (slsv_framework PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include) # Specify the header files here

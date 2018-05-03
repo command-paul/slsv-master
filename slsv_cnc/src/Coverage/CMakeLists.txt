@@ -20,7 +20,7 @@ SET(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/slsv)
 SET_SOURCE_FILES_PROPERTIES(Coverage.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(Coverage.i PROPERTIES SWIG_FLAGS "-includeall")
 SWIG_ADD_LIBRARY(slsv_coverage LANGUAGE python SOURCES Coverage.i Coverage.cpp EditDistance.cpp SV_Assertions.cpp ToggleCoverage.cpp)
-SWIG_LINK_LIBRARIES(slsv_coverage ${PYTHON_LIBRARIES})
+SWIG_LINK_LIBRARIES(slsv_coverage slsv_framework State ${PYTHON_LIBRARIES})
 #endif(${BUILD_SWIG} EQUAL TRUE )
 
 

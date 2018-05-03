@@ -79,6 +79,12 @@ private:
 #include <vector>
 #include "Commons.hpp"
 
+
+typedef  std::pair<INTLEN,INTLEN> update_t;
+typedef  std::vector<update_t> UpdateFrame_t;
+typedef  std::pair<UpdateFrame_t,UpdateFrame_t> traceFrame_t;
+
+
 class Interface; // Some Circular dep issue only sitting with interface so far ;
 class Coverage;
 class traceCache;
@@ -148,6 +154,34 @@ public:
     bool restore();
     std::vector<Coverage*> coverageTrackers;
     bool addCoverageTracker();
+};
+
+// Should I integrate the trace cache intot he coverage module section  ?? Me thinks yes .
+class traceCache{
+public:
+    riscv* ScratchState; 
+	// The above is my sacraficeing space for commputational overhead & time to functional deployment
+	Device* Parent;
+    traceCache();
+	//traceCache(uint32_t max_len);    // ease of use - later not in testing :P
+    ~traceCache();
+
+    std::vector<traceFrame_t> Cache; 
+    uint32_t max_length;
+    uint32_t curr_length;
+    std::vector<uint64_t> traceCommitMask ; // This restricts the Number of possible coverage trackers to 64
+	uint64_t traceCommitClearMask = 0;
+	// 1D Assert Clear
+	// Trace Analysis Clear
+	// Toggle Coverage Clear
+	// 2D Assert Clear - can be disabled by Trace Analysis clear.
+	// Alternatively for lockstep if PC not match pc Step the Device that matches a sequence 
+    //bool configureScratchState();
+    uint32_t enqueueTF(traceFrame_t frame);
+    //bool commitTopFrame();
+    //bool commitNFrames(uint32_t N);
+	uint32_t updateScratch();
+	uint32_t commitScratch();
 };
 
 #endif

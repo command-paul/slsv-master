@@ -22,8 +22,8 @@ bool SVAssetrions::update(){
 // House Sva DEcls .
 
 // add a SVAssertion
-uint32_t SVAssetrions::add_assertion(std::vector<Device*> Devices,uint32_t type,std::vector<uint64_t> Args){
-	Assertions.push_back(new Assertion(Devices[0],Eval[type],Args));
+uint32_t SVAssetrions::add_assertion(Device* Devices,uint32_t type,std::vector<uint64_t> Args){
+	Assertions.push_back(new Assertion(Devices,Eval[type],Args));
 	return ALL_OK;
 }
 

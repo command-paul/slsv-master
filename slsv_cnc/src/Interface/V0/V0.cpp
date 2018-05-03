@@ -172,10 +172,10 @@ bool V0::configureV0(std::string IP,std::string PORT,uint32_t ABITS, uint32_t WI
 	return true;
 	}
 
-bool set_ocd_port(uint32_t port){
+bool V0::set_ocd_port(uint32_t port){
 	return true;
 }
-bool set_ocd_ip(char* ip){
+bool V0::set_ocd_ip(char* ip){
 	return true;
 }
 

@@ -10,12 +10,12 @@ INCLUDE_DIRECTORIES(${RISCV}/include/spike)
 
 link_directories(${RISCV}/lib)
 
-add_library (slsvSpikeIf SHARED SpikeIf.cpp)
+add_library (slsvSpikeIf SHARED SpikeIf.cpp ../Interface.cpp)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++11")
 
 target_include_directories (slsvSpikeIf PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include) # Specify the header files here
-target_link_libraries(slsvSpikeIf riscv spike_main fesvr State Coverage Interface slsv_framework) ## link to the shared object files here 
+target_link_libraries(slsvSpikeIf riscv spike_main fesvr State Coverage slsv_framework) ## link to the shared object files here 
 #target_include_directories (testSpikeIf PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RISCV}/include) # Specify the header files here
 #target_link_libraries(testSpikeIf riscv spike_main fesvrState Interface Coverage slsv_framework ) 
 # TDD On V0 Interface

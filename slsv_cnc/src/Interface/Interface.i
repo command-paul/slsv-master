@@ -15,6 +15,8 @@
 
 class Device;
 
+%factory(Interface ,V0 ,SpikeIf );
+
 class Interface{
 public:
 	// Constructors
