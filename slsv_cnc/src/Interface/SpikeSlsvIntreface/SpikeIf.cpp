@@ -177,7 +177,7 @@ bool SpikeIf::Initialise() {
  s->set_histogram(histogram);
   
  s->run(); // Essentially initialises everything :P
-  std::cout<< "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl ;
+  //std::cout<< "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl ;
   //while(!done()){
   //s.main();
  s->set_log(log);
@@ -187,7 +187,7 @@ bool SpikeIf::Initialise() {
   //reg_t get_csr(int which);
   //mmu_t* get_mmu() { return mmu; }
   //state_t* get_state() { return &state; }
-  std::cout << std::hex << HART0->get_csr(2816) << std::endl;
+  //std::cout << std::hex << HART0->get_csr(2816) << std::endl;
   //mmu_t hart0mmu = *(HART0.get_mmu());
   state_t* hart0state = HART0->get_state();
   // use spike bus_t to access memory mapped IO . but bus is private and i will have to seriously modify something to get it :(
@@ -205,7 +205,7 @@ bool SpikeIf::Initialise() {
 bool SpikeIf::Synchronise() {
   processor_t* HART0 =s->get_core(0);
   state_t* hart0state = HART0->get_state();
-  std::cout << std::hex << hart0state->pc << std::endl;
+  //std::cout << std::hex << hart0state->pc << std::endl;
   while(hart0state->pc <= 0x80000000){
     s->set_log(0);
     //std::cout << "lop" << std::endl;
@@ -223,7 +223,7 @@ bool SpikeIf::Synchronise() {
 uint32_t SpikeIf::Single_Step() {
   traceFrame_t updates;
 	uint32_t event = ALL_OK; // ref events.hpp	
-	std::cout << "<<<<<<" << std::endl;
+	//std::cout << "<<<<<<" << std::endl;
 	uint32_t iterator = 0;
 // 	MEMORY
 	UpdateFrame_t MemUpdates;
@@ -255,7 +255,7 @@ uint32_t SpikeIf::Single_Step() {
       uint64_t csval = hartPtr->get_register(i);
 			if(value != csval){
 				// Check if this is an update , if not skip // Resolve after reference to state container is sorted
-				std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
+				//std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
 				// The I being comitted here needs to be transelated to the required address
 				update_t temp = std::make_pair(i,value);
 				RegUpdates.push_back(temp);
@@ -278,7 +278,7 @@ uint32_t SpikeIf::Single_Step() {
 	*/
 	// Partent->traceCache.cache(updates);
 	// free updates ?? update and free all liabilities of the interface file ??? -  yasss good in long run as everyone fends for his / her own memory
-	std::cout << "<<<<<<" << std::endl;
+	//std::cout << "<<<<<<" << std::endl;
 	return event;
 }
 

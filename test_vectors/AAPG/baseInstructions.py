@@ -164,7 +164,7 @@ def gen_base_instr(opcode):
 				if memb['instrPosition']-2<maxBranchPosition and memb['setBranch'] == False:
 					maxBranchPosition=memb['instrPosition']-2
 			
-			if maxBranchPosition< cv.instructionNumber+6:
+			if maxBranchPosition< cv.instructionNumber+4:
 				return
 			minBranchPosition=max((max(previousBranches)+4,cv.instructionNumber+4))
 			

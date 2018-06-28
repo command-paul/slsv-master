@@ -37,10 +37,15 @@
 /*
         Event Name  {4'h Event Origin,4'h Event ID} 
 */
+
 #define ALL_OK                  0x00000000
 #define DEVICE_BASIC_TEST_0     0x10000000
 #define DEVICE_BASIC_TEST_1     0x10000001
 #define TRACE_CACHE_FULL        0x11111111
+
+#define TO_HOST_0               0x11110000
+#define TO_HOST_1               0x11110001
+#define TO_HOST_2               0x11110010
 
 #define SVA1D_EQUALITY          0x10100001
 #define SVA1D_INEQUALITY        0x10100010

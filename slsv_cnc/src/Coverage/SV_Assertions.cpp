@@ -1,25 +1,35 @@
 #include"Coverage.hpp"
 #include <iostream>
 #include <vector>
-// Helper functions 
+
+// Assertion Evaluation Kernels
+
+//
 
 uint32_t SV_1D_equality(Assertion* State){
-	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == 0x80001000) return SVA1D_EQUALITY;
+	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == 0x8000F000) return SVA1D_EQUALITY;
 	return ALL_OK;
 }
 
-// I think the 1D 2D business can be cleared up once i have a sloid State variable addressing policy in place
-
 uint32_t SV_1D_inequality(Assertion* State){
-	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC > 0x80002000) return SVA1D_INEQUALITY;
+	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC > 0x8000D000) return SVA1D_INEQUALITY;
 	return ALL_OK;
 }
 
 uint32_t SV_2D_notequal(Assertion* State){
 	Assertion2D* St = (Assertion2D*) State ;
-	if(St->deviceB->Cache->ScratchState->HART_Vec[0].PC != St->deviceA->Cache->ScratchState->HART_Vec[0].PC ) return SVA2D_NOTEQUAL;
+	uint64_t pc0 = St->deviceB->Cache->ScratchState->HART_Vec[0].PC;
+	uint64_t pc1 = St->deviceA->Cache->ScratchState->HART_Vec[0].PC;
+	std::cout << "D1\t" << std::hex <<  pc0  << "\tD2\t" << pc1 << std::endl ; 
+	if(pc0!= pc1) return SVA2D_NOTEQUAL;
 	return ALL_OK;
 }
+
+
+
+
+
+
 
 // SVA update policy
 bool SVAssetrions::update(){

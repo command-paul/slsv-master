@@ -25,3 +25,4 @@ docs/latex
 __pycache__
 slsv_*.py
 *_wrap.cxx
+*.pyc
