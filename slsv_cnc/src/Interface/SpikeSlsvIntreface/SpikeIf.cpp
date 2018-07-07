@@ -230,7 +230,7 @@ bool SpikeIf::Synchronise() {
 uint32_t SpikeIf::Single_Step() {
   traceFrame_t updates;
 	uint32_t event = ALL_OK; // ref events.hpp	
-	//std::cout << "<<<<<<" << std::endl;
+	std::cout << "<<<<<<" << std::endl;
 	uint32_t iterator = 0;
 // 	MEMORY
 	UpdateFrame_t MemUpdates;
@@ -285,7 +285,7 @@ uint32_t SpikeIf::Single_Step() {
 	*/
 	// Partent->traceCache.cache(updates);
 	// free updates ?? update and free all liabilities of the interface file ??? -  yasss good in long run as everyone fends for his / her own memory
-	std::cout << "<<<<<<" << std::endl;
+	//std::cout << "<<<<<<" << std::endl;
 	return event;
 }
 

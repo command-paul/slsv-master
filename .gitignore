@@ -27,3 +27,4 @@ __pycache__
 slsv_*.py
 *_wrap.cxx
 *.log
+*.pyc

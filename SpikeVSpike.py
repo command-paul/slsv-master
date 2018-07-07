@@ -31,7 +31,6 @@ import signal # for handling signals later not being used now :/
 
 
 def BasicSelfTests(path,telnet_port1,telnet_port2):
-
     A = sf.basicDeviceTests()
     A.DUT.deviceName = "spikeOpenOCD"
     A.DUT.Cache = sf.traceCache()
@@ -53,7 +52,6 @@ def BasicSelfTests(path,telnet_port1,telnet_port2):
     
     #A.deviceA.Bridge = DAB
     A.DUT.Bridge = DABV0
-
     SVA = sf.SVAssetrions()
     config  = [0,0,0,0]
     dv = [A.DUT]
@@ -75,7 +73,6 @@ def BasicSelfTests(path,telnet_port1,telnet_port2):
     print("Exiting Test with event",format(event, '#x'))
     return
 
-
 def LockstepVerification(path,telnet_port1,telnet_port2):
     A = sf.LockStep_Verification()
     A.deviceA.deviceName = "spikeOpenOCD"
@@ -93,31 +90,27 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
     A.deviceB.Cache.ScratchState.TopRegAddress = 32
     A.deviceB.Cache.ScratchState.addHART()
     A.deviceB.Cache.Parent = A.deviceB
-
+    
     #DABV0 = sf.V0()
     #DABV0.Parent = A.deviceA
     #DABV0.configureV0("0.0.0.0",telnet_port1,0,0);
-    #     
+  #     
     #DBBV0 = sf.V0()
     #DBBV0.Parent = A.deviceB
     #DBBV0.configureV0("0.0.0.0",telnet_port2,0,0);
-    
     DAB = sf.SpikeIf()
     DAB.Parent = A.deviceA
     DAB.setISA("RV64IMAFD")
     DAB.SpikeArguments =(path) 
-    
     DBB = sf.SpikeIf()
     DBB.Parent = A.deviceB
     DBB.setISA("RV64IMAFD")
-    DBB.SpikeArguments =(path) 
-
+    DBB.SpikeArguments =(path)
     A.deviceA.Bridge = DAB
     A.deviceB.Bridge = DBB
     #A.deviceA.Bridge = DABV0
     #A.deviceB.Bridge = DBBV0
-        
-   # '''    
+    # '''    
     SVA = sf.SVAssetrions()
     config  = [0,0,0,0]
     dv = [A.deviceA,A.deviceB]
@@ -145,21 +138,19 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
     #config  = []
     #SVA.add_assertion([dv[0]],3,config)
     A.coverageTrackers.push_back(SVA)
-
     A.deviceA.Bridge.Initialise()
-    A.deviceB.Bridge.Initialise()    
+    A.deviceB.Bridge.Initialise()
     A.deviceA.Bridge.Synchronise()
     A.deviceB.Bridge.Synchronise()
 
     event = 0
-     
     while event == 0x0 :
         event = A.run()
         print(A.deviceB.Cache.ScratchState.HART_Vec[0].PC)
         # Code here for event handler , replaces catching the return value of A.Run
     print("Exiting Test with event",format(event, '#x'))
-    DAB.destroy_s() # Spike Instance
-    DBB.destroy_s() # Spike Instance
+    #DAB.destroy_s() # Spike Instance
+    #DBB.destroy_s() # Spike Instance
     return
 
 
@@ -182,22 +173,23 @@ def DLockstepVerification(path):
     gdb_port2 = '3334'
     telnet_port2 = '4445'
 
-    process1 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port1)
+    #process1 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port1)
     #process1 = ss.SpawnShaktiV0()
-    process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
-    time.sleep(1)
-    process3 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
-    process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
-    time.sleep(1)
-    ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
-    ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
-    time.sleep(3)
+    #process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
+    #time.sleep(0.5)
+    #process3 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
+    #time.sleep(0.5)
+    #process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
+    #time.sleep(1)
+    #ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
+    #ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
+    #time.sleep(2)
     LockstepVerification(path,telnet_port1,telnet_port2)
     #windup test env 
-    process1.kill()
-    process2.kill()
-    process3.kill()
-    process4.kill()
+    #process1.kill()
+    #process2.kill()
+    #process3.kill()
+    #process4.kill()
 
 def DBasicSelfTests(path):
     bootstrap_path = '/scratch/slsv-master/test_vectors/bootstrap/output.riscv'

@@ -11,24 +11,24 @@ uint32_t SV_1D_equality(Assertion* State){
 	//std::cout << "BP :: \t" << std::hex << breakpoint << std::endl ; 
 	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == breakpoint) return SVA1D_EQUALITY;
 	return ALL_OK;
-}
+	}
 
 uint32_t SV_1D_inequality(Assertion* State){
 	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC > 0x8000E000) return SVA1D_INEQUALITY;
 	return ALL_OK;
-}
+	}
 
 uint32_t SV_1D_stable(Assertion* State){
 	if(State->scratchPad.empty()) {
 		State->scratchPad.push_back(State->Parent->Cache->ScratchState->HART_Vec[0].PC);
 		return ALL_OK;
-	}
+		}
 	uint64_t temp = State->scratchPad.back();
 	State->scratchPad.pop_back();
 	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == temp ) return SVA1D_STABLE;
 	State->scratchPad.push_back(State->Parent->Cache->ScratchState->HART_Vec[0].PC);
 	return ALL_OK;
-}
+	}
 
 uint32_t SV_2D_notequal(Assertion* State){
 	Assertion2D* St = (Assertion2D*) State ;
@@ -40,6 +40,7 @@ uint32_t SV_2D_notequal(Assertion* State){
 	} 
 	return ALL_OK;
 }
+
 
 // SVA update policy
 bool SVAssetrions::update(){
