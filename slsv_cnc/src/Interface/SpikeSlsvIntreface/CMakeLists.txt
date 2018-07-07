@@ -8,6 +8,8 @@ INCLUDE_DIRECTORIES(${RISCV}/include/)
 INCLUDE_DIRECTORIES(${RISCV}/lib)
 INCLUDE_DIRECTORIES(${RISCV}/include/spike)
 
+INCLUDE_DIRECTORIES(./debug_rom/)
+
 link_directories(${RISCV}/lib)
 
 add_library (slsvSpikeIf SHARED SpikeIf.cpp ../Interface.cpp)

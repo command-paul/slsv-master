@@ -28,7 +28,7 @@
 #ifndef Coverage_H
 #define Coverage_H
 
-#define SVA_INDEX 3 // Total Number of defined assertion types  
+#define SVA_INDEX 4 // Total Number of defined assertion types  
 
 #include <vector>
 #include <cstdint>
@@ -112,17 +112,19 @@ class editDistance : public Coverage {
 private:
 };
 
-uint32_t SV_1D_equality(Assertion* State); //{
+uint32_t SV_1D_equality(Assertion* State); //{   //0
 // 	std::cout << "1D equality" << std::endl ;
 // 	return ALL_OK;
 // }
 
-uint32_t SV_1D_inequality(Assertion* State);//{
+uint32_t SV_1D_inequality(Assertion* State);//{ // 1
 	// std::cout << "1D inequality" << std::endl ;
 	// return ALL_OK;
 // }
 
-uint32_t SV_2D_notequal(Assertion* State);
+uint32_t SV_2D_notequal(Assertion* State); // number 2  , 1000 and 2 // 1002 :(
+
+uint32_t SV_1D_stable(Assertion* State); // number 3  for those playing along at home 
 
 // SV ASSERTIONS
 class Assertion{
@@ -159,7 +161,7 @@ public:
 	uint32_t get_event(uint32_t id); // use ID to diff b/w events 
 	uint32_t Event0;
 // SVA specific containers
-	uint32_t (*Eval[SVA_INDEX])(Assertion*)= {SV_1D_equality,SV_1D_inequality,SV_2D_notequal}; // Flexible Array Member at the end of Class
+	uint32_t (*Eval[SVA_INDEX])(Assertion*)= {SV_1D_equality,SV_1D_inequality,SV_2D_notequal,SV_1D_stable}; // Flexible Array Member at the end of Class
 };
 
 // TOGGLE COVERAGE

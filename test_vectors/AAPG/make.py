@@ -83,14 +83,14 @@ try:
       counter = counter + 1
       genObjdump()
       runSpike();
-      print ('Running RTL Simulation')
-      runRTLSim();
-      stdoutdata=subprocess.getoutput("diff -qiw spike.dump rtl.dump")
-      if not stdoutdata:
-        print("Results Match")
-      else:
-        print(" *!*!*!*!*! Results DO NOT Match *!*!*!*!*!")
-        break
+      #print ('Running RTL Simulation')
+      #runRTLSim();
+      #stdoutdata=subprocess.getoutput("diff -qiw spike.dump rtl.dump")
+      #if not stdoutdata:
+      #  print("Results Match")
+      #else:
+      #  print(" *!*!*!*!*! Results DO NOT Match *!*!*!*!*!")
+      #  break
       #if(percentSPFloat!=0):
       #	stdoutdata=subprocess.getoutput("diff -qiw rtl_fregister_dump.txt spike_fregister_dump.txt")
       #if not stdoutdata:

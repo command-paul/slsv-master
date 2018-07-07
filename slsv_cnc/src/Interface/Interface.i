@@ -109,7 +109,7 @@ public:
     SpikeIf();
 	// Destructor
     ~SpikeIf() override ;
-	
+	bool destroy_s();
 	//Spike Command Line Arguments 
 	bool setISA(std::string);
 	bool setProcessors(u_int16_t);

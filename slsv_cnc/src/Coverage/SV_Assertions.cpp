@@ -1,23 +1,43 @@
 #include"Coverage.hpp"
 #include <iostream>
 #include <vector>
-// Helper functions 
+
+/* Assertion Evaluation Kernels
+// get the data at 0000000080010400 to_host
+*/
 
 uint32_t SV_1D_equality(Assertion* State){
-	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == 0x80001000) return SVA1D_EQUALITY;
+	uint64_t breakpoint = State->scratchPad[0];
+	//std::cout << "BP :: \t" << std::hex << breakpoint << std::endl ; 
+	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == breakpoint) return SVA1D_EQUALITY;
 	return ALL_OK;
 }
 
-// I think the 1D 2D business can be cleared up once i have a sloid State variable addressing policy in place
-
 uint32_t SV_1D_inequality(Assertion* State){
-	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC > 0x80002000) return SVA1D_INEQUALITY;
+	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC > 0x8000E000) return SVA1D_INEQUALITY;
+	return ALL_OK;
+}
+
+uint32_t SV_1D_stable(Assertion* State){
+	if(State->scratchPad.empty()) {
+		State->scratchPad.push_back(State->Parent->Cache->ScratchState->HART_Vec[0].PC);
+		return ALL_OK;
+	}
+	uint64_t temp = State->scratchPad.back();
+	State->scratchPad.pop_back();
+	if(State->Parent->Cache->ScratchState->HART_Vec[0].PC == temp ) return SVA1D_STABLE;
+	State->scratchPad.push_back(State->Parent->Cache->ScratchState->HART_Vec[0].PC);
 	return ALL_OK;
 }
 
 uint32_t SV_2D_notequal(Assertion* State){
 	Assertion2D* St = (Assertion2D*) State ;
-	if(St->deviceB->Cache->ScratchState->HART_Vec[0].PC != St->deviceA->Cache->ScratchState->HART_Vec[0].PC ) return SVA2D_NOTEQUAL;
+	uint64_t pc0 = St->deviceB->Cache->ScratchState->HART_Vec[0].PC;
+	uint64_t pc1 = St->deviceA->Cache->ScratchState->HART_Vec[0].PC;
+	if(pc0!= pc1){
+		std::cout << "D1\t" << std::hex <<  pc0  << "\tD2\t" << pc1 << std::endl ; 
+		return SVA2D_NOTEQUAL;
+	} 
 	return ALL_OK;
 }
 
@@ -37,7 +57,7 @@ uint32_t SVAssetrions::add_assertion(std::vector<Device*> Devices,uint32_t type,
 		return ALL_OK;
 	}
 	else{
-		type = type%1000;
+		type = type%1000; // please redo this horrible no intuitive access scheme and actually demarkate the two because yousa can :(
 		Assertions.push_back(new Assertion2D(Devices,Eval[type],Args));
 		return ALL_OK;
 	}
@@ -81,7 +101,7 @@ uint32_t SVAssetrions::get_event(uint32_t id){
 Assertion ::Assertion(std::vector<Device*> Devices,uint32_t (*FPTR)(Assertion*),std::vector<uint64_t> Args){
 	Parent = Devices[0];
 	Eval = FPTR;
-	scratchPad = Args;
+	scratchPad = Args; // Not a Pointer STL Vector Assignment Copies the vector .
 	return;
 }
 

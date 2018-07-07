@@ -60,6 +60,9 @@ public:
 	riscv();
 	~riscv();
 
+	// Memory Looked Up By Address.
+	// All Other State Variables Looked up
+
 	std::vector <risc_v_HART> HART_Vec;
 	std::vector <memoryMappedDevice> Memory;
 	std::vector <nonHARTStateVariables> NHSV;

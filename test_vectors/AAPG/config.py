@@ -2,7 +2,7 @@
 import os
 import sys
 
-numberOfTests=10
+numberOfTests=36
 
 spikeBootAddress = 0x80000000			      # This is where spike boots from.
 stackPointerRegister = 2
@@ -18,8 +18,8 @@ initialMemorySize = 1                #Size in KB. Should be less than or equal t
 maxNestedLoops= 3                    #Maximum number of nested loops
 maxLoopIterations= 20                 #Max number of iterations for a loop
 forwardBranchRange= 10               #Maximum number of instructions that can be jumped over during forward jumps
-loopRange= 20                        #Maximum number of instructions within a loop is roughly loopRange
-branchBackwardProbability= 0.2        #Prob of a branch being backward. Increase this to make more loops.
+loopRange=  20                        #Maximum number of instructions within a loop is roughly loopRange
+branchBackwardProbability= 0.2       #Prob of a branch being backward. Increase this to make more loops.
 
 # Percentage split of instructions
 percentBaseInstr = 100

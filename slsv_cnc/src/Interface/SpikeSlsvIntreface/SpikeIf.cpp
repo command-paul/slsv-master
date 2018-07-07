@@ -58,10 +58,18 @@ SpikeIf::SpikeIf(){
   return;
 }
 SpikeIf::~SpikeIf() {
-  s->stop();
-  delete s;
   std::cout << "Special SLSV Interface Instance Destroyed" << std::endl ;
   return;
+}
+
+bool SpikeIf::destroy_s(){
+  if(s != NULL){
+    s->stop();
+    delete s;
+    std::cout << "Special SLSv Sim_t deleted" << std::endl ;
+    return true;
+  }
+  return false;
 }
 
 bool SpikeIf::setISA(std::string){
@@ -140,7 +148,7 @@ bool SpikeIf::Initialise() {
   std::function<extension_t*()> extension;
   const char* isa = DEFAULT_ISA;
   uint16_t rbb_port = 0;
-  bool use_rbb = true;
+  bool use_rbb = false;
   unsigned progsize = 2;
   unsigned max_bus_master_bits = 0;
   std::vector<int> hartids;
@@ -157,7 +165,8 @@ bool SpikeIf::Initialise() {
 
   //htif_args.push_back(SpikeArguments);
 
-  s = new sim_t(isa, nprocs, halted, start_pc, mems, htif_args, std::move(hartids),progsize, max_bus_master_bits);
+  s = new sim_t(isa, nprocs, halted, start_pc, mems, htif_args, std::move(hartids),progsize, max_bus_master_bits,0);
+          //sim_t(isa,_nprocs, halted,start_pc , mems, args     , const std::vector<int> hartids,unsigned progsize, unsigned max_bus_master_bits, bool require_authentication); // Updated interface for new commit
       
   std::unique_ptr<remote_bitbang_t> remote_bitbang((remote_bitbang_t *) NULL);
   std::unique_ptr<jtag_dtm_t> jtag_dtm(new jtag_dtm_t(&s->debug_module));
@@ -177,7 +186,7 @@ bool SpikeIf::Initialise() {
  s->set_histogram(histogram);
   
  s->run(); // Essentially initialises everything :P
-  std::cout<< "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl ;
+  //std::cout<< "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl ;
   //while(!done()){
   //s.main();
  s->set_log(log);
@@ -187,7 +196,7 @@ bool SpikeIf::Initialise() {
   //reg_t get_csr(int which);
   //mmu_t* get_mmu() { return mmu; }
   //state_t* get_state() { return &state; }
-  std::cout << std::hex << HART0->get_csr(2816) << std::endl;
+  //std::cout << std::hex << HART0->get_csr(2816) << std::endl;
   //mmu_t hart0mmu = *(HART0.get_mmu());
   state_t* hart0state = HART0->get_state();
   // use spike bus_t to access memory mapped IO . but bus is private and i will have to seriously modify something to get it :(
@@ -195,17 +204,15 @@ bool SpikeIf::Initialise() {
   //reg_t pc;
   //regfile_t<reg_t, NXPR, true> XPR;
   //regfile_t<freg_t, NFPR, false> FPR;
-  std::cout << std::hex << hart0state->pc << std::endl;
-  std::cout << std::hex << hart0state->XPR[0] << std::endl;
-
-
+  //std::cout << std::hex << hart0state->pc << std::endl;
+  //std::cout << std::hex << hart0state->XPR[0] << std::endl;
   return true;
 }
 
 bool SpikeIf::Synchronise() {
   processor_t* HART0 =s->get_core(0);
   state_t* hart0state = HART0->get_state();
-  std::cout << std::hex << hart0state->pc << std::endl;
+  //std::cout << std::hex << hart0state->pc << std::endl;
   while(hart0state->pc <= 0x80000000){
     s->set_log(0);
     //std::cout << "lop" << std::endl;
@@ -215,7 +222,7 @@ bool SpikeIf::Synchronise() {
     //std::cout << std::hex << hart0state->pc << std::endl;
     //std::cout << std::hex << hart0state->XPR[0] << std::endl;
   }
-  std::cout<< "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl ;
+  //std::cout<< "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl ;
   //s.target.switch_to();
   return true;
 }
@@ -223,7 +230,7 @@ bool SpikeIf::Synchronise() {
 uint32_t SpikeIf::Single_Step() {
   traceFrame_t updates;
 	uint32_t event = ALL_OK; // ref events.hpp	
-	std::cout << "<<<<<<" << std::endl;
+	//std::cout << "<<<<<<" << std::endl;
 	uint32_t iterator = 0;
 // 	MEMORY
 	UpdateFrame_t MemUpdates;

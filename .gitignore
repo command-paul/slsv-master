@@ -17,6 +17,7 @@ slsv_cnc/bin/
 slsv_cnc/lib
 test_vectors/Tests/
 test_vectors/pkTests/
+test_vectors/AARG/*
 test_vectors/AAPG/result/
 test_vectors/AAPG_MOD
 test_vectors/openocd
@@ -25,3 +26,4 @@ docs/latex
 __pycache__
 slsv_*.py
 *_wrap.cxx
+*.log

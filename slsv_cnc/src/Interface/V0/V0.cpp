@@ -71,7 +71,7 @@ uint32_t V0::Single_Step(){  // This should return bool and simply set the frame
 	traceFrame_t updates;
 	uint32_t event = ALL_OK; // ref events.hpp	
 	char response[1024]; // Remove this later
-	std::cout << "<<<<<<" << std::endl;
+	//std::cout << "<<<<<<" << std::endl;
 	uint32_t iterator = 0;
 // 	MEMORY
 	UpdateFrame_t MemUpdates;
@@ -95,7 +95,7 @@ uint32_t V0::Single_Step(){  // This should return bool and simply set the frame
 			uint64_t csval = hartPtr->get_register(i);
 			if(value != csval){
 				// Check if this is an update , if not skip // Resolve after reference to state container is sorted
-				std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
+				std::cout << i << "\t" << std::hex << value << "  OLD :: ONDEV   " << std::hex << csval <<std::endl;
 				// The I being comitted here needs to be transelated to the required address
 				update_t temp = std::make_pair(i,value);
 				RegUpdates.push_back(temp);
