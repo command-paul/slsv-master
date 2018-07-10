@@ -158,7 +158,7 @@ def DLockstepVerification(path):
 
     # Port 1 is the shakti C-class default settings
     OOCD_port1 = '10000'
-    config_file1 = '/scratch/slsv-master/test_vectors/spike.cfg'
+    config_file1 = '/scratch/slsv-master/test_vectors/cfpga.cfg'
     ip1 = '0.0.0.0'
     tcl_port1 = '6666'
     gdb_port1 = '3333'
@@ -174,15 +174,14 @@ def DLockstepVerification(path):
 
     #process1 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port1)
     #process1 = ss.SpawnShaktiV0()
-    #process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
-    #Kewl = input("Check Spike V0 Spawned")
+    process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
+    time.sleep(0.5)
     #process3 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
-    #time.sleep(0.5)
-    #process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
-    #Kewl = input("Check OOCD V0 Spawned")
-    time.sleep(5)
+    process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
+    time.sleep(2)
     ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
     ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
+    time.sleep(5)
     #Kewl = input("Check GDB LOADED Spawned")
     LockstepVerification(path,telnet_port1,telnet_port2)
     #windup test env 
@@ -238,7 +237,7 @@ def DBasicSelfTests(path):
 count = 0
 TD  = ss.TestDispatch()
 #Tests = TD.getTests('/scratch/slsv-master/test_vectors/Tests/','')
-Tests = TD.getTests('/scratch/slsv-master/test_vectors/tests')
+Tests = TD.getTests('/scratch/slsv-master/test_vectors/rv64g-p-tests')
 #while True :
 
 for Test in Tests:
