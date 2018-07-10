@@ -90,6 +90,7 @@ uint32_t V0::Single_Step(){  // This should return bool and simply set the frame
 		uint64_t value;
 		for(uint i = 0 ; i <= MaxRegs; i ++){
 			(*Transport).getAbstReg(&value,0,i,1,16);
+			//std::cout << i << "\t" << std::hex << value << std::endl;
 			// Branching to get the trace cache initialization setup
 			// Required to get the latest state setup. // The trace cache state is the main state and the DUV is just a shadow state for house keeping.
 			uint64_t csval = hartPtr->get_register(i);

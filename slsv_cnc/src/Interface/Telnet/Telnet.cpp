@@ -139,6 +139,8 @@ bool TelnetOCD::getAbstReg(uint64_t* result,uint32_t hartid,uint32_t regno,uint3
 	// send the message
 	rs = strlen(str);
 	_input(str, rs);
+	rs = 0;
+	buffer[0] = 0;
 	// get the response
 		while (poll(pfd, 2, 20) != -1) {
 			/* read from client */
@@ -160,7 +162,6 @@ bool TelnetOCD::getAbstReg(uint64_t* result,uint32_t hartid,uint32_t regno,uint3
 				break;
 			} 
 		}
-		
 	getPackedHex(result,(telnet->response_len)/16,telnet->response_buffer,16);
 	//for(uint i = 0 ; i < (telnet->response_len)/16 ; i++) printf(">>%016lx<<\r\n" , result[i]);
 	return true;
@@ -363,15 +364,16 @@ bool TelnetOCD::Tconnect(){
 	// 	temp[width] = '\0';
 	// 	sscanf(temp,"%lux",vector+i);
 	// uint width = (*hex) - 32;
-/*
+
 int main(){
-	TelnetOCD a("localhost","4444",6,32);
-	a.set_ip_port("localhost",4444);
+	TelnetOCD a("localhost","4445",6,32);
+	a.set_ip_port("localhost",4445);
 	a.Tconnect();
 	uint64_t results[1024];
 	char* result;
 	while(1){
 		a.getAbstReg(results,0,0x7b0,100,1);
+		std::cout << results << std::endl;
 		//a.getAbstReg(results,0,0x0,10,1);
 		//a.getAbstReg(results,0,0x7b0,10,1);
 		a.runCommand("slsv 2\n",result);
@@ -405,4 +407,3 @@ int main(){
 //Commands.push_back("slsv 4 0002000021000220002300024\n");
 //Commands.push_back("slsv 4 0002000021000220002300024\n");
 	
-*/

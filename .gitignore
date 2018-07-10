@@ -21,6 +21,7 @@ test_vectors/AARG/*
 test_vectors/AAPG/result/
 test_vectors/AAPG_MOD
 test_vectors/openocd
+test_vectors/log.txt
 docs/html
 docs/latex
 __pycache__
