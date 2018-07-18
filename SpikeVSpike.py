@@ -91,25 +91,25 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
     A.deviceB.Cache.ScratchState.addHART()
     A.deviceB.Cache.Parent = A.deviceB
     
-    DABV0 = sf.V0()
-    DABV0.Parent = A.deviceA
-    DABV0.configureV0("0.0.0.0",telnet_port1,0,0);    
-    DBBV0 = sf.V0()
-    DBBV0.Parent = A.deviceB
-    DBBV0.configureV0("0.0.0.0",telnet_port2,0,0);
-    #DAB = sf.SpikeIf()
-    #DAB.Parent = A.deviceA
-    #DAB.setISA("RV64IMAFD")
-    #DAB.SpikeArguments =(path) 
-    #DBB = sf.SpikeIf()
-    #DBB.Parent = A.deviceB
-    #DBB.setISA("RV64IMAFD")
-    #DBB.SpikeArguments =(path)
-    #A.deviceA.Bridge = DAB
-    #A.deviceB.Bridge = DBB
-    A.deviceA.Bridge = DABV0
-    A.deviceB.Bridge = DBBV0
-    # '''    
+    # DABV0 = sf.V0()
+    # DABV0.Parent = A.deviceA
+    # DABV0.configureV0("0.0.0.0",telnet_port1,0,0);    
+    # DBBV0 = sf.V0()
+    # DBBV0.Parent = A.deviceB
+    # DBBV0.configureV0("0.0.0.0",telnet_port2,0,0);
+    DAB = sf.SpikeIf()
+    DAB.Parent = A.deviceA
+    DAB.setISA("RV64IMAFD")
+    DAB.SpikeArguments =(path) 
+    DBB = sf.SpikeIf()
+    DBB.Parent = A.deviceB
+    DBB.setISA("RV64IMAFD")
+    DBB.SpikeArguments =(path)
+    A.deviceA.Bridge = DAB
+    A.deviceB.Bridge = DBB
+    # A.deviceA.Bridge = DABV0
+    # A.deviceB.Bridge = DBBV0
+    # # '''    
     SVA = sf.SVAssetrions()
     config  = [0,0,0,0]
     dv = [A.deviceA,A.deviceB]
@@ -148,8 +148,8 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
         print(A.deviceB.Cache.ScratchState.HART_Vec[0].PC)
         # Code here for event handler , replaces catching the return value of A.Run
     print("Exiting Test with event",format(event, '#x'))
-    #DAB.destroy_s() # Spike Instance
-    #DBB.destroy_s() # Spike Instance
+    DAB.destroy_s() # Spike Instance
+    DBB.destroy_s() # Spike Instance
     return
 
 
@@ -174,21 +174,22 @@ def DLockstepVerification(path):
 
     #process1 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port1)
     #process1 = ss.SpawnShaktiV0()
-    process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
-    time.sleep(0.5)
-    #process3 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
-    process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
-    time.sleep(2)
-    ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
-    ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
-    time.sleep(5)
-    #Kewl = input("Check GDB LOADED Spawned")
+    # process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
+    # time.sleep(0.5)
+    # process3 = ss.SpawnOOCD(config_file2,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
+    # time.sleep(0.5)
+    # process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
+    # time.sleep(2)
+    # ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
+    # ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
+    # time.sleep(2)
+
     LockstepVerification(path,telnet_port1,telnet_port2)
     #windup test env 
-    #process1.kill()
-    #process2.kill()
-    #process3.kill()
-    #process4.kill()
+    # process1.kill()
+    # process2.kill()
+    # process3.kill()
+    # process4.kill()
 
 def DBasicSelfTests(path):
     bootstrap_path = '/scratch/slsv-master/test_vectors/bootstrap/output.riscv'
@@ -207,29 +208,22 @@ def DBasicSelfTests(path):
     tcl_port2 = '6667'
     gdb_port2 = '3334'
     telnet_port2 = '4445'
-    #process2 = ss.SpawnShaktiV0()
-    #process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
-    #process4 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
-    #process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
     
-    #ss.SpawnGDBLoadKill(ip2,gdb_port1,path)
-    p1 = subprocess.Popen('riscv64-unknown-elf-gdb', stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #ip   = '0.0.0.0'
-    #port = '3333'
-    ip = ip1
-    port = gdb_port1
-    message = ('target remote '+ ip + ':' + port + ' \n').encode()
-    p1.stdin.write(message)
-    p1.stdin.flush()
+    OOCD_port3 = '10002'
+    config_file3 = '/scratch/slsv-master/test_vectors/spike.cfg'
+    ip3 = '0.0.0.0'
+    tcl_port3 = '6668'
+    gdb_port3 = '3335'
+    telnet_port3 = '4446'
+    #process2 = ss.SpawnShaktiV0()
+    #process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port3)
+    #time.sleep(0.5)
+    #process4 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
+    process4 = ss.SpawnOOCD(config_file3,ip3,OOCD_port3,tcl_port3,gdb_port3,telnet_port3)
     time.sleep(2)
-    message = ('load '+path+' \n').encode()
-    p1.stdin.write(message)
-    p1.stdin.flush()
-    time.sleep(5)
-    p1.stdin.write('quit \n'.encode())
-    p1.stdin.flush()
-    p1.kill()
-    BasicSelfTests(path,telnet_port1,telnet_port1)
+    ss.SpawnGDBLoadKill(ip3,gdb_port3,path)
+    time.sleep(2)
+    BasicSelfTests(path,telnet_port3,telnet_port3)
     #BasicSelfTests(path,telnet_port2,telnet_port2)
     #process2.kill()
     #process4.kill()
@@ -242,10 +236,10 @@ Tests = TD.getTests('/scratch/slsv-master/test_vectors/rv64g-p-tests')
 
 for Test in Tests:
     path = Test[0]
-    print (path)
+    print (count , path)
     count=count+1
     DLockstepVerification(path)
     #DBasicSelfTests(path)
 
 
-print (count," /122 Tests Cmpleted ! check to_host for status")
+print (count," Tests Cmpleted ! check to_host for status")

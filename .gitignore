@@ -29,3 +29,5 @@ slsv_*.py
 *_wrap.cxx
 *.log
 *.pyc
+test_vectors/SpikeSVMonitorC/
+test_vectors/c*.cfg
