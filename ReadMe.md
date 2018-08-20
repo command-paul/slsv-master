@@ -1,3 +1,5 @@
+##### FEATURE BRANCH :: Interactable Front END - with clearly defined trace subscribers and event handlers
+
 ##### This is a work in progress with modifications being made over time.
 # SLSV
 ## The Shakti Lock-Step Verification Framework
