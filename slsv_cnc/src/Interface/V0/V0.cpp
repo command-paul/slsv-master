@@ -34,7 +34,7 @@ bool V0::Initialise(){
 // Get it to the defined sync point
 // Different policy for multi core
 bool V0::Synchronise(){
-	return true;
+	return true; 
 }
 // Update State
 
@@ -88,20 +88,45 @@ uint32_t V0::Single_Step(){  // This should return bool and simply set the frame
 		(*Transport).runCommand("slsv 2\n",response); // Step Command
 		// Capture Updates
 		uint64_t value;
-		for(uint i = 0 ; i <= MaxRegs; i ++){
-			(*Transport).getAbstReg(&value,0,i,1,16);
-			//std::cout << i << "\t" << std::hex << value << std::endl;
-			// Branching to get the trace cache initialization setup
-			// Required to get the latest state setup. // The trace cache state is the main state and the DUV is just a shadow state for house keeping.
-			uint64_t csval = hartPtr->get_register(i);
-			if(value != csval){
-				// Check if this is an update , if not skip // Resolve after reference to state container is sorted
-				std::cout << i << "\t" << std::hex << value << "  OLD :: ONDEV   " << std::hex << csval <<std::endl;
-				// The I being comitted here needs to be transelated to the required address
-				update_t temp = std::make_pair(i,value);
-				RegUpdates.push_back(temp);
-			}	
-	  	}
+		uint64_t csval;
+		uint64_t hotregs;
+		// HOT bit cpu reader 
+		(*Transport).getAbstReg(&hotregs,0,0x1044,1,16);
+		for(uint i=0 ; i <32 ; i ++ ){
+			if((hotregs & (1<<i)) != 0){
+				(*Transport).getAbstReg(&value,0,i,1,16);	
+				 csval = hartPtr->get_register(i);
+				if(value != csval){
+					// Validate if there truly was an update in value if not skip 
+					std::cout << i << "\tOOCD:\t" << std::hex << value << "\tOLD :: ONDEV\t" << std::hex << csval <<std::endl;
+					update_t temp = std::make_pair(i,value);
+					RegUpdates.push_back(temp);
+				}	
+			}
+		}
+		// GET PC Missed out earlier
+		(*Transport).getAbstReg(&value,0,0x20,1,16);	
+		csval = hartPtr->get_register(0x20);
+		if(value != csval){
+			// Validate if there truly was an update in value if not skip 
+			std::cout << 0x20 << "\tOOCD:\t" << std::hex << value << "\tOLD :: ONDEV\t" << std::hex << csval <<std::endl;
+			update_t temp = std::make_pair(0x20,value);
+			RegUpdates.push_back(temp);
+		}
+		// for(uint i = 0 ; i <= MaxRegs; i ++){
+		// 	(*Transport).getAbstReg(&value,0,i,1,16);
+		// 	//std::cout << i << "\t" << std::hex << value << std::endl;
+		// 	// Branching to get the trace cache initialization setup
+		// 	// Required to get the latest state setup. // The trace cache state is the main state and the DUV is just a shadow state for house keeping.
+		// 	uint64_t csval = hartPtr->get_register(i);
+		// 	if(value != csval){
+		// 		// Check if this is an update , if not skip // Resolve after reference to state container is sorted
+		// 		std::cout << i << "\tOOCD:\t" << std::hex << value << "\tOLD :: ONDEV\t" << std::hex << csval <<std::endl;
+		// 		// The I being comitted here needs to be transelated to the required address
+		// 		update_t temp = std::make_pair(i,value);
+		// 		RegUpdates.push_back(temp);
+		// 	}	
+	  	// }
 		// CSR
 	}
 

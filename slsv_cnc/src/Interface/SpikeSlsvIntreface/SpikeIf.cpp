@@ -262,7 +262,7 @@ uint32_t SpikeIf::Single_Step() {
       uint64_t csval = hartPtr->get_register(i);
 			if(value != csval){
 				// Check if this is an update , if not skip // Resolve after reference to state container is sorted
-				std::cout << i << "\t" << std::hex << value << "OLD :: ONDEV " << std::hex << csval <<std::endl;
+				std::cout << i << "\tSSPI:\t" << std::hex << value << "\tOLD :: ONDEV\t" << std::hex << csval <<std::endl;
 				// The I being comitted here needs to be transelated to the required address
 				update_t temp = std::make_pair(i,value);
 				RegUpdates.push_back(temp);

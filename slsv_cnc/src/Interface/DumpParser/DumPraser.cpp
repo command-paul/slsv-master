@@ -116,7 +116,7 @@ uint32_t DumParser::Single_Step(){  // This should return bool and simply set th
 				uint64_t csval = 0; //hartPtr->get_register(address);
 				value = = (uint64_t)( buffer & 0x0000000000000000FFFFFFFFFFFFFFFF )
 				if(value != csval)
-					std::cout << i << "\t" << std::hex << value << "  OLD :: ONDEV   " << std::hex << csval <<std::endl;
+					std::cout << i << "\tSVCD:\t" << std::hex << value << "\tOLD :: ONDEV\t" << std::hex << csval <<std::endl;
 					//append packet to vector
 					update_t temp = std::make_pair(i,value);
 					RegUpdates.push_back(temp);

@@ -20,6 +20,13 @@
 #    def getResult(self):
 #        return True
 
+
+#  Numbers pre One hot ~ one instruction retired per second @ 200Khz Jtag Clock
+# After One Hot Optimisation
+# 8832 / (14 * 60)
+# 10.51428571429 instructions per second
+# User Time 2.5x Real time , because of open mp parallel.
+
 import subprocess
 
 from slsv import slsv_framework as sf
@@ -29,12 +36,10 @@ import signal # for handling signals later not being used now :/
 
 # TODO Handle SIG-INT in a pretty way of checkpointing everything
 
-
 def BasicSelfTests(path,telnet_port1,telnet_port2):
     A = sf.basicDeviceTests()
     A.DUT.deviceName = "spikeOpenOCD"
     A.DUT.Cache = sf.traceCache()
-
     A.DUT.Cache.ScratchState = sf.riscv()
     A.DUT.Cache.max_length = 10
     A.DUT.Cache.ScratchState.TopRegAddress = 32
@@ -43,7 +48,7 @@ def BasicSelfTests(path,telnet_port1,telnet_port2):
     
     DABV0 = sf.V0()
     DABV0.Parent = A.DUT
-    DABV0.configureV0("0.0.0.0",telnet_port2,0,0);
+    DABV0.configureV0("0.0.0.0",telnet_port2,0,0)
     
     #DAB = sf.SpikeIf()
     #DAB.Parent = A.deviceA
@@ -91,30 +96,30 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
     A.deviceB.Cache.ScratchState.addHART()
     A.deviceB.Cache.Parent = A.deviceB
     
-    # DABV0 = sf.V0()
-    # DABV0.Parent = A.deviceA
-    # DABV0.configureV0("0.0.0.0",telnet_port1,0,0);    
-    # DBBV0 = sf.V0()
-    # DBBV0.Parent = A.deviceB
-    # DBBV0.configureV0("0.0.0.0",telnet_port2,0,0);
-    DAB = sf.SpikeIf()
-    DAB.Parent = A.deviceA
-    DAB.setISA("RV64IMAFD")
-    DAB.SpikeArguments =(path) 
+    DABV0 = sf.V0()
+    DABV0.Parent = A.deviceA
+    DABV0.configureV0("0.0.0.0",telnet_port1,0,0);    
+    #DBBV0 = sf.V0()
+    #DBBV0.Parent = A.deviceB
+    #DBBV0.configureV0("0.0.0.0",telnet_port2,0,0);
+    #DAB = sf.SpikeIf()
+    #DAB.Parent = A.deviceA
+    #DAB.setISA("RV64IMAFD")
+    #DAB.SpikeArguments =(path) 
     DBB = sf.SpikeIf()
     DBB.Parent = A.deviceB
     DBB.setISA("RV64IMAFD")
     DBB.SpikeArguments =(path)
-    A.deviceA.Bridge = DAB
+    #A.deviceA.Bridge = DAB
     A.deviceB.Bridge = DBB
-    # A.deviceA.Bridge = DABV0
-    # A.deviceB.Bridge = DBBV0
+    A.deviceA.Bridge = DABV0
+    #A.deviceB.Bridge = DBBV0
     # # '''    
-    SVA = sf.SVAssetrions()
-    config  = [0,0,0,0]
-    dv = [A.deviceA,A.deviceB]
-    SVA.add_assertion(dv,1002,config)
-    #A.coverageTrackers.push_back(SVA)
+    # SVA = sf.SVAssetrions()
+    # config  = [0,0,0,0]
+    # dv = [A.deviceA,A.deviceB]
+    # SVA.add_assertion(dv,1002,config)
+    # #A.coverageTrackers.push_back(SVA)
     #SVA2 = sf.SVAssetrions()
     #config2  = [0,0,0,0]
     #dv2 = [A.deviceA]
@@ -129,9 +134,9 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
     SVA = sf.SVAssetrions()
     config  = []
     dv = [A.deviceA,A.deviceB]
-    #SVA.add_assertion(dv,1002,config)
-    config  = [0x80000360]
-    SVA.add_assertion([dv[0]],0,config)
+    SVA.add_assertion(dv,1002,config)
+    #config  = [0x80000360]
+    #SVA.add_assertion([dv[0]],0,config)
     config  = [0x80000048]
     SVA.add_assertion([dv[0]],0,config)
     #config  = []
@@ -148,8 +153,8 @@ def LockstepVerification(path,telnet_port1,telnet_port2):
         print(A.deviceB.Cache.ScratchState.HART_Vec[0].PC)
         # Code here for event handler , replaces catching the return value of A.Run
     print("Exiting Test with event",format(event, '#x'))
-    DAB.destroy_s() # Spike Instance
-    DBB.destroy_s() # Spike Instance
+    #DAB.destroy_s() # Spike Instance
+    #DBB.destroy_s() # Spike Instance
     return
 
 
@@ -174,22 +179,22 @@ def DLockstepVerification(path):
 
     #process1 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port1)
     #process1 = ss.SpawnShaktiV0()
-    # process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
-    # time.sleep(0.5)
-    # process3 = ss.SpawnOOCD(config_file2,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
-    # time.sleep(0.5)
-    # process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
-    # time.sleep(2)
-    # ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
-    # ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
-    # time.sleep(2)
-
+    #process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port2)
+    #time.sleep(0.5)
+    #process3 = ss.SpawnOOCD(config_file2,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
+    #time.sleep(0.5)
+    #process4 = ss.SpawnOOCD(config_file2,ip2,OOCD_port2,tcl_port2,gdb_port2,telnet_port2)
+    #time.sleep(1)
+    ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
+    #time.sleep(1)
+    #ss.SpawnGDBLoadKill(ip2,gdb_port2,path)
+    time.sleep(1)
     LockstepVerification(path,telnet_port1,telnet_port2)
     #windup test env 
     # process1.kill()
-    # process2.kill()
+    #process2.kill()
     # process3.kill()
-    # process4.kill()
+    #process4.kill()
 
 def DBasicSelfTests(path):
     bootstrap_path = '/scratch/slsv-master/test_vectors/bootstrap/output.riscv'
@@ -219,11 +224,11 @@ def DBasicSelfTests(path):
     #process2 = ss.SpawnSpikeV0(bootstrap_path,OOCD_port3)
     #time.sleep(0.5)
     #process4 = ss.SpawnOOCD(config_file1,ip1,OOCD_port1,tcl_port1,gdb_port1,telnet_port1)
-    process4 = ss.SpawnOOCD(config_file3,ip3,OOCD_port3,tcl_port3,gdb_port3,telnet_port3)
+    #process4 = ss.SpawnOOCD(config_file3,ip3,OOCD_port3,tcl_port3,gdb_port3,telnet_port3)
     time.sleep(2)
-    ss.SpawnGDBLoadKill(ip3,gdb_port3,path)
+    ss.SpawnGDBLoadKill(ip1,gdb_port1,path)
     time.sleep(2)
-    BasicSelfTests(path,telnet_port3,telnet_port3)
+    BasicSelfTests(path,telnet_port1,telnet_port1)
     #BasicSelfTests(path,telnet_port2,telnet_port2)
     #process2.kill()
     #process4.kill()

@@ -3,8 +3,15 @@
 #include <vector>
 
 /* Assertion Evaluation Kernels
-// get the data at 0000000080010400 to_host
+// TODO ADD WATCH POINTS eg on values at locations :: get the data at 0000000080010400 to_host
 */
+// every kernel is given a scratch pad at initialisation
+// The scratch pad will contain values at locations which the respective kernels  understand
+// The scratch pad is also used ny the kernels to store some intermediate state information 
+// necessary for the opeartion of the kernels.
+// The scratch can also be accesed by other event handlers to look into.
+// The scratch pad is just a shared memory structure setup as an std vector construct which 
+// allows for independent memory managemennt.
 
 uint32_t SV_1D_equality(Assertion* State){
 	uint64_t breakpoint = State->scratchPad[0];

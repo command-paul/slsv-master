@@ -34,6 +34,8 @@
 
 // #define vs enums ?? going with #defines for now
 
+// Upgrading to ENUM duality till the #defines can be removed.
+
 /*
         Event Name  {4'h Event Origin,4'h Event ID} 
 */
@@ -54,5 +56,29 @@
 #define SVA2D_EQUALITY          0x10110001
 #define SVA2D_INEQUALITY        0x10110010
 #define SVA2D_NOTEQUAL          0x10110011
+
+// Begin ENUM source offsets
+
+// This is pretty useless // Just freeze a packet format or use some standard.
+
+// // SOURCE SLSV - 
+// enum EventOrigin{
+//                 SLSV_Interface,
+//                 SLSV_State,
+//                 SLSV_TraceCache,
+//                 SLSV_TestDriver,
+//                 SLSV_Trace_Subscriber,
+//                 SLSV_Runtime}
+
+// enum Interface_event
+// // SOURCE Model Checking 
+//         //Event fron Tandem
+//         //Event from ISA Formal
+
+// //
+
+// Throw event system ?
+
+// Accumulate events with a throw ?
 
 #endif
