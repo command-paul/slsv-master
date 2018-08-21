@@ -1,4 +1,4 @@
-%module slsv_coverage
+%module(directors="1") slsv_coverage
 %{
 /* Header files or functon declaritions here */
     #include "Coverage.hpp"
@@ -24,7 +24,9 @@ typedef  std::vector<update_t> UpdateFrame_t;
 typedef  std::pair<UpdateFrame_t,UpdateFrame_t> traceFrame_t;
 
 // my memory footprint is huge, I tbh can at each step compute the net effective state 
-    
+
+%feature("director") Coverage;
+
 class Coverage{
 public:
 	Coverage();
